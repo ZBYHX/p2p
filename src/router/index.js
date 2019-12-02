@@ -3,8 +3,8 @@ import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 
 //登录和主页相关模块
-import Login from '@/views/Login'
-import AppMain from '@/views/AppMain'
+import Login from '@/views/loginAndRegistration/Login'
+import AppMain from '@/views/backstage/mainPageModule/AppMain'
 
 
 
