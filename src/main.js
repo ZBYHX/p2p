@@ -1,4 +1,7 @@
 import Vue from 'vue'
+//添加jQuery
+import $ from 'jquery'
+// import 'jquery'
 
 import ElementUI from 'element-ui' //新添加1
 import 'element-ui/lib/theme-chalk/index.css' //新添加2，避免后期打包样式不同，要放在import App from './App';之前
@@ -12,6 +15,7 @@ import store from './store'
 
 import axios from '@/api/http'
 import VueAxios from 'vue-axios'
+
 
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI) //新添加3
