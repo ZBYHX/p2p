@@ -24,74 +24,75 @@
 		name: 'Login',
 		data: function() {
 			return {
-				username: 'admin',
-				password: '123'
+				username: 'admin',//用户名称
+				password: '123'//用户密码
 			}
 		},
 		methods: {
+			// doSubmit: function() {
+			// 	this.$router.replace({
+			// 		path: '/AppMain'
+			// 	});
+      //
+			// },
+
+			//表单提交
 			doSubmit: function() {
-				this.$router.replace({
-					path: '/AppMain'
-				});
+				if ('' == this.username) {
+					this.$message({
+						showClose: true,
+						message: '用户帐号不能为空！',
+						type: 'error'
+					});
+					return false;
+				} else {
+					if ('' == this.password) {
+						this.$message({
+							showClose: true,
+							message: '用户密码不能为空！',
+							type: 'error'
+						});
+						return false;
+					}
+				}
+
+				const form = {
+          userName: this.username,
+          userPassword: this.password
+				}
+
+				//后台请求
+				let url = this.axios.urls.SYS_USER_LOGIN;
+				this.axios.post(url, form).then((resp) => {
+					if (0 == resp.data.code) {
+						this.$message({
+							message: resp.data.message,
+							type: 'success'
+						});
+
+						//给vuex中username赋值
+						this.$store.commit('setUsername', {
+							username: this.username
+						});
+            //给vuex中userid赋值
+						this.$store.commit('setUserid', {
+							userid: resp.data.result.user_id
+						});
+
+						// this.$store.commit('setMyurls', {
+						// 	myurls: resp.data.array
+						// });
+
+            //跳转到后台主页面
+						this.$router.replace({
+							path: '/AppMain'
+						});
+					} else {
+						this.$message.error(resp.data.message);
+					}
+				}).catch((error) => {});
 
 			},
-
-			// //表单提交
-			// doSubmit: function() {
-			// 	if ('' == this.username) {
-			// 		this.$message({
-			// 			showClose: true,
-			// 			message: '用户帐号不能为空！',
-			// 			type: 'error'
-			// 		});
-			// 		return false;
-			// 	} else {
-			// 		if ('' == this.password) {
-			// 			this.$message({
-			// 				showClose: true,
-			// 				message: '用户密码不能为空！',
-			// 				type: 'error'
-			// 			});
-			// 			return false;
-			// 		}
-			// 	}
-
-			// 	var form = {
-			// 		user_name: this.username,
-			// 		user_password: this.password
-			// 	}
-
-			// 	let url = this.axios.urls.SYS_USER_DOLOGIN;
-			// 	this.axios.post(url, form).then((resp) => {
-			// 		if (0 == resp.data.code) {
-			// 			this.$message({
-			// 				message: resp.data.message,
-			// 				type: 'success'
-			// 			});
-
-			// 			this.$store.commit('setUsername', {
-			// 				username: this.username
-			// 			});
-			// 			this.$store.commit('setUserid', {
-			// 				userid: resp.data.result.user_id
-			// 			});
-
-			// 			// console.log("log: "+resp.data.result.user_id);
-			// 			// console.log("log: "+resp.data.array);
-			// 			this.$store.commit('setMyurls', {
-			// 				myurls: resp.data.array
-			// 			});
-
-			// 			this.$router.replace({
-			// 				path: '/AppMain'
-			// 			});
-
-			// 		} else {
-			// 			this.$message.error(resp.data.message);
-			// 		}
-			// 	}).catch((error) => {});
-
-			// },
 			// 用户注册
 			register: function() {
 				// location.href = "#/Register";
@@ -121,7 +122,7 @@
 
 	.login-container {
 		border-radius: 10px;
-		margin: 0px auto;
+		margin: 0 auto;
 		width: 350px;
 		padding: 30px 35px 15px 35px;
 		background: #fff;
@@ -131,7 +132,7 @@
 	}
 
 	.title {
-		margin: 0px auto 40px auto;
+		margin: 0 auto 40px auto;
 		text-align: center;
 		color: #505458;
 	}

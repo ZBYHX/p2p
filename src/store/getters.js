@@ -1,7 +1,4 @@
 export default {
-	resturantName: function(state) {
-		return state.resturantName;
-	},
 	username: function(state) {
 		return state.username;
 	},
