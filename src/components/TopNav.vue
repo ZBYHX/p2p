@@ -24,6 +24,7 @@
 		},
 		computed: {
 			username: function() {
+
 				return this.$store.getters.username;
 			}
 		},
@@ -31,28 +32,28 @@
 			
 			//退出系统的方法
 			exit: function() {
-				this.$router.push({
-					path: '/'
-				})
-				// this.$confirm('你确定要退出系统吗？, 是否继续?', '提示', {
-				// 	confirmButtonText: '确定',
-				// 	cancelButtonText: '取消',
-				// 	type: 'warning'
-				// }).then(() => {
-				// 	this.$message({
-				// 		type: 'success',
-				// 		message: '退出成功！'
-				// 	});
-				// 	this.$store.commit('clear');
-				// 	this.$router.push({
-				// 		path: '/'
-				// 	})
-				// }).catch(() => {
-				// 	this.$message({
-				// 		type: 'info',
-				// 		message: '退出已取消！'
-				// 	});
-				// });
+				// this.$router.push({
+				// 	path: '/'
+				// })
+				this.$confirm('你确定要退出系统吗？, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					this.$message({
+						type: 'success',
+						message: '退出成功！'
+					});
+					this.$store.commit('clear');
+					this.$router.push({
+						path: '/Login'
+					})
+				}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '退出已取消！'
+					});
+				});
 			},
 			//左侧菜单折叠
 			doToggle: function() {

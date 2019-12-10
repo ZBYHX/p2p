@@ -11,7 +11,7 @@ export default {
 
 
   //权限管理部分
-	// 'SYS_USER_DOLOGIN': '/right/userAction_selectOneUser.action', //用户登陆
+	'sys_right_rootSelect': '/rightManagement/selectRootRights', //查询所有root权限信息
 
 
 

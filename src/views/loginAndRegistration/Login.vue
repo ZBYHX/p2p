@@ -76,7 +76,7 @@
 						});
             //给vuex中userid赋值
 						this.$store.commit('setUserid', {
-							userid: resp.data.result.user_id
+							userid: resp.data.result.userId
 						});
 
 						// this.$store.commit('setMyurls', {

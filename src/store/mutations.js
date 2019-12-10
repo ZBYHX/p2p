@@ -1,11 +1,11 @@
 export default {
 	// type(事件类型)： 其值为setResturantName
 	// payload：官方给它还取了一个高大上的名字：载荷，其实就是一个保存要传递参数的容器
+	setResturantName: function(state, payload) {
+		state.resturantName = payload.resturantName;
+	},
 	setUsername: function(state, payload) {
 		state.username = payload.username;
-	},
-	setUserid: function(state, payload) {
-		state.userid = payload.userid;
 	},
 	setJwt: function(state, payload) {
 		state.jwt = payload.jwt;
@@ -15,6 +15,9 @@ export default {
 			state[attrName] = null;
 		}
 	},
+	setUserid: function(state, payload) {
+		state.userid = payload.userid;
+	},
 	setMyid: function(state, payload) {
 		state.myid = payload.myid;
 	},
@@ -22,3 +25,5 @@ export default {
 		state.myurls = payload.myurls;
 	}
 }
+
+

@@ -32,6 +32,8 @@
 			LeftNav
 		},
 		created: function() {
+
+
 			this.$root.Bus.$on("aside-toggle", (v) => {
 				if (true === v) {
 					setTimeout(() => {

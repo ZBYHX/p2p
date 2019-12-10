@@ -28,6 +28,8 @@ Vue.config.productionTip = false
 //   render: h => h(App)
 // }).$mount("#app")
 
+
+
 window.vm = new Vue({
 	// el: '#app',
 	router, //导入路由
@@ -43,7 +45,7 @@ window.vm = new Vue({
 			Bus: new Vue()
 		}
 	}
-}).$mount("#app")
+}).$mount("#app");
 
 
 

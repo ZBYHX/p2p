@@ -1,7 +1,8 @@
 export default {
-	username: null,//用户名称
-	userid: null,//用户ID
-	jwt: null,//jwt令牌
-	myid: null,//
-	myurls: null//
+	resturantName: '飞歌餐馆',
+	username: null,
+	jwt: null,
+	userid: null,
+	myid: null,
+	myurls: null
 };
