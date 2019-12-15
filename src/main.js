@@ -21,15 +21,6 @@ Vue.use(VueAxios, axios)
 Vue.use(ElementUI) //新添加3
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
-// window.vm =new Vue({
-//   router,
-//   store,
-//   render: h => h(App)
-// }).$mount("#app")
-
-
-
 window.vm = new Vue({
 	// el: '#app',
 	router, //导入路由
@@ -47,6 +38,23 @@ window.vm = new Vue({
 	}
 }).$mount("#app");
 
+
+/* eslint-disable no-new */
+// window.vm = new Vue({
+//   el: '#app',
+//   router,//导入路由
+//   store, //在main.js中导入store实例
+//   components: {
+//     App
+//   },
+//   template: '<App/>',
+//   data: function() {
+//     return {
+//       //自定义事件总线对象，用于非父子组件的通信
+//       Bus: new Vue()
+//     }
+//   }
+// });
 
 
 //导入代码阻止菜单点击报错
