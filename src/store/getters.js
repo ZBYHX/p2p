@@ -2,14 +2,14 @@ export default {
 	resturantName: function(state) {
 		return state.resturantName;
 	},
-	username: function(state) {
-		return state.username;
+  userName: function(state) {
+		return state.userName;
 	},
 	jwt: function(state) {
 		return state.jwt;
 	},
-	userid: function(state) {
-		return state.userid;
+  userId: function(state) {
+		return state.userId;
 	},
 	myid: function(state) {
 		return state.myid;

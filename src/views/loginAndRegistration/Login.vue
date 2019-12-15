@@ -3,7 +3,7 @@
 		<el-form label-position="left" label-width="0px" class="demo-ruleForm login-container">
 			<h3 class="title">用户登录</h3>
 			<el-form-item>
-				<el-input type="text" v-model="username" placeholder="请输入账号"></el-input>
+				<el-input type="text" v-model="userName" placeholder="请输入账号"></el-input>
 			</el-form-item>
 			<el-form-item>
 				<el-input type="password" v-model="password" placeholder="请输入密码" autocomplete="off" show-password></el-input>
@@ -24,7 +24,7 @@
 		name: 'Login',
 		data: function() {
 			return {
-				username: 'admin',//用户名称
+        userName: 'admin',//用户名称
 				password: '123'//用户密码
 			}
 		},
@@ -38,7 +38,7 @@
 
 			//表单提交
 			doSubmit: function() {
-				if ('' == this.username) {
+				if ('' == this.userName) {
 					this.$message({
 						showClose: true,
 						message: '用户帐号不能为空！',
@@ -46,7 +46,7 @@
 					});
 					return false;
 				} else {
-					if ('' == this.password) {
+					if ('' == this.userPassword) {
 						this.$message({
 							showClose: true,
 							message: '用户密码不能为空！',
@@ -57,7 +57,7 @@
 				}
 
 				const form = {
-          userName: this.username,
+          userName: this.userName,
           userPassword: this.password
 				}
 
@@ -71,12 +71,12 @@
 						});
 
 						//给vuex中username赋值
-						this.$store.commit('setUsername', {
-							username: this.username
+						this.$store.commit('setUserName', {
+              userName: this.userName
 						});
             //给vuex中userid赋值
-						this.$store.commit('setUserid', {
-							userid: resp.data.result.userId
+						this.$store.commit('setUserId', {
+              userId: resp.data.result.userId
 						});
 
 						// this.$store.commit('setMyurls', {
@@ -87,6 +87,8 @@
 						this.$router.replace({
 							path: '/AppMain'
 						});
+
+
 					} else {
 						this.$message.error(resp.data.message);
 					}
