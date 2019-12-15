@@ -47,6 +47,8 @@ import RealNameAuthenticationAudit from '@/views/backstage/auditProjectModule/Re
 import BankCardAudit from '@/views/backstage/auditProjectModule/BankCardAudit'//银行卡认证审核
 import MaterialAudit from '@/views/backstage/auditProjectModule/MaterialAudit'//银行卡认证审核
 
+
+
 Vue.use(Router)
 
 export default new Router({
