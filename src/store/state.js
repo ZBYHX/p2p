@@ -1,8 +1,8 @@
 export default {
 	resturantName: '飞歌餐馆',
-	username: null,
+  userName: null,
 	jwt: null,
-	userid: null,
-	myid: null,
+  userId: null,//员工ID
+	myid: null,//图片ID
 	myurls: null
 };

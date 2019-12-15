@@ -35,32 +35,39 @@
         this.collapsed = v;
       });
 
-      //查询所有root权限信息
-      let url = this.axios.urls.sys_right_rootSelect;
-      // let id = this.$store.getters.userid;
-      this.axios.post(url, {}).then((resp) => {
-        if (resp.data.code == 0) {
-          this.treeNodeList = resp.data.result;
-        }
-      }).catch((error) => {
-      });
+      /*查询所有root权限信息*/
+      // let url = this.axios.urls.sys_right_rootSelect;
+      // this.axios.post(url, {}).then((resp) => {
+      //   if (resp.data.code == 0) {
+      //     this.treeNodeList = resp.data.result;
+      //   }
+      // }).catch((error) => {
+      // });
 
-      //根据用户分权限
-      // let id = this.$store.getters.userid;
-      // this.axios.post(url, {
-      // 	userid: id
-      // }).then((resp) => {
-      // 	this.treeNodeList = resp.data.result;
-      // }).catch((error) => {});
 
-      // if (this.$store.getters.myid == null) {
-      //   this.$router.push({
-      //     path: '/Img'
-      //   });
-      //   this.$store.commit('setMyid', {
-      //     myid: 0
-      //   });
-      // }
+      // console.log("用户id：", this.$store.getters.userName);
+      // console.log("员工id：", id);
+      /*根据用户分权限*/
+      let url = this.axios.urls.sys_right_selectRightById;
+      let id = this.$store.getters.userId;
+      this.axios.post(url, {
+      	userId: id
+      }).then((resp) => {
+      	this.treeNodeList = resp.data.result;
+      }).catch((error) => {});
+
+
+      /*主页显示图片*/
+      // console.log("图片ID：" + this.$store.getters.myid);
+      // console.log("员工ID：" + this.$store.getters.userName)
+      if (this.$store.getters.myid == null) {
+        this.$router.push({
+          path: '/Img'
+        });
+        this.$store.commit('setMyid', {
+          myid: 0
+        });
+      }
 
     },
     methods: {

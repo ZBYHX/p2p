@@ -4,8 +4,8 @@ export default {
 	setResturantName: function(state, payload) {
 		state.resturantName = payload.resturantName;
 	},
-	setUsername: function(state, payload) {
-		state.username = payload.username;
+  setUserName: function(state, payload) {
+		state.userName = payload.userName;
 	},
 	setJwt: function(state, payload) {
 		state.jwt = payload.jwt;
@@ -15,8 +15,8 @@ export default {
 			state[attrName] = null;
 		}
 	},
-	setUserid: function(state, payload) {
-		state.userid = payload.userid;
+	setUserId: function(state, payload) {
+		state.userId = payload.userId;
 	},
 	setMyid: function(state, payload) {
 		state.myid = payload.myid;

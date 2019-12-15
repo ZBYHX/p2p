@@ -5,7 +5,7 @@
 		</el-button>
 		<el-submenu index="2" class="submenu">
 			<!-- <template slot="title">超级管理员</template> -->
-			<template slot="title">{{username}}</template>
+			<template slot="title">{{userName}}</template>
 			<el-menu-item index="2-1"><i class="el-icon-s-tools" style="color: white;"></i>设&emsp;置</el-menu-item>
 			<el-menu-item index="2-2"><i class="el-icon-user-solid" style="color: white;"></i>个人中心</el-menu-item>
 			<el-menu-item @click="exit()" index="2-3"><i class="el-icon-switch-button" style="color: white;"></i>退&emsp;出</el-menu-item>
@@ -23,9 +23,9 @@
 			};
 		},
 		computed: {
-			username: function() {
+      userName: function() {
 
-				return this.$store.getters.username;
+				return this.$store.getters.userName;
 			}
 		},
 		methods: {
