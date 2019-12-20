@@ -2,7 +2,7 @@
   <div>
     <div>
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item style="font-size: 24px;">借款投资查询</el-breadcrumb-item>
+        <el-breadcrumb-item style="font-size: 24px;">用户流水查询</el-breadcrumb-item>
       </el-breadcrumb>
 
       <div style="text-align: right">
@@ -18,17 +18,15 @@
       <div>
         <el-form>
           <el-form-item>
-            <el-input placeholder="请输入账户名" v-model="queryForm.userName" style="width: 300px;" clearable></el-input>
-            <el-select v-model="queryForm.state" placeholder="请选择类型" key="-1" value="-1" clearable>
-              <!--<el-option key="-1" index="-1" label="所有产类型" value=""></el-option>-->
-              <el-option v-for="item in types" :label="item.label" :value="item.value" :key="item.value"></el-option>
+            <el-input placeholder="请输入账户名" v-model="queryForm.accountName" style="width: 300px;" clearable></el-input>
+            <el-select v-model="queryForm.actiontype" placeholder="请选择类型" key="-1" value="-1" clearable>
+              <el-option v-for="item in types" :label="item.label" :value="item.value" :key="item.value" ></el-option>
             </el-select>
-            <el-date-picker clearable v-model="queryForm.dateName" clearable align="right" type="date"
-                            placeholder="借款投资日期" value-format="yyyy-MM-dd"></el-date-picker>
-            <el-date-picker clearable v-model="queryForm.dateName2" clearable align="right" type="date"
-                            placeholder="截至日期" value-format="yyyy-MM-dd"></el-date-picker>
-            <el-select clearable v-model="queryForm.totalamount00" clearable placeholder="请选择交易价格段">
-              <!--<el-option key="e" index="r" label="" value=""></el-option>-->
+
+            <el-date-picker v-model="queryForm.tradetimeName" clearable align="right" type="date"
+                            placeholder="选择交易日期" value-format="yyyy-MM-dd" ></el-date-picker>
+
+            <el-select v-model="queryForm.amount00" clearable placeholder="请选择交易价格段">
               <el-option v-for="(item,index) in this.list" :value="item" :index="index" :key="index" :label="item"
                          :disabled="item.disabled"></el-option>
             </el-select>
@@ -42,23 +40,15 @@
       <el-table :data="dataResult" border style="width: 100%">
         <el-table-column type="index" label="序" :index="indexMethod" min-width="30" align="center"></el-table-column>
 
-        <el-table-column prop="userName" label="借款/投资用户" width="149"></el-table-column>
+        <el-table-column prop="accountName" label="交易用户" width="200"></el-table-column>
 
-        <el-table-column prop="totalamount" label="借款/投资总金额" width="150"></el-table-column>
+        <el-table-column prop="amount" label="交易金额" width="200"></el-table-column>
 
-        <el-table-column prop="principal" label="借款本金/投资本金" width="150"></el-table-column>
+        <el-table-column prop="tradeTimeCN" label="交易时间" width="200"></el-table-column>
 
-        <el-table-column prop="payDateCN" label="借款/投资日期" width="153"></el-table-column>
+        <el-table-column prop="servicefee" label="服务费用" width="200"></el-table-column>
 
-        <el-table-column prop="deadLineCN" label="截止期限" width="153"></el-table-column>
-
-        <el-table-column prop="interest" label="借款利息/投资获利" width="149"></el-table-column>
-
-        <el-table-column prop="monthindex" label="月指数" width="149"></el-table-column>
-
-        <el-table-column prop="callid" label="招标ID" width="150"></el-table-column>
-
-        <el-table-column prop="stateCN" label="交易类型" width="150"></el-table-column>
+        <el-table-column prop="actionTypeCN" label="交易类型" width="200"></el-table-column>
 
         相关操作
         <el-table-column label="操作">
@@ -84,29 +74,30 @@
       <!-- 添加和编辑操作 -->
       <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="30%" @close="handleDialogClose">
         <el-form :model="mergeForm" :rules="mergeFormRules" ref="mergeForm" :label-position="labelPosition"
-                 label-width="130px">
-          <el-form-item label="用户名称" prop="userName">
-            <el-input :readonly="diss" v-model="mergeForm.userName"></el-input>
+                 label-width="80px">
+          <el-form-item label="用户名称" prop="accountName">
+            <el-input :readonly="diss" v-model="mergeForm.accountName"></el-input>
           </el-form-item>
-          <el-form-item label="交易类型" prop="state">
-            <el-select v-model="mergeForm.state" filterable placeholder="请选择">
+          <el-form-item label="交易类型" prop="actiontype">
+            <el-select v-model="mergeForm.actiontype" filterable placeholder="请选择">
               <el-option v-for="item in types" :label="item.label" :value="item.value" :key="item.value"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="借款/投资总金额" prop="totalamount">
-            <el-input v-model="mergeForm.totalamount"></el-input>
+          <el-form-item label="交易金额" prop="amount">
+            <el-input v-model="mergeForm.amount"></el-input>
           </el-form-item>
-          <el-form-item label="月指数" prop="monthindex">
-            <el-input v-model="mergeForm.monthindex"></el-input>
+          <el-form-item label="服务费" prop="servicefee">
+            <el-input v-model="mergeForm.servicefee"></el-input>
           </el-form-item>
-          <el-form-item label="借款本金/投资本金" prop="principal">
-            <el-input v-model="mergeForm.principal"></el-input>
-          </el-form-item>
-          <el-form-item label="借款/投资日期" prop="payDateCN">
-            <el-input :readonly="diss" v-model="mergeForm.payDateCN"></el-input>
-          </el-form-item>
-          <el-form-item label="借款/投资日期" prop="deadLineCN">
-            <el-input :readonly="diss" v-model="mergeForm.deadLineCN"></el-input>
+          <el-form-item label="日期" prop="tradeTimeCN">
+            <el-input :readonly="diss" v-model="mergeForm.tradeTimeCN"></el-input>
+            <!--<el-date-picker-->
+            <!--v-model="value2"-->
+            <!--align="right"-->
+            <!--type="date"-->
+            <!--placeholder="选择日期"-->
+            <!--:picker-options="pickerOptions">-->
+            <!--</el-date-picker>-->
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -154,72 +145,79 @@
         // value2: '',
         diss: null,
         dialogVisible: false,
-        dialogTitle: '借款投资添加',
+        dialogTitle: '账户流水添加',
         labelPosition: 'left',
         dataResult: [],
         queryForm: {
           current_page: 1, //当前页码数
           page_size: 10, //每页显示的最大记录数
           total_count: 0, //总记录数
-          totalamount00: null,
+          amount00: null,
           min: null,
           max: null
         },
         queryForm1: {
-          deadlineX: null,
-          // paydateX: null,
-          dateName: null,
-          state: null,
-          userName: null,
-          totalamount00: null,
+          accountName: null,
+          amount00: null,
+          tradetimeName: null,
+          actiontype: null
         },
 
-        totalamount: '',
-        totalamountX: '',
+        amount: '',
+        amounts: '',
         list: ["1-5000", "5001-10000", "10001-20000", "20001-50000", "50001-100000", "100001-200000", "200001-100000000"],
         mergeForm: {
-          payid: null,
-          deadline: null,
-          paydate: null,
-          totalamount: null,
-          principal: null,
-          interest: null,
-          monthindex: null,
-          userid: null,
-          callid: null,
-          state: null,
-          deadLineCN: null,
-          payDateCN: null,
-          stateCN: null,
-          userName: null,
-          dateName: null,
-          dateName2: null,
+          amount: null,
+          tradetime: null,
+          tradeTimeCN: null,
+          servicefee: null,
+          actiontype: null,
+          actionTypeCN: null,
+          accountId: null,
+          accountName: null,
+          accountflowid: null
         },
         types: [{
           value: '1',
-          label: '投资'
+          label: '充值'
         }, {
           value: '2',
-          label: '借款'
+          label: '提现'
         }, {
           value: '3',
-          label: '主动还款'
+          label: '还款'
         }, {
           value: '4',
-          label: '自动还款'
+          label: '获利'
         }, {
           value: '5',
           label: '逾期还款'
         }, {
           value: '6',
-          label: '投资收益'
+          label: '资金撤销'
         }],
-        mergeFormRules: {}
+        mergeFormRules: {
+          // accountName: [{
+          //   required: true,
+          //   message: '请输入账号',
+          //   trigger: 'blur'
+          // }],
+          // servicefee: [{
+          //   required: true,
+          //   message: '请输入服务费用',
+          //   trigger: 'blur'
+          // }],
+          // actiontype: [{
+          //   required: true,
+          //   message: '请选择交易类型',
+          //   trigger: 'blur'
+          // }],
+        }
       }
     },
     created: function () {
       // this.type();
-      console.log(this.totalamountX);
+      console.log(this.amounts);
       this.loadAll();
     },
     methods: {
@@ -234,7 +232,7 @@
       loadAll: function () {
         var min = null;
         var max = null;
-        let str = this.queryForm.totalamount00;
+        let str = this.queryForm.amount00;
         if (str != null && str.length > 0) {
           let str1 = str.split("-");
           min = str1[0];
@@ -246,33 +244,32 @@
         this.queryForm.min = min;
         this.queryForm.max = max;
 
-        if (this.queryForm.userName != this.queryForm1.userName || this.queryForm1.state != this.queryForm.state || this.queryForm.dateName != this.queryForm1.dateName) {
-          if (this.queryForm.userName != null && this.queryForm.userName != '') {
+        if(this.queryForm.actiontype == ''){
+          this.queryForm.actiontype = null;
+        }
+
+        if (this.queryForm.accountName != this.queryForm1.accountName || this.queryForm1.actiontype != this.queryForm.actiontype || this.queryForm.tradetime != this.queryForm1.tradetime) {
+          if (this.queryForm.accountName != null && this.queryForm.accountName != '') {
             this.queryForm.current_page = 1;
           }
-          if (this.queryForm.state != null && this.queryForm.state != '') {
+          if (this.queryForm.actiontype != null && this.queryForm.actiontype != '') {
             this.queryForm.current_page = 1;
           }
-          if (this.queryForm.dateName != null && this.queryForm.dateName != '') {
-            this.queryForm.current_page = 1;
-          }
-          if (this.queryForm.dateName2 != null && this.queryForm.dateName2 != '') {
+          if (this.queryForm.tradetimeName != null && this.queryForm.tradetimeName != '') {
             this.queryForm.current_page = 1;
           }
         }
-        this.queryForm1.userName = this.queryForm.userName;
-        this.queryForm1.state = this.queryForm.state;
-        this.queryForm1.dateName = this.queryForm.dateName;
-        this.queryForm1.dateName2 = this.queryForm.dateName2;
+        this.queryForm1.accountName = this.queryForm.accountName;
+        this.queryForm1.actiontype = this.queryForm.actiontype;
+        this.queryForm1.tradetimeName = this.queryForm.tradetimeName;
 
 
-        let url = this.axios.urls['QUERY_JKMANAGER'];
 
-        if (this.queryForm.dateName != null && this.queryForm.dateName != '') {
-          this.queryForm.dateName = this.queryForm.dateName.toString();
-        }
-        if (this.queryForm.dateName2 != null && this.queryForm.dateName2 != '') {
-          this.queryForm.dateName2 = this.queryForm.dateName2.toString();
+
+        let url = this.axios.urls['QUERY_ACCOUNT_WATER'];
+
+        if (this.queryForm.tradetimeName != null && this.queryForm.tradetimeName != ''){
+          this.queryForm.tradetimeName = this.queryForm.tradetimeName.toString();
         }
 
         this.axios.post(url, this.queryForm).then((response) => {
@@ -296,7 +293,7 @@
       wantHelp: function () {
         this.$message({
           showClose: true,
-          message: '这是系统账户流水查询界面，可进行查询、删除、修改等操作!'
+          message: '这是账户流水查询界面，可进行查询、删除、修改等操作!'
         });
       },
 
@@ -304,12 +301,11 @@
         this.$confirm('你确定要删除这条记录, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning',
+          type: 'warning'
         }).then(() => {
-          let url = this.axios.urls.DEL_JKMANAGER;
-          console.log('123');
+          let url = this.axios.urls.DEL_ACCOUNT_FLOW;
           this.axios.post(url, {
-            payid: row.payid
+            accountflowid: row.accountflowid
           }).then((response) => {
             this.$message({
               message: response.data.message,
@@ -336,21 +332,19 @@
           if (false === valid) {
             return false;
           }
-          let url = this.axios.urls['EDIT_JKMANAGER'];
-          console.log('edited');
+          let url = this.axios.urls['EDIT_ACCOUNT_FLOW'];
           this.axios.post(url, {
-              payid: this.mergeForm.payid,
-              totalAmount: this.mergeForm.totalamount,
-              principal: this.mergeForm.principal,
-              monthIndex: this.mergeForm.monthindex,
-              state: this.mergeForm.state,
+              accountflowid: this.mergeForm.accountflowid,
+              amount: this.mergeForm.amount,
+              servicefee: this.mergeForm.servicefee,
+              actiontype: this.mergeForm.actiontype
             }
           ).then((response) => {
             this.$message({
               message: response.data.message,
               type: 'success'
             });
-            if (null == this.mergeForm.payid) {
+            if (null == this.mergeForm.accountflowid) {
               this.handleDialogClose();
             }
             this.loadAll();
@@ -361,23 +355,16 @@
       },
       //修改
       handleByEdit: function (row) {
-        this.mergeForm.payid = row.payid;
-        this.mergeForm.totalamount = row.totalamount;
-        this.mergeForm.state = row.state.toString();
-        this.mergeForm.userid = row.userid;
-        this.mergeForm.interest = row.interest;
-        this.mergeForm.monthindex = row.monthindex;
-        this.mergeForm.principal = row.principal;
-        this.mergeForm.callid = row.callid;
-        this.mergeForm.userName = row.userName;
-        this.mergeForm.payDateCN = row.payDateCN;
-        this.mergeForm.deadLineCN = row.deadLineCN;
-        this.mergeForm.dateName=row.dateName;
-        this.mergeForm.dateName2=row.dateName2;
-
+        this.mergeForm.amount = row.amount;
+        this.mergeForm.actiontype = row.actiontype.toString();
+        this.mergeForm.accountId = row.accountId;
+        this.mergeForm.servicefee = row.servicefee;
+        this.mergeForm.accountName = row.accountName;
+        this.mergeForm.tradeTimeCN = row.tradeTimeCN;
+        this.mergeForm.accountflowid = row.accountflowid;
         this.dialogVisible = true;
         this.diss = true;
-        this.dialogTitle = '借款投资信息修改';
+        this.dialogTitle = '账户流水信息修改';
       },
       //更改每页显示行数
       handleSizeChange(total) {
@@ -398,16 +385,13 @@
       //清空表单中的数据
       doClearMergeForm: function () {
         // 清空后台提交表单数据
-        this.mergeForm.payid = null,
-          this.mergeForm.totalamount = null,
-          this.mergeForm.state = null,
-          this.mergeForm.userid = null,
-          this.mergeForm.interest = null,
-          this.mergeForm.monthindex = null,
-          this.mergeForm.principal = null,
-          this.mergeForm.callid = null,
+        this.mergeForm.accountId = null,
+          this.mergeForm.actiontype = null,
+          this.mergeForm.servicefee = null,
+          this.mergeForm.amount = null,
+          this.mergeForm.tradetime = null,
           // this.$refs['mergeForm'].resetFields(); //清空验证信息
-          this.dialogTitle = '添加';
+          this.dialogTitle = '账户流水添加';
       },
       //序列显示方法
       indexMethod(index) {

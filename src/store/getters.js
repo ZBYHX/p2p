@@ -16,5 +16,12 @@ export default {
 	},
 	myurls: function(state) {
 		return state.myurls;
-	}
+	},
+  myPath: function (state) {
+    return state.myPath;
+  },
+  myPersonId: function (state) {
+    return state.myPersonId;
+  }
+
 };
