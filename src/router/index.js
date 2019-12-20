@@ -65,9 +65,9 @@ import UserManagement from '@/views/backstage/userManagementModule/UserManagemen
 import StaffManagement from '@/views/backstage/userManagementModule/StaffManagement'//员工管理
 import LoginHistory from '@/views/backstage/userManagementModule/LoginHistory'//登录历史
 //财务管理
-import AccountOfTheWater from "@iews/backstage/financeManagementModule/AccountOfTheWater"
-import SysAccountOfTheWater from "@iews/backstage/financeManagementModule/SysAccountOfTheWater"
-import QueryMoney from "@iews/backstage/financeManagementModule/QueryMoney"
+import AccountOfTheWater from "@/views/backstage/financeManagementModule/AccountOfTheWater"
+import SysAccountOfTheWater from "@/views/backstage/financeManagementModule/SysAccountOfTheWater"
+import QueryMoney from "@/views/backstage/financeManagementModule/QueryMoney"
 //数据字典管理
 import SysDataDictCatalog from '@/views/backstage/dictManagementModule/SysDataDictCatalog'//字典目录管理
 import SysDataDictDetail from '@/views/backstage/dictManagementModule/SysDataDictDetail' //字典明细管理
