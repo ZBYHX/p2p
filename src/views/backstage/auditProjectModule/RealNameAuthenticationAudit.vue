@@ -27,10 +27,10 @@
           align="right"
         >
         </el-date-picker>
-
       </el-form-item>
+
       <el-form-item>
-        <el-button size="small" type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
+        <el-button size="middle" type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
       </el-form-item>
     </el-form>
 
@@ -73,10 +73,8 @@
     <!-- 添加和编辑操作-->
     <el-dialog title="实名认证编辑" :visible.sync="dialogMergeFormVisible" @close="doDialogMergeFormClose" width="60%"
                style="margin-top: -30px;">
-      <!--<el-form :model="mergeForm" :rules="MergeFormRules" ref="mergeForm" label-position="left" label-width="120px">-->
       <el-form :inline="true" :model="mergeForm" ref="mergeForm" :rules="MergeFormRules" label-position="left"
                label-width="100px" style="overflow: auto;max-height: 420px;">
-        <!--<div style="height: 500px;overflow: auto;">-->
         <div>
           <!--实名认证ID不可被编辑 -->
           <el-form-item label="实名认证ID" prop="realid">
@@ -135,14 +133,12 @@
           </el-form-item>
         </div>
         <div>
-          <el-form-item label="备注" prop="remark">
-            <el-input type="textarea" rows="3" style="width: 770px;" v-model="mergeForm.remark"
+          <el-form-item label="备注" prop="remarkk">
+            <el-input type="textarea" rows="3" style="width: 770px;" v-model="mergeForm.remarkk"
                       auto-complete="off" maxlength="200"
                       placeholder="请输入你审核的备注信息"></el-input>
           </el-form-item>
           <el-form-item style="width: 500px;" label="审核结果" prop="state">
-            <!--<el-radio v-model="mergeForm.state" value="1" label="通过"  border></el-radio>-->
-            <!--<el-radio v-model="mergeForm.state" value="2" label="拒绝"  border></el-radio>-->
             <el-radio-group v-model="mergeForm.state" size="small">
               <el-radio label="1" border>通过</el-radio>
               <el-radio label="2" border>拒绝</el-radio>
@@ -156,18 +152,6 @@
       </div>
     </el-dialog>
 
-    <!--&lt;!&ndash; 添加和编辑操作&ndash;&gt;-->
-    <!--<el-dialog title="实名认证编辑" :visible.sync="visible01" width="50%" style="margin-top: -30px;">-->
-    <!--<el-form :inline="true" :model="mergeForm" ref="mergeForm" :rules="MergeFormRules" label-position="center"-->
-    <!--label-width="100px" style="overflow: auto;max-height: 420px;">-->
-    <!--&lt;!&ndash;显示图片一&ndash;&gt;-->
-    <!--<div align="center">-->
-    <!--<img src="../img/身份证正面.jpg" style="width: 500px;height: 230px;" @click="visible01=true">-->
-    <!--</div>-->
-    <!--</el-form>-->
-    <!--</el-dialog>-->
-
-
   </div>
 </template>
 
@@ -177,8 +161,8 @@
     data: function () {
       return {
         queryForm: {
-          nickname: null,//用户昵称
-          state: null,//审核类型
+          state: null,//审核状态
+          value4:null,//申请时间
           startTime: null,//起始时间
           endTime: null,//结束时间
           current_page: 1,
@@ -186,7 +170,8 @@
           total_count: 0
         },
         queryForm2: {
-          nickname: null//用户昵称
+          state: null,//审核状态
+          value4:null//申请时间
         },
         result: [],
         //日期值的  到时候查询结果里面有
@@ -195,7 +180,7 @@
         dialogMergeFormVisible: false,
         //定义一个行的ID属性
         realnameID: null,
-        realname: null,
+        state: null,
         mergeForm: {
           realid: null,
           realname: null,
@@ -206,8 +191,8 @@
           idnumber: null,
           image1: null,
           image2: null,
-          auditId: null,
-          remark: null,
+          auditid: null,
+          remarkk: null,
           state: null
         },
         //类型数组
@@ -227,7 +212,7 @@
         ],
         visible01: false,
         MergeFormRules: {
-          remark: [{
+          remarkk: [{
             required: true,
             message: '请输入审核的备注信息',
             trigger: 'blur'
@@ -237,71 +222,6 @@
             message: '请选择审核结果',
             trigger: 'change'
           }]
-          // realid: [],
-          // realname: [{
-          //   required: true,
-          //   message: '请输入真实姓名',
-          //   trigger: 'blur'
-          // },
-          //   {
-          //     min: 2,
-          //     max: 5,
-          //     message: '长度在2到5个字符',
-          //     trigger: 'blur'
-          //   }
-          // ],
-          // sex: [{
-          //   required: true,
-          //   message: '请选择性别',
-          //   trigger: 'change'
-          // }],
-          // nation: [{
-          //   required: true,
-          //   message: '请输入民族',
-          //   trigger: 'blur'
-          // },
-          //   {
-          //     min: 1,
-          //     max: 5,
-          //     message: '长度在1 到 5 个字符',
-          //     trigger: 'blur'
-          //   }
-          // ],
-          // birthday: [{
-          //   type: 'date',
-          //   required: true, message: '请选择日期',
-          //   trigger: 'change'
-          // }],
-          // address: [{
-          //   required: true,
-          //   message: '请输入地址',
-          //   trigger: 'blur'
-          // }],
-          // idnumber: [{
-          //   required: true,
-          //   message: '请输入身份证号',
-          //   trigger: 'blur'
-          // },
-          //   {
-          //     length: 18,
-          //     message: '身份证的长度为18位',
-          //     trigger: 'blur'
-          //   }],
-          // image1: [{
-          //   required: true,
-          //   message: '请选择图片',
-          //   trigger: 'blur'
-          // }],
-          // image2: [{
-          //   required: true,
-          //   message: '请选择图片',
-          //   trigger: 'blur'
-          // }],
-          // auditId: [{
-          //   required: true,
-          //   message: '请输入审核',
-          //   trigger: 'blur'
-          // }],
         },
         pickerOptions2: {
           shortcuts: [{
@@ -330,7 +250,6 @@
             }
           }]
         },
-        // value3: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
         value4: ''
       }
     },
@@ -353,7 +272,6 @@
       },
       //更改每页显示行数
       handleSizeChange(rows) {
-        //console.log('rows=%i', rows);
         this.queryForm.page_size = rows;
         this.queryForm.current_page = 1;
         this.search();
@@ -361,20 +279,18 @@
       //更改当前页码数
       handleCurrentChange(page) {
         this.selectCansle();
-        //console.log('page=%i', page);
         this.queryForm.current_page = page;
         this.search();
       },
       search: function () {
-        //分页
-
-        if (this.queryForm2.nickname != this.queryForm.nickname) {
-          if (this.queryForm.nickname != null && this.queryForm.nickname != '') {
+        //分页Bug
+        if (this.queryForm2.state != this.queryForm.state||this.queryForm2.value4!=this.queryForm.value4) {
+          if (this.queryForm.state != null && this.queryForm.state != ''||this.queryForm.value4!=null&&this.queryForm.value4) {
             this.queryForm.current_page = 1;
           }
         }
-        this.queryForm2.nickname = this.queryForm.nickname;
-
+        this.queryForm2.state = this.queryForm.state;
+        this.queryForm2.value4=this.queryForm.value4;
 
         if (this.value4 != null && this.value4.length > 0) {
           //起始时间
@@ -390,7 +306,6 @@
           this.queryForm.endTime = null;
         }
 
-        // console.log("search...");
         let url = this.axios.urls.REALNAME_LISTALLNAME;
         this.axios.post(url, this.queryForm).then((resp) => {
           this.result = resp.data.result;
@@ -398,9 +313,8 @@
         }).catch((error) => {
           console.log(error);
         });
-
-
       },
+
       //序列显示方法
       indexMethod(index) {
         return (this.queryForm.current_page - 1) * this.queryForm.page_size + (index + 1);
@@ -420,29 +334,22 @@
 
         this.mergeForm.birthday = row.birthday;
         this.mergeForm.idnumber = row.idnumber;
-        this.mergeForm.remark = row.audit.remark;
+        this.mergeForm.remarkk = row.audit.remarkk;
         this.mergeForm.auditid = row.audit.auditid;
 
-        // this.mergeForm.custCredit = row.image1;
-        // this.mergeForm.custAddr = row.image2;
-        // this.mergeForm.custZip = row.auditId.toLocaleString();
-
-        // this.dialogMergeFormTitle = '客户信息修改';
         this.dialogMergeFormVisible = true;
       },
 
-      doMergeForm: function () {
-        //新增和修改同是调用此方法
-        // console.log('doMergeForm...');
-        // console.log(this.mergeForm);
-        this.$refs['mergeForm'].validate((valid) => {
-          if (false === valid) {
-            return false;
-          }
+      //修改调用此方法
+          doMergeForm: function () {
+            this.$refs['mergeForm'].validate((valid) => {
+              if (false === valid) {
+                return false;
+              }
 
           //创建一个提交表单
           let from01 = {
-            remark: this.mergeForm.remark,
+            remarkk: this.mergeForm.remarkk,
             state: this.mergeForm.state,
             aid: this.mergeForm.auditid,
             auditorid: this.$store.getters.userId
@@ -475,12 +382,10 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-
           let from01={
             realid: row.realid,
             aid: row.audit.auditid
           }
-
           let url = this.axios.urls.REALNAME_DELREALNAME;
           this.axios.post(url, from01).then((resp) => {
             this.$message({
@@ -489,16 +394,13 @@
             });
             this.search();
           }).catch((error) => {});
-
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消删除'
           });
         });
-
       },
-
       //dialog对话框的关闭事件
       handleDialogClose: function () {
         console.log('handleDialogClose......');

@@ -3,7 +3,7 @@
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item style="font-size: 20px;">审核管理</el-breadcrumb-item>
-      <el-breadcrumb-item style="font-size: 20px;">撤资审核</el-breadcrumb-item>
+      <el-breadcrumb-item style="font-size: 20px;">招标审核</el-breadcrumb-item>
     </el-breadcrumb>
     <br/>
 
@@ -27,10 +27,10 @@
           align="right"
         >
         </el-date-picker>
-
       </el-form-item>
+
       <el-form-item>
-        <el-button size="small" type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
+        <el-button size="middle" type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
       </el-form-item>
     </el-form>
 
@@ -60,6 +60,8 @@
         </template>
       </el-table-column>
     </el-table>
+
+
     <!-- 完整分页 -->
     <div class="block" style="padding-top: 20px; text-align: left;">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
@@ -69,42 +71,86 @@
       </el-pagination>
     </div>
 
-    <!-- 添加和编辑操作-->
-    <el-dialog title="撤资审核编辑" :visible.sync="dialogFormVisible" @close="doDialogMergeFormClose" width="60%"
+
+    <!-- 查单个编辑操作-->
+    <el-dialog title="银行卡认证编辑" :visible.sync="dialogMergeFormVisible" @close="doDialogMergeFormClose" width="60%"
                style="margin-top: -30px;">
-      <!--<el-form :model="mergeForm" :rules="MergeFormRules" ref="mergeForm" label-position="left" label-width="120px">-->
-      <el-form :inline="true" :model="mergeForm" ref="mergeForm" :rules="MergeFormRules" label-position="left"
-               label-width="100px" style="overflow: auto;max-height: 350px;">
-        <!--<div style="height: 500px;overflow: auto;">-->
+      <el-form  :inline="true" :model="mergeForm" ref="mergeForm" :rules="MergeFormRules" label-position="left"
+      label-width="100px" style="overflow: auto;max-height: 420px;">
         <div>
-          <el-form-item label="资金撤消ID" prop="withdrawid">
-            <el-input style="width: 300px;" v-model="mergeForm.withdrawid" readonly="readonly"
-                      auto-complete="off"></el-input>
+          <!--招标请求ID不可被编辑 -->
+          <el-form-item label="招标请求ID" prop="callid">
+            <el-input style="width: 300px;" v-model="mergeForm.callid" auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="招标ID" prop="callid" style="margin-left: 60px;">
-            <el-input style="width: 300px;" v-model="mergeForm.callid" readonly="readonly" auto-complete="off"></el-input>
+
+          <!--招标请求类型 -->
+          <el-form-item label="招标请求类型" prop="bidrequesttype" style="margin-left: 60px;">
+            <el-input style="width: 300px;" v-model="mergeForm.bidrequesttype" auto-complete="off" placeholder="请输入招标请求类型"></el-input>
+          </el-form-item>
+        </div>
+
+        <div>
+          <!--招标请求状态-->
+          <el-form-item label="招标请求状态" prop="bidrequeststate">
+            <el-input style="width: 300px;" v-model="mergeForm.bidrequeststate" auto-complete="off" placeholder="请输入招标请求状态"></el-input>
+          </el-form-item>
+
+          <!--招标请求金额 -->
+          <el-form-item label="招标请求金额" prop="bidrequestamount" style="margin-left: 60px;">
+            <el-input style="width: 300px;" v-model="mergeForm.bidrequestamount" auto-complete="off" placeholder="请输入招标请求金额"></el-input>
+          </el-form-item>
+        </div>
+
+        <div>
+          <!--当前汇率 -->
+          <el-form-item label="当前汇率" prop="currentrate">
+            <el-input style="width: 300px;" v-model="mergeForm.currentrate" auto-complete="off" placeholder="请输入当前汇率"></el-input>
+          </el-form-item>
+
+          <!--投标数量 -->
+          <el-form-item label="投标数量" prop="bidcount" style="margin-left: 60px;">
+            <el-input style="width: 300px;" v-model="mergeForm.bidcount" auto-complete="off" placeholder="请输入投标数量"></el-input>
+          </el-form-item>
+        </div>
+
+        <div>
+          <!--总报酬金额 -->
+          <el-form-item label="当前汇率" prop="totalrewardamount">
+            <el-input style="width: 300px;" v-model="mergeForm.totalrewardamount" auto-complete="off" placeholder="请输入总报酬金额"></el-input>
+          </el-form-item>
+
+          <!--当前招标总金额 -->
+          <el-form-item label="投标数量" prop="currentsum" style="margin-left: 60px;">
+            <el-input style="width: 300px;" v-model="mergeForm.currentsum" auto-complete="off" placeholder="请输入当前招标总金额"></el-input>
+          </el-form-item>
+        </div>
+
+        <div>
+          <!--招标请求标题 -->
+          <el-form-item label="招标请求标题" prop="title">
+            <el-input style="width: 300px;" v-model="mergeForm.title" auto-complete="off" placeholder="请输入招标请求标题"></el-input>
+          </el-form-item>
+
+          <!--招标请求描述 -->
+          <el-form-item label="招标请求描述" prop="description" style="margin-left: 60px;">
+            <el-input style="width: 300px;" v-model="mergeForm.description" auto-complete="off" placeholder="请输入招标请求描述"></el-input>
+          </el-form-item>
+        </div>
+
+        <div>
+          <!--招标注意事项 -->
+          <el-form-item label="招标注意事项" prop="note">
+            <el-input style="width: 300px;" v-model="mergeForm.note" auto-complete="off" placeholder="请输入招标注意事项"></el-input>
+          </el-form-item>
+
+          <!--招标备注 -->
+          <el-form-item label="招标备注" prop="remark" style="margin-left: 60px;">
+            <el-input style="width: 300px;" v-model="mergeForm.remark" auto-complete="off" placeholder="请输入招标备注"></el-input>
           </el-form-item>
         </div>
         <div>
-          <el-form-item label="平台服务费" prop="servicefee">
-            <el-input style="width: 300px;" v-model="mergeForm.servicefee" readonly="readonly"
-                      auto-complete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="银行名称" prop="bankname" style="margin-left: 60px;">
-            <el-input style="width: 300px;" v-model="mergeForm.bankname" readonly="readonly" auto-complete="off"></el-input>
-          </el-form-item>
-        </div>
-        <div>
-          <el-form-item label="账户名称" prop="accountname">
-            <el-input style="width: 300px;" v-model="mergeForm.accountname" readonly="readonly" auto-complete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="账目编号" prop="accountnumber" style="margin-left: 60px;">
-            <el-input style="width: 300px;" v-model="mergeForm.accountnumber" readonly="readonly" auto-complete="off"></el-input>
-          </el-form-item>
-        </div>
-        <div>
-          <el-form-item label="备注" prop="remark">
-            <el-input type="textarea" rows="3" style="width: 770px;" v-model="mergeForm.remark"
+          <el-form-item label="备注" prop="remarkk">
+            <el-input type="textarea" rows="3" style="width: 770px;" v-model="mergeForm.remarkk"
                       auto-complete="off" maxlength="200"
                       placeholder="请输入你审核的备注信息"></el-input>
           </el-form-item>
@@ -115,43 +161,58 @@
             </el-radio-group>
           </el-form-item>
         </div>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="dialogMergeFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="doMergeForm">确 定</el-button>
       </div>
     </el-dialog>
 
 
   </div>
+
 </template>
 
 <script>
-
   export default {
     data: function () {
       return {
         queryForm: {
-          state: null,//审核类型
+          state: null,//审核状态
+          value4:null,//申请时间
           startTime: null,//起始时间
           endTime: null,//结束时间
           current_page: 1,
           page_size: 10,
           total_count: 0
         },
+        queryForm2: {
+          state: null,//审核状态
+          value4:null//申请时间
+        },
         result: [],
         //日期值的  到时候查询结果里面有
         value1: '',
         currentRow: null,
-        dialogFormVisible: false,
+        dialogMergeFormVisible:false,
+        //定义一个行的ID属性
+        banknameID: null,
+        state: null,
         mergeForm: {
-          withdrawid: null,
           callid: null,
-          servicefee: null,
-          bankname: null,
-          accountname: null,
-          accountnumber: null,
-          auditid: null,
+          bidrequesttype: null,
+          bidrequeststate: null,
+          bidrequestamount: null,
+          currentrate: null,
+          bidcount: null,
+          totalrewardamount: null,
+          currentsum: null,
+          title: null,
+          description: null,
+          note: null,
+          auditid:null,
+          remark:null,
           remarkk: null,
           state: null
         },
@@ -183,6 +244,7 @@
             trigger: 'change'
           }]
         },
+
         pickerOptions2: {
           shortcuts: [{
             text: '最近一周',
@@ -210,7 +272,6 @@
             }
           }]
         },
-        // value3: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
         value4: ''
       }
     },
@@ -221,15 +282,18 @@
       //选中一行
       selectCansle(row) {
         this.$refs.singleTable.setCurrentRow(row);
+        this.banknameID = null;
+        this.bankname = null;
       },
       handelSelectRow(rows) {
         if (rows != null) {
+          this.banknameID = rows.custNo;
+          this.bankname = rows.bankname;
           this.currentRow = rows;
         }
       },
       //更改每页显示行数
       handleSizeChange(rows) {
-        //console.log('rows=%i', rows);
         this.queryForm.page_size = rows;
         this.queryForm.current_page = 1;
         this.search();
@@ -237,13 +301,19 @@
       //更改当前页码数
       handleCurrentChange(page) {
         this.selectCansle();
-        //console.log('page=%i', page);
         this.queryForm.current_page = page;
         this.search();
       },
-      //查询
       search: function () {
-        //分页
+        //分页Bug
+        if (this.queryForm2.state != this.queryForm.state||this.queryForm2.value4!=this.queryForm.value4) {
+          if (this.queryForm.state != null && this.queryForm.state != ''||this.queryForm.value4!=null&&this.queryForm.value4) {
+            this.queryForm.current_page = 1;
+          }
+        }
+        this.queryForm2.state = this.queryForm.state;
+        this.queryForm2.value4=this.queryForm.value4;
+
         if (this.value4 != null && this.value4.length > 0) {
           //起始时间
           const t1 = this.value4[0].toLocaleString().substr(0, 10);
@@ -258,45 +328,49 @@
           this.queryForm.endTime = null;
         }
 
-        // console.log("search...");
-        let url = this.axios.urls.WITHDRAW_LISTALLWITHDRAW;
+        let url = this.axios.urls.CALLBIDS_LISTALLCALLBIDS;
         this.axios.post(url, this.queryForm).then((resp) => {
           this.result = resp.data.result;
           this.queryForm.total_count = resp.data.total;
         }).catch((error) => {
           console.log(error);
         });
-
-
       },
+
+
       //序列显示方法
       indexMethod(index) {
         return (this.queryForm.current_page - 1) * this.queryForm.page_size + (index + 1);
       },
       //修改方法
-      handleEdit: function (row) {
-        if (row.audit.state != null && row.audit.state != 3) {
-          this.mergeForm.state = row.audit.state.toString();
-          console.log("状态id", this.mergeForm.state);
-        }
-        this.mergeForm.withdrawid = row.withdrawid;
+      handleEdit: function(row) {
         this.mergeForm.callid = row.callid;
+        this.mergeForm.bidrequesttype = row.bidrequesttype;
+        this.mergeForm.bidrequeststate = row.bidrequeststate;
 
-        this.mergeForm.servicefee = row.servicefee;
-        this.mergeForm.bankname = row.bankname;
-        this.mergeForm.accountname = row.accountname;
+        this.mergeForm.bidrequestamount = row.bidrequestamount;
+        this.mergeForm.currentrate = row.currentrate;
+        this.mergeForm.bidcount = row.bidcount;
 
-        this.mergeForm.accountnumber = row.accountnumber;
+        this.mergeForm.totalrewardamount = row.totalrewardamount;
+        this.mergeForm.currentsum = row.currentsum;
+        this.mergeForm.title = row.title;
+
+        this.mergeForm.description = row.description;
+        this.mergeForm.note = row.note;
+        this.mergeForm.auditid = row.auditid;
+
         this.mergeForm.remarkk = row.audit.remarkk;
-        this.mergeForm.auditid = row.audit.auditid;
+        this.mergeForm.remark = row.remark;
+        this.mergeForm.state = row.audit.state.toString();
 
-        this.dialogFormVisible = true;
+        this.dialogMergeFormVisible = true;
       },
 
-      doMergeForm: function () {
+      doMergeForm: function() {
         //新增和修改同是调用此方法
-        // console.log('doMergeForm...');
-        // console.log(this.mergeForm);
+        console.log('doMergeForm...');
+        console.log(this.mergeForm);
         this.$refs['mergeForm'].validate((valid) => {
           if (false === valid) {
             return false;
@@ -307,12 +381,10 @@
             remarkk: this.mergeForm.remarkk,
             state: this.mergeForm.state,
             aid: this.mergeForm.auditid,
-            auditid: this.$store.getters.userId
+            auditorid: this.$store.getters.userId
           }
 
-          console.log(from01);
-
-          let url = this.axios.urls['WITHDRAW_EDITWITHDRAW'];
+          var url = this.axios.urls['CALLBIDS_EDITCALLBIDS'];
           this.axios.post(url, from01).then((response) => {
             if (0 === response.data.code) {
               this.$message({
@@ -321,7 +393,7 @@
               });
             }
             this.search();
-          }).catch(function (error) {
+          }).catch(function(error) {
             console.log(error);
           });
         });
@@ -333,13 +405,11 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-
           let from01={
-            withdrawid: row.withdrawid,
+            callid: row.callid,
             aid: row.audit.auditid
           }
-
-          let url = this.axios.urls.WITHDRAW_DELWITHDRAW;
+          let url = this.axios.urls.CALLBIDS_DELCALLBIDS;
           this.axios.post(url, from01).then((resp) => {
             this.$message({
               message: resp.data.message,
@@ -347,24 +417,20 @@
             });
             this.search();
           }).catch((error) => {});
-
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消删除'
           });
         });
-
       },
-
       //dialog对话框的关闭事件
-      handleDialogClose: function () {
-        console.log('handleDialogClose......');
+      handleDialogClose: function() {
         this.$refs['mergeForm'].resetFields(); //清空验证信息
         //this.doClearMergeForm();
       },
 
-      doDialogMergeFormClose: function () {
+      doDialogMergeFormClose: function() {
         console.log('close...');
         this.handleDialogClose();
       },
@@ -375,13 +441,7 @@
       }
     }
   }
-
 </script>
 
 <style>
-  .searchBox {
-    margin-top: 20px;
-  }
-
-
 </style>
