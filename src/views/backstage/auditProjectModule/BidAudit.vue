@@ -3,7 +3,7 @@
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item style="font-size: 20px;">审核管理</el-breadcrumb-item>
-      <el-breadcrumb-item style="font-size: 20px;">材料认证审核</el-breadcrumb-item>
+      <el-breadcrumb-item style="font-size: 20px;">投标审核</el-breadcrumb-item>
     </el-breadcrumb>
     <br/>
 
@@ -27,8 +27,8 @@
           align="right"
         >
         </el-date-picker>
-
       </el-form-item>
+
       <el-form-item>
         <el-button size="middle" type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
       </el-form-item>
@@ -54,8 +54,6 @@
       <el-table-column label="操作" min-width="30">
         <template slot-scope="scope">
           <!--<el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>-->
-          <!--<el-button type="primary" icon="el-icon-edit" @click="handleEditFile(scope.row)">{{scope.row.audit.diableState}}-->
-          <!--</el-button>-->
           <el-button type="primary" icon="el-icon-edit" @click="handleEdit(scope.row)">{{scope.row.audit.diableState}}
           </el-button>
           <el-button type="danger" icon="el-icon-delete"  @click="del(scope.row)"  >删除</el-button>
@@ -72,66 +70,57 @@
       </el-pagination>
     </div>
 
-    <!-- 添加和编辑操作-->
-    <el-dialog title="材料认证编辑" :visible.sync="dialogMergeFormVisible" @close="doDialogMergeFormClose" width="60%"
+    <!-- 查单个编辑操作-->
+    <el-dialog title="投标审核编辑" :visible.sync="dialogMergeFormVisible" @close="doDialogMergeFormClose" width="60%"
                style="margin-top: -30px;">
       <el-form :inline="true" :model="mergeForm" ref="mergeForm" :rules="MergeFormRules" label-position="left"
                label-width="100px" style="overflow: auto;max-height: 420px;">
         <div>
-          <!--认证材料ID不可被编辑 -->
-          <el-form-item label="认证材料ID" prop="materid">
-            <el-input style="width: 300px;" v-model="mergeForm.materid" auto-complete="off" placeholder="请输入认证材料ID"></el-input>
+          <!--投标ID -->
+          <el-form-item label="投标ID" prop="bidid">
+            <el-input v-model="mergeForm.bidid" auto-complete="off" style="width: 300px;"></el-input>
           </el-form-item>
-          <!-- 用户ID-->
-          <el-form-item  label="用户ID" prop="userid" style="margin-left: 60px;">
-            <el-input style="width: 300px;"  v-model="mergeForm.userid" auto-complete="off" placeholder="请输入用户ID"></el-input>
-          </el-form-item>
-        </div>
-
-        <div>
-          <!--手机号 -->
-          <el-form-item label="手机号" prop="phonenumber">
-            <el-input v-model="mergeForm.phonenumber" style="width: 300px;" auto-complete="off" placeholder="请输入手机号"></el-input>
-          </el-form-item>
-          <!-- 收入ID-->
-          <el-form-item label="收入ID" prop="incomegradeid" style="margin-left: 60px;">
-            <el-input v-model="mergeForm.incomegradeid" style="width: 300px;" auto-complete="off" placeholder="请输入收入ID"></el-input>
+          <!--招标ID-->
+          <el-form-item label="招标ID" prop="callid" style="margin-left: 60px;">
+            <el-input v-model="mergeForm.callid" style="width: 300px;" auto-complete="off" placeholder="请输入招标ID"></el-input>
           </el-form-item>
         </div>
 
         <div>
-          <!--婚姻情况ID -->
-          <el-form-item label="婚姻情况ID" prop="marriageid">
-            <el-input v-model="mergeForm.marriageid" style="width: 300px;" auto-complete="off" placeholder="请输入婚姻情况ID"></el-input>
+          <!--投标用户ID -->
+          <el-form-item label="投标用户ID" prop="userid">
+            <el-input v-model="mergeForm.userid" style="width: 300px;" auto-complete="off" placeholder="请输入投标用户ID"></el-input>
           </el-form-item>
-
-          <!--子女情况ID-->
-          <el-form-item label="子女情况ID" prop="kidcountid" style="margin-left: 60px;">
-            <el-input v-model="mergeForm.kidcountid" style="width: 300px;" auto-complete="off" placeholder="请输入民族"></el-input>
-          </el-form-item>
-        </div>
-
-        <div>
-          <!--学历ID -->
-          <el-form-item label="学历ID" prop="educateid">
-            <el-input v-model="mergeForm.educateid" style="width: 300px;" auto-complete="off" placeholder="请输入学历ID"></el-input>
-          </el-form-item>
-          <!--住房条件ID -->
-          <el-form-item label="住房条件ID" prop="houseconditionid" style="margin-left: 60px;">
-            <el-input v-model="mergeForm.houseconditionid" style="width: 300px;" auto-complete="off" placeholder="请输入住房条件"></el-input>
+          <!--投标金额-->
+          <el-form-item label="投标金额" prop="bidmoney" style="margin-left: 60px;">
+            <el-input v-model="mergeForm.bidmoney" style="width: 300px;" auto-complete="off" placeholder="请输入投标金额"></el-input>
           </el-form-item>
         </div>
 
         <div>
-          <!--审核ID -->
+          <!-- 投标时间-->
+          <el-form-item label="银行卡号" prop="bidtime">
+            <el-input v-model="mergeForm.bidtime" style="width: 300px;" auto-complete="off" placeholder="请输入银行卡号"></el-input>
+          </el-form-item>
+
+          <!--实际汇率 -->
+          <el-form-item label="实际汇率" prop="actualrate" style="margin-left: 60px;">
+            <el-input v-model="mergeForm.actualrate" style="width: 300px;" auto-complete="off" placeholder="请输入实际汇率"></el-input>
+          </el-form-item>
+        </div>
+
+        <div>
+          <!-- 审核ID-->
           <el-form-item label="审核ID" prop="auditid">
             <el-input v-model="mergeForm.auditid" style="width: 300px;" auto-complete="off" placeholder="请输入审核ID"></el-input>
           </el-form-item>
-          <!--备注 -->
-          <el-form-item label="备注" prop="remark" style="margin-left: 60px;">
-            <el-input v-model="mergeForm.remark" style="width: 300px;" auto-complete="off" placeholder="请输入备注"></el-input>
+
+          <!-- 投标备注-->
+          <el-form-item label="投标备注" prop="remark" style="margin-left: 60px;">
+            <el-input v-model="mergeForm.remark" style="width: 300px;" auto-complete="off" placeholder="请输入投标备注"></el-input>
           </el-form-item>
         </div>
+
         <div>
           <el-form-item label="备注" prop="remarkk">
             <el-input type="textarea" rows="3" style="width: 770px;" v-model="mergeForm.remarkk"
@@ -145,6 +134,7 @@
             </el-radio-group>
           </el-form-item>
         </div>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogMergeFormVisible = false">取 消</el-button>
@@ -152,90 +142,11 @@
       </div>
     </el-dialog>
 
-    <!--&lt;!&ndash; 认证材料文件编辑操作&ndash;&gt;-->
-    <!--<el-dialog title="材料文件认证编辑" :visible.sync="dialogMergeFormVisible" @close="doDialogMergeFormClose" width="60%"-->
-               <!--style="margin-top: -30px;">-->
-      <!--<el-form :inline="true" :model="mergeForm" ref="mergeForm" :rules="MergeFormRules" label-position="left"-->
-               <!--label-width="100px" style="overflow: auto;max-height: 420px;">-->
-        <!--<div>-->
-          <!--&lt;!&ndash; 文件ID&ndash;&gt;-->
-          <!--<el-form-item  label="用户ID" prop="fileid" style="margin-left: 60px;">-->
-            <!--<el-input style="width: 300px;"  v-model="mergeForm.fileid" auto-complete="off" placeholder="请输入文件ID"></el-input>-->
-          <!--</el-form-item>-->
-          <!--&lt;!&ndash; 认证材料ID&ndash;&gt;-->
-          <!--<el-form-item label="认证材料ID" prop="materid">-->
-            <!--<el-input style="width: 300px;" v-model="mergeForm.materid" auto-complete="off" placeholder="请输入认证材料ID"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</div>-->
-
-        <!--<div>-->
-          <!--&lt;!&ndash;手机号 &ndash;&gt;-->
-          <!--<el-form-item label="手机号" prop="state">-->
-            <!--<el-input v-model="mergeForm.state" style="width: 300px;" auto-complete="off" placeholder="请选择状态"></el-input>-->
-          <!--</el-form-item>-->
-          <!--&lt;!&ndash; 收入ID&ndash;&gt;-->
-          <!--<el-form-item label="收入ID" prop="incomegradeid" style="margin-left: 60px;">-->
-            <!--<el-input v-model="mergeForm.incomegradeid" style="width: 300px;" auto-complete="off" placeholder="请输入收入ID"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</div>-->
-
-        <!--<div>-->
-          <!--&lt;!&ndash;婚姻情况ID &ndash;&gt;-->
-          <!--<el-form-item label="婚姻情况ID" prop="marriageid">-->
-            <!--<el-input v-model="mergeForm.marriageid" style="width: 300px;" auto-complete="off" placeholder="请输入婚姻情况ID"></el-input>-->
-          <!--</el-form-item>-->
-
-          <!--&lt;!&ndash;子女情况ID&ndash;&gt;-->
-          <!--<el-form-item label="子女情况ID" prop="kidcountid" style="margin-left: 60px;">-->
-            <!--<el-input v-model="mergeForm.kidcountid" style="width: 300px;" auto-complete="off" placeholder="请输入民族"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</div>-->
-
-        <!--<div>-->
-          <!--&lt;!&ndash;学历ID &ndash;&gt;-->
-          <!--<el-form-item label="学历ID" prop="educateid">-->
-            <!--<el-input v-model="mergeForm.educateid" style="width: 300px;" auto-complete="off" placeholder="请输入学历ID"></el-input>-->
-          <!--</el-form-item>-->
-          <!--&lt;!&ndash;住房条件ID &ndash;&gt;-->
-          <!--<el-form-item label="住房条件ID" prop="houseconditionid" style="margin-left: 60px;">-->
-            <!--<el-input v-model="mergeForm.houseconditionid" style="width: 300px;" auto-complete="off" placeholder="请输入住房条件"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</div>-->
-
-        <!--<div>-->
-          <!--&lt;!&ndash;审核ID &ndash;&gt;-->
-          <!--<el-form-item label="审核ID" prop="auditid">-->
-            <!--<el-input v-model="mergeForm.auditid" style="width: 300px;" auto-complete="off" placeholder="请输入审核ID"></el-input>-->
-          <!--</el-form-item>-->
-          <!--&lt;!&ndash;备注 &ndash;&gt;-->
-          <!--<el-form-item label="备注" prop="remark" style="margin-left: 60px;">-->
-            <!--<el-input v-model="mergeForm.remark" style="width: 300px;" auto-complete="off" placeholder="请输入备注"></el-input>-->
-          <!--</el-form-item>-->
-        <!--</div>-->
-        <!--<div>-->
-          <!--<el-form-item label="备注" prop="remarkk">-->
-            <!--<el-input type="textarea" rows="3" style="width: 770px;" v-model="mergeForm.remarkk"-->
-                      <!--auto-complete="off" maxlength="200"-->
-                      <!--placeholder="请输入你审核的备注信息"></el-input>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item style="width: 500px;" label="审核结果" prop="state">-->
-            <!--<el-radio-group v-model="mergeForm.state" size="small">-->
-              <!--<el-radio label="1" border>通过</el-radio>-->
-              <!--<el-radio label="2" border>拒绝</el-radio>-->
-            <!--</el-radio-group>-->
-          <!--</el-form-item>-->
-        <!--</div>-->
-      <!--</el-form>-->
-      <!--<div slot="footer" class="dialog-footer">-->
-        <!--<el-button @click="dialogMergeFormVisible = false">取 消</el-button>-->
-        <!--<el-button type="primary" @click="doMergeForm">确 定</el-button>-->
-      <!--</div>-->
-    <!--</el-dialog>-->
-
   </div>
 </template>
 
 <script>
+
   export default {
     data: function () {
       return {
@@ -257,20 +168,16 @@
         value1: '',
         currentRow: null,
         dialogMergeFormVisible:false,
-
         //定义一个行的ID属性
-        phonenumberID: null,
-        state: null,
-
+        banknameID: null,
+        bankname: null,
         mergeForm: {
-          materid: null,
+          bidid: null,
+          callid: null,
           userid: null,
-          phonenumber: null,
-          marriageid: null,
-          kidcountid: null,
-          incomegradeid: null,
-          educateid: null,
-          houseconditionid: null,
+          bidmoney: null,
+          bidtime: null,
+          actualrate:null,
           auditid: null,
           remark: null,
           remarkk: null,
@@ -341,13 +248,13 @@
       //选中一行
       selectCansle(row) {
         this.$refs.singleTable.setCurrentRow(row);
-        this.phonenumberID = null;
-        this.realname = null;
+        this.banknameID = null;
+        this.bankname = null;
       },
       handelSelectRow(rows) {
         if (rows != null) {
-          this.phonenumberID = rows.custNo;
-          this.realname = rows.realname;
+          this.banknameID = rows.custNo;
+          this.bankname = rows.bankname;
           this.currentRow = rows;
         }
       },
@@ -387,15 +294,15 @@
           this.queryForm.endTime = null;
         }
 
-        let url = this.axios.urls.MATERIAL_LISTALLMATERIAL;
+        let url = this.axios.urls.BID_LISTALLBID;
         this.axios.post(url, this.queryForm).then((resp) => {
           this.result = resp.data.result;
           this.queryForm.total_count = resp.data.total;
         }).catch((error) => {
           console.log(error);
         });
-      },
 
+      },
       //序列显示方法
       indexMethod(index) {
         return (this.queryForm.current_page - 1) * this.queryForm.page_size + (index + 1);
@@ -407,61 +314,20 @@
           console.log("状态id", this.mergeForm.state);
         }
 
-        this.mergeForm.materid = row.materid;
+
+        this.mergeForm.bidid = row.bidid;
+        this.mergeForm.callid = row.callid;
         this.mergeForm.userid = row.userid;
-        this.mergeForm.phonenumber = row.phonenumber;
 
-        this.mergeForm.marriageid = row.marriageid;
-        this.mergeForm.kidcountid = row.kidcountid;
-        this.mergeForm.incomegradeid = row.incomegradeid;
+        this.mergeForm.bidmoney = row.bidmoney;
+        this.mergeForm.bidtime = row.bidtime;
+        this.mergeForm.actualrate = row.actualrate;
 
-        this.mergeForm.educateid = row.educateid;
-        this.mergeForm.houseconditionid = row.houseconditionid;
         this.mergeForm.auditid = row.auditid;
         this.mergeForm.remark = row.remark;
-
         this.mergeForm.remarkk = row.audit.remarkk;
-        this.mergeForm.auditid = row.audit.auditid;
-
+        this.mergeForm.state = row.audit.state.toString();
         this.dialogMergeFormVisible = true;
-      },
-
-      doMergeForm: function() {
-        this.$refs['mergeForm'].validate((valid) => {
-          if (false === valid) {
-            return false;
-          }
-          //创建一个提交表单
-          let from01 = {
-            remarkk: this.mergeForm.remarkk,
-            state: this.mergeForm.state,
-            aid: this.mergeForm.auditid,
-            auditorid: this.$store.getters.userId
-          }
-
-          let url = this.axios.urls['REALNAME_EDITREALNAME'];
-          this.axios.post(url, from01).then((response) => {
-            if (0 === response.data.code) {
-              this.$message({
-                message: response.data.message,
-                type: 'success'
-              });
-            }
-            //只有新增时才需要清空表单
-            // if (!this.mergeForm.custNo) {
-            //   this.doClearMergeForm();
-            // }
-            this.search();
-          }).catch(function(error) {
-            console.log(error);
-          });
-        });
-      },
-      //dialog对话框的关闭事件
-      handleDialogClose: function() {
-        console.log('handleDialogClose......');
-        this.$refs['mergeForm'].resetFields(); //清空验证信息
-        //this.doClearMergeForm();
       },
       //删除的单条数据的方法
       del: function (row) {
@@ -471,10 +337,10 @@
           type: 'warning'
         }).then(() => {
           let from01={
-            materid: row.materid,
+            bidid: row.bidid,
             aid: row.audit.auditid
           }
-          let url = this.axios.urls.MATERIAL_DELMATERIAL;
+          let url = this.axios.urls.BID_DELBID;
           this.axios.post(url, from01).then((resp) => {
             this.$message({
               message: resp.data.message,
@@ -489,6 +355,41 @@
           });
         });
       },
+      doMergeForm: function() {
+        //新增和修改同是调用此方法
+        this.$refs['mergeForm'].validate((valid) => {
+          if (false === valid) {
+            return false;
+          }
+          //创建一个提交表单
+          let from01 = {
+            remarkk: this.mergeForm.remarkk,
+            state: this.mergeForm.state,
+            aid: this.mergeForm.auditid,
+            auditorid: this.$store.getters.userId
+          }
+
+          var url = this.axios.urls['BID_EDITBID'];
+          this.axios.post(url, from01).then((response) => {
+            if (0 === response.data.code) {
+              this.$message({
+                message: response.data.message,
+                type: 'success'
+              });
+            }
+            this.search();
+          }).catch(function(error) {
+            console.log(error);
+          });
+        });
+      },
+      //dialog对话框的关闭事件
+      handleDialogClose: function () {
+        console.log('handleDialogClose......');
+        this.$refs['mergeForm'].resetFields(); //清空验证信息
+        //this.doClearMergeForm();
+      },
+
       doDialogMergeFormClose: function() {
         console.log('close...');
         this.handleDialogClose();
@@ -500,8 +401,11 @@
       }
     }
   }
-
 </script>
 
 <style>
+  .searchBox {
+    margin-top: 20px;
+  }
+
 </style>

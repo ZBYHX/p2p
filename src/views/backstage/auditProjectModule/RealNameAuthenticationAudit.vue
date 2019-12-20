@@ -27,8 +27,8 @@
           align="right"
         >
         </el-date-picker>
-
       </el-form-item>
+
       <el-form-item>
         <el-button size="middle" type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
       </el-form-item>
@@ -152,18 +152,6 @@
       </div>
     </el-dialog>
 
-    <!--&lt;!&ndash; 添加和编辑操作&ndash;&gt;-->
-    <!--<el-dialog title="实名认证编辑" :visible.sync="visible01" width="50%" style="margin-top: -30px;">-->
-    <!--<el-form :inline="true" :model="mergeForm" ref="mergeForm" :rules="MergeFormRules" label-position="center"-->
-    <!--label-width="100px" style="overflow: auto;max-height: 420px;">-->
-    <!--&lt;!&ndash;显示图片一&ndash;&gt;-->
-    <!--<div align="center">-->
-    <!--<img src="../img/身份证正面.jpg" style="width: 500px;height: 230px;" @click="visible01=true">-->
-    <!--</div>-->
-    <!--</el-form>-->
-    <!--</el-dialog>-->
-
-
   </div>
 </template>
 
@@ -203,7 +191,7 @@
           idnumber: null,
           image1: null,
           image2: null,
-          auditId: null,
+          auditid: null,
           remarkk: null,
           state: null
         },
@@ -262,7 +250,6 @@
             }
           }]
         },
-        // value3: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
         value4: ''
       }
     },
@@ -304,7 +291,6 @@
         }
         this.queryForm2.state = this.queryForm.state;
         this.queryForm2.value4=this.queryForm.value4;
-
 
         if (this.value4 != null && this.value4.length > 0) {
           //起始时间
@@ -351,20 +337,15 @@
         this.mergeForm.remarkk = row.audit.remarkk;
         this.mergeForm.auditid = row.audit.auditid;
 
-        // this.mergeForm.custCredit = row.image1;
-        // this.mergeForm.custAddr = row.image2;
-        // this.mergeForm.custZip = row.auditId.toLocaleString();
-
-        // this.dialogMergeFormTitle = '客户信息修改';
         this.dialogMergeFormVisible = true;
       },
 
       //修改调用此方法
-      doMergeForm: function () {
-        this.$refs['mergeForm'].validate((valid) => {
-          if (false === valid) {
-            return false;
-          }
+          doMergeForm: function () {
+            this.$refs['mergeForm'].validate((valid) => {
+              if (false === valid) {
+                return false;
+              }
 
           //创建一个提交表单
           let from01 = {
@@ -401,12 +382,10 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-
           let from01={
             realid: row.realid,
             aid: row.audit.auditid
           }
-
           let url = this.axios.urls.REALNAME_DELREALNAME;
           this.axios.post(url, from01).then((resp) => {
             this.$message({
@@ -415,16 +394,13 @@
             });
             this.search();
           }).catch((error) => {});
-
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消删除'
           });
         });
-
       },
-
       //dialog对话框的关闭事件
       handleDialogClose: function () {
         console.log('handleDialogClose......');
