@@ -13,17 +13,16 @@
                   placeholder="模块名称"></el-input>
       </el-form-item>
       <el-form-item label="类型">
-        <el-select v-model="queryForm.right_type" placeholder="请选择权限的类型">
-          <el-option key="aa" index="aa" label="所有权限类型" value="">
+        <el-select v-model="queryForm.rightType" placeholder="请选择权限的类型">
+          <el-option key="aa" index="aa" label="所有权限类型" value="" >
           </el-option>
-          <el-option v-for="(item, index) in types" :key="index" :index="index" :label="item.right_type" :value="item.right_type">
+          <el-option v-for="(item, index) in types" :key="index" :index="index" :label="item" :value="item">
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="primary" icon="el-icon-search" @click="search()">&emsp;搜&emsp;索&emsp;</el-button>
-        <!-- <el-button size="small" type="primary" icon="el-icon-plus" @click="dialogVisible=true">添加</el-button> -->
-        <!-- <el-button size="small" type="primary" icon="el-icon-plus" @click="doOpenDialog()">添加</el-button> -->
+        <!-- <el-button sizemall" type="primary" icon="el-icon-plus" @click="doOpenDialog()">添加</el-button> -->
       </el-form-item>
     </el-form>
 
@@ -31,18 +30,15 @@
     <el-table :data="result" border style="width: 100%" height="400">
       <el-table-column type="index" label="序" :index="indexMethod" min-width="" align="center">
       </el-table-column>
-      <el-table-column prop="right_text" label="权限名称" min-width="16">
+      <el-table-column prop="rightText" label="权限名称" min-width="16">
       </el-table-column>
-      <el-table-column prop="right_type" label="权限类型" min-width="16">
+      <el-table-column prop="rightType" label="权限类型" min-width="16">
       </el-table-column>
-      <el-table-column prop="right_icon" label="权限图标" min-width="15">
-        <!-- <template slot-scope="scope">
-                    <span icon="scope.right_icon"></span>
-                </template> -->
+      <el-table-column prop="rightIcon" label="权限图标" min-width="15">
       </el-table-column>
-      <el-table-column prop="right_url" label="权限对应的URL" min-width="20">
+      <el-table-column prop="rightUrl" label="权限对应的URL" min-width="20">
       </el-table-column>
-      <el-table-column prop="right_tip" label="权限提示" min-width="30">
+      <el-table-column prop="rightTip" label="权限提示" min-width="30">
       </el-table-column>
       <el-table-column label="操作" min-width="14" align="center">
         <template slot-scope="scope">
@@ -56,23 +52,23 @@
                    :current-page="queryForm.current_page" :page-sizes="[8, 20, 30, 40]" :page-size="queryForm.page_size" layout="total, sizes, prev, pager, next, jumper"
                    :total="queryForm.total_count">
     </el-pagination>
-    <!-- 添加和编辑操作 -->
+    <!-- 编辑操作 -->
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="40%" @close="handleDialogClose">
       <el-form :model="mergeForm" :rules="mergeFormRules" ref="mergeForm" :label-position="labelPosition" label-width="120px">
         <el-form-item label="权限名称" prop="right_text">
-          <el-input v-model="mergeForm.right_text" placeholder="请输入权限名称"></el-input>
+          <el-input v-model="mergeForm.rightText" placeholder="请输入权限名称"></el-input>
         </el-form-item>
         <el-form-item label="权限类型" prop="right_type">
-          <el-input v-model="mergeForm.right_type" placeholder="请输入权限的类型"></el-input>
+          <el-input v-model="mergeForm.rightType" placeholder="请输入权限的类型"></el-input>
         </el-form-item>
-        <el-form-item label="权限图标" prop="right_icon">
-          <el-input v-model="mergeForm.right_icon" readonly="readonly"></el-input>
+        <el-form-item label="权限图标" prop="rightIcon">
+          <el-input v-model="mergeForm.rightIcon" readonly="readonly"></el-input>
         </el-form-item>
-        <el-form-item label="权限的URL" prop="right_url">
-          <el-input v-model="mergeForm.right_url" readonly="readonly"></el-input>
+        <el-form-item label="权限的URL" prop="rightUrl">
+          <el-input v-model="mergeForm.rightUrl" readonly="readonly"></el-input>
         </el-form-item>
-        <el-form-item label="权限提示" prop="right_tip">
-          <el-input type="textarea" rows="2" maxlength="50" show-word-limit v-model="mergeForm.right_tip" placeholder="请输入权限的提示内容"></el-input>
+        <el-form-item label="权限提示" prop="rightTip">
+          <el-input type="textarea" v-model="mergeForm.rightTip" rows="2" maxlength="50" show-word-limit placeholder="请输入权限的提示内容"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" align="center">
@@ -89,57 +85,57 @@
     data: function() {
       return {
         queryForm: {
-          right_type: null, //权限类型
-          right_text: null, //权限名称
+          rightType: null, //权限类型
+          rightText: null, //权限名称
           current_page: 1, //当前显示页码数
           page_size: 8, //每页显示的最大行数
           total_count: 0 //数据的总记录数
         },
         queryForm2: {
-          right_type: null, //权限类型
-          right_text: null, //权限名称
+          rightType: null, //权限类型
+          rightText: null, //权限名称
         },
         result: [], //数据的结果集
         dialogVisible: false, //弹出框的显示判断
         dialogTitle: '模块修改', //弹出框的名称
         labelPosition: 'left', //弹出框中文字标签的位置
         mergeForm: {
-          right_code: null, //权限ID
-          right_parent_code: null, //父权限ID
-          right_text: null, //权限名称
-          right_type: null, //权限类型
-          right_icon: null, //权限图标
-          right_url: null, //权限对应的URL
-          right_tip: null //权限提示
+          rightCode: null, //权限ID
+          rightParentCode: null, //父权限ID
+          rightText: null, //权限名称
+          rightType: null, //权限类型
+          rightIcon: null, //权限图标
+          rightUrl: null, //权限对应的URL
+          rightTip: null //权限提示
         },
         mergeFormRules: { //表单验证
-          right_text: [{
+          rightText: [{
             required: true,
             message: '请输入权限名称',
             trigger: 'blur'
           }],
-          right_type: [{
+          rightType: [{
             required: true,
             message: '请选择权限类型',
             trigger: 'blur'
           }],
-          right_icon: [{
+          rightIcon: [{
             required: true,
             message: '请输入权限图标',
             trigger: 'blur'
           }],
-          right_url: [{
+          rightUrl: [{
             required: true,
             message: '请输入权限对应的URL',
             trigger: 'blur'
           }],
-          right_tip: [{
+          rightTip: [{
             required: true,
             message: '请输入权限提示的信息',
             trigger: 'blur'
           }]
         },
-        types: null, //用户查询的权限类型数组
+        types: null //用户查询的权限类型数组
 
       };
     },
@@ -149,13 +145,13 @@
     methods: {
       //编辑文本（行）
       handleEdit: function(index, row) {
-        this.mergeForm.right_code = row.right_code;
-        this.mergeForm.right_parent_code = row.right_parent_code;
-        this.mergeForm.right_text = row.right_text;
-        this.mergeForm.right_type = row.right_type;
-        this.mergeForm.right_icon = row.right_icon;
-        this.mergeForm.right_url = row.right_url;
-        this.mergeForm.right_tip = row.right_tip;
+        this.mergeForm.rightCode = row.rightCode;
+        this.mergeForm.rightParentCode = row.rightParentCode;
+        this.mergeForm.rightText = row.rightText;
+        this.mergeForm.rightType = row.rightType;
+        this.mergeForm.rightIcon = row.rightIcon;
+        this.mergeForm.rightUrl = row.rightUrl;
+        this.mergeForm.rightTip = row.rightTip;
         this.dialogVisible = true;
       },
       //序列显示方法
@@ -190,13 +186,13 @@
       },
       //清空表单中的数据
       doClearMergeForm: function() {
-        this.mergeForm.right_code = null;
-        this.mergeForm.right_parent_code = null;
-        this.mergeForm.right_text = null;
-        this.mergeForm.right_type = null;
-        this.mergeForm.right_icon = null;
-        this.mergeForm.right_url = null;
-        this.mergeForm.right_tip = null;
+        this.mergeForm.rightCode = null;
+        this.mergeForm.rightParentCode = null;
+        this.mergeForm.rightText = null;
+        this.mergeForm.rightType = null;
+        this.mergeForm.rightIcon = null;
+        this.mergeForm.rightUrl = null;
+        this.mergeForm.rightTip = null;
       },
       //更改每页显示行数
       handleSizeChange(rows) {
@@ -213,25 +209,24 @@
       },
       //搜索
       search: function() {
-        if (this.queryForm.right_text != this.queryForm2.right_text || this.queryForm.right_type != this.queryForm2.right_type) {
-          if (this.queryForm.right_text != null && this.queryForm.right_text != '') {
+        if (this.queryForm.rightText != this.queryForm2.rightText || this.queryForm.rightType != this.queryForm2.rightType) {
+          if (this.queryForm.rightText != null && this.queryForm.rightText != '') {
             this.queryForm.current_page = 1;
           }
-          if (this.queryForm.right_type != null && this.queryForm.right_type != '') {
+          if (this.queryForm.rightType != null && this.queryForm.rightType != '') {
             this.queryForm.current_page = 1;
           }
         }
+        this.queryForm2.rightText = this.queryForm.rightText;
+        this.queryForm2.rightType = this.queryForm.rightType;
 
-        this.queryForm2.right_text = this.queryForm.right_text;
-        this.queryForm2.right_type = this.queryForm.right_type;
-
-        let url01 = this.axios.urls.SYS_RIGHT_ALLlLIST;
+        let url01 = this.axios.urls.sys_right_listAllRights;
         this.axios.post(url01, this.queryForm).then((resp) => {
           this.result = resp.data.result;
-          this.queryForm.total_count = resp.data.rows;
+          this.queryForm.total_count = resp.data.total;
         }).catch((error) => {});
 
-        let url02 = this.axios.urls.SYS_RIGHT_ALLTYPES;
+        let url02 = this.axios.urls.sys_right_selectAllType;
         this.axios.post(url02, {}).then((resp) => {
           this.types = resp.data.result;
         }).catch((error) => {});

@@ -130,6 +130,7 @@
 <script>
   export default {
     data: function () {
+      //验证两次输入的密码是否相同
       var validatePass = (rule, value, callback) => {
         if (value == null) {
           callback(new Error('请再次输入密码'));
@@ -139,6 +140,19 @@
           callback();
         }
       };
+
+      var validatePass02 = (rule, value, callback) => {
+        //校验手机号是否合法
+        const reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        if (value == null) {
+          callback(new Error('请输入你的电话号码！'));
+        } else if (!reg.test(this.mergeForm.phonenumber)) {
+          callback(new Error('你输入的电话号码不合法!'));
+        } else {
+          callback();
+        }
+      };
+
       return {
         queryForm: {
           userName: null, //员工名称
@@ -205,8 +219,8 @@
           }],
           numberphone: [{
             required: true,
-            message: '请输入你的电话号码',
-            trigger: 'change'
+            validator: validatePass02,
+            trigger: 'blur'
           }],
           userFlag: [{
             required: true,
@@ -251,8 +265,8 @@
           }],
           userFlag: [{
             required: true,
-            message: '请选择用户状态',
-            trigger: 'change'
+            validator: validatePass02,
+            trigger: 'blur'
           }],
           roleId: [{
             required: true,

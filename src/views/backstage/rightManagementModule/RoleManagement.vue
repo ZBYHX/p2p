@@ -9,8 +9,8 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="searchBox">
       <el-form-item label="名称">
-        <el-input size="small" clearable style="width: 300px;" prefix-icon="el-icon-search" v-model="queryForm.role_name"
-                  placeholder="请输入搜索的角色名称"></el-input>
+        <el-input size="small" clearable style="width: 300px;" prefix-icon="el-icon-search"
+                  v-model="queryForm.roleName" placeholder="请输入搜索的角色名称"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="primary" icon="el-icon-search" @click="search()">&emsp;搜&emsp;索&emsp;</el-button>
@@ -26,11 +26,11 @@
               height="450">
       <el-table-column type="index" label="序" :index="indexMethod" min-width="" align="center">
       </el-table-column>
-      <el-table-column prop="role_name" label="角色名称" min-width="20">
+      <el-table-column prop="roleName" label="角色名称" min-width="20">
       </el-table-column>
-      <el-table-column prop="role_desc" label="角色说明" min-width="30">
+      <el-table-column prop="roleDesc" label="角色说明" min-width="30">
       </el-table-column>
-      <el-table-column prop="role_flagName" label="角色状态" min-width="10">
+      <el-table-column prop="roleFlagName" label="角色状态" min-width="10">
       </el-table-column>
       <el-table-column label="操作" min-width="30" align="center">
         <template slot-scope="scope">
@@ -49,17 +49,17 @@
     <!-- 添加和编辑操作 -->
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="40%" @close="handleDialogClose">
       <el-form :model="mergeForm" :rules="mergeFormRules" ref="mergeForm" :label-position="labelPosition" label-width="80px">
-        <el-form-item label="角色名称" prop="role_name">
-          <el-input v-model="mergeForm.role_name" placeholder="请输入角色名称"></el-input>
+        <el-form-item label="角色名称" prop="roleName">
+          <el-input v-model="mergeForm.roleName" placeholder="请输入角色名称"></el-input>
         </el-form-item>
-        <el-form-item label="角色状态" prop="role_flag">
+        <el-form-item label="角色状态" prop="roleFlag">
           <template slot-scope="scope">
-            <el-radio v-model="mergeForm.role_flag" label="1" border>可&ensp;用</el-radio>
-            <el-radio v-model="mergeForm.role_flag" label="0" border>不可用</el-radio>
+            <el-radio v-model="mergeForm.roleFlag" label="1" border>可用</el-radio>
+            <el-radio v-model="mergeForm.roleFlag" label="0" border>禁用</el-radio>
           </template>
         </el-form-item>
-        <el-form-item label="角色说明" prop="role_desc">
-          <el-input type="textarea" rows="3" v-model="mergeForm.role_desc" placeholder="请输入角色说明" maxlength="50"
+        <el-form-item label="角色说明" prop="roleDesc">
+          <el-input type="textarea" rows="3" v-model="mergeForm.roleDesc" placeholder="请输入角色说明" maxlength="50"
                     show-word-limit></el-input>
         </el-form-item>
       </el-form>
@@ -75,7 +75,7 @@
         <div style="width: 50%;height: 500px;overflow: auto;float: left;border-right: 2px solid aqua;">
           <div style="font-size: 20px;">页面权限部分</div>
           <el-tree style="margin-left: 80px;margin-top: 30px;" ref="tree" :data="data02" @check="handleNodeClick"
-                   @node-click="myclick" :icon-class="data02[0].right_icon" show-checkbox node-key="right_code"
+                   @node-click="myclick" :icon-class="data02[0].rightIcon" show-checkbox node-key="rightCode"
                    :default-expanded-keys="openNodes" :default-checked-keys="selectNodes" :props="defaultProps">
           </el-tree>
         </div>
@@ -102,62 +102,62 @@
     data: function() {
       return {
         queryForm: {
-          role_name: null, //角色名称
+          roleName: null, //角色名称
           current_page: 1, //当前页码数
           page_size: 7, //每页显示的最大记录数
           total_count: 0 //总记录数
         },
         queryForm2: {
-          role_name: null //角色名称
+          roleName: null //角色名称
         },
         result: [], //用于接收查询表格数据的数组
         dialogVisible: false, //弹出框是否显示
         dialogTitle: '角色添加', //弹出框标题
         labelPosition: 'left', //弹出框中标签的位置
         mergeForm: {
-          role_id: null, //角色ID
-          role_name: null, //角色名称
-          role_flag: null, //角色标识
-          role_desc: null, //角色描述
-          role_flagName: null //角色标识名称
+          roleId: null, //角色ID
+          roleName: null, //角色名称
+          roleFlag: null, //角色标识
+          roleDesc: null, //角色描述
+          roleFlagName: null //角色标识名称
         },
         mergeFormRules: { //角色增加或者修改的表单验证
-          role_name: [{ //角色名称
+          roleName: [{ //角色名称
             required: true,
             message: '请输入角色名称',
             trigger: 'blur'
           }],
-          role_desc: [{ //角色描述
+          roleDesc: [{ //角色描述
             required: true,
             message: '请输入角色描述信息',
             trigger: 'blur'
           }],
-          role_flag: [{ //角色标识
+          roleFlag: [{ //角色标识
             required: true,
             message: '请选择角色标识',
             trigger: 'change'
           }]
         },
         data02: [{ //存取权限数组
-          right_code: 1,
-          right_text: '一级 1',
+          rightCode: 1,
+          rightText: '一级 1',
           children: [{
-            right_code: 4,
-            right_text: '二级 1-1',
+            rightCode: 4,
+            rightText: '二级 1-1',
             children: [{
-              right_code: 9,
-              right_text: '三级 1-1-1'
+              rightCode: 9,
+              rightText: '三级 1-1-1'
             }, {
-              right_code: 10,
-              right_text: '三级 1-1-2'
+              rightCode: 10,
+              rightText: '三级 1-1-2'
             }]
           }]
         }],
         defaultProps: {
           children: 'children',
-          label: 'right_text',
-          id: 'right_code',
-          disabled: 'right_flag'
+          label: 'rightText',
+          id: 'rightCode',
+          // disabled: 'right_flag'
         },
         defaultProps2: {
           // children: 'children',
@@ -171,7 +171,7 @@
         currentRow: null, //当前行
         editRights: {
           arr: [],
-          role_id: null
+          roleId: null
         },
         usesArr: [],
         switchOne: true,
@@ -191,8 +191,8 @@
 
           let url = this.axios.urls.SYS_RIGHT_SELECT_GONG;
           this.axios.post(url, {
-            right_id: data.right_code, //权限id
-            role_id: this.editRights.role_id
+            right_id: data.rightCode, //权限id
+            roleId: this.editRights.roleId
           }).then((resp) => {
             this.gong = resp.data.result;
             this.$refs.tree02.setCheckedKeys([], true); //使相关权限复选框全部不选中
@@ -207,7 +207,7 @@
       },
       //修改权限信息
       editAllRights: function() {
-        if (this.editRights.role_id != null && this.editRights.arr.length != 0) {
+        if (this.editRights.roleId != null && this.editRights.arr.length != 0) {
           // console.log('总right_code数组:' + this.editRights.arr);
           // console.log('角色id：' + this.editRights.role_id);
 
@@ -224,9 +224,9 @@
           cc += "]";
           this.editRights.arr = cc;
 
-          let url = this.axios.urls.SYS_right_EDIT;
+          let url = this.axios.urls.sys_right_addRoleRight;
           this.axios.post(url, {
-            role_id: this.editRights.role_id,
+            roleId: this.editRights.roleId,
             str: cc
           }).then((resp) => {
             if (resp.data.code == 0) {
@@ -237,6 +237,8 @@
             }
             this.editRights.arr = a1;
           }).catch((error) => {});
+
+
 
         } else if (this.editRights.arr.length == 0) {
           this.$message({
@@ -252,10 +254,10 @@
       },
       //点击恢复角色对应的初始化权限信息
       backRights: function() {
-        if (this.editRights.role_id != null) {
-          let url = this.axios.urls.SYS_right_RIGHTSODES;
+        if (this.editRights.roleId != null) {
+          let url = this.axios.urls.sys_right_selectRightCodeByRoleid;
           this.axios.post(url, {
-            role_id: this.editRights.role_id
+            roleId: this.editRights.roleId
           }).then((resp) => {
             this.$refs.tree.setCheckedKeys([], true); //使相关权限复选框全部不选中
             this.$refs.tree.setCheckedKeys(resp.data.result.arr1, true); //设置角色对应的权限复选框选中
@@ -302,7 +304,7 @@
 
         let url = this.axios.urls.SYS_RIGHT_UPDATE_GONG;
         this.axios.post(url, {
-          role_id: this.editRights.role_id,
+          roleId: this.editRights.roleId,
           str: cc,
           right_id: data.right_id
         }).then((resp) => {
@@ -341,7 +343,7 @@
         this.$refs.singleTable.setCurrentRow(row);
         this.$refs.tree.setCheckedKeys([], true); //使相关权限复选框全部不选中
         this.editRights.arr = [];
-        this.editRights.role_id = null;
+        this.editRights.roleId = null;
       },
       //点击表格行触发
       handleCurrentChange02: function(rows) {
@@ -355,11 +357,12 @@
 
           //给权限部分的复选框默认选中
           this.gong = [];
-          this.editRights.role_id = rows.role_id;
-          let url = this.axios.urls.SYS_right_RIGHTSODES;
+          this.editRights.roleId = rows.roleId;
+          let url = this.axios.urls.sys_right_selectRightCodeByRoleid;
           this.axios.post(url, {
-            role_id: rows.role_id
+            roleId: rows.roleId
           }).then((resp) => {
+            // console.log(resp.data.result);
             this.$refs.tree.setCheckedKeys([], true); //使相关权限复选框全部不选中
             this.$refs.tree.setCheckedKeys(resp.data.result.arr1, true); //设置角色对应的权限复选框选中
             this.$refs.tree.setCheckedKeys(resp.data.result.arr2, true);
@@ -375,16 +378,14 @@
           // }).catch((error) => {});
 
         }
-
-        // console.log("行数据："+rows);
       },
       //点击编辑文本（行）
       handleEdit: function(index, row) {
-        this.mergeForm.role_id = row.role_id;
-        this.mergeForm.role_name = row.role_name;
-        this.mergeForm.role_desc = row.role_desc;
-        this.mergeForm.role_flag = row.role_flag.toLocaleString();
-        this.mergeForm.role_flagName = row.role_flagName;
+        this.mergeForm.roleId = row.roleId;
+        this.mergeForm.roleName = row.roleName;
+        this.mergeForm.roleDesc = row.roleDesc;
+        this.mergeForm.roleFlag = row.roleFlag.toLocaleString();
+        this.mergeForm.roleFlagName = row.roleFlagName;
         this.dialogVisible = true;
         this.dialogTitle = '角色修改';
 
@@ -398,7 +399,7 @@
         }).then(() => {
           let url = this.axios.urls.SYS_ROLE_DEL;
           this.axios.post(url, {
-            role_id: row.role_id
+            roleId: row.roleId
           }).then((resp) => {
             this.$message({
               message: resp.data.message,
@@ -446,11 +447,11 @@
       //清空表单中的数据
       doClearMergeForm: function() {
         //清空后台提交表单数据
-        this.mergeForm.role_id = null;
-        this.mergeForm.role_name = null;
-        this.mergeForm.role_desc = null;
-        this.mergeForm.role_flag = null;
-        this.mergeForm.role_flagName = null;
+        this.mergeForm.roleId = null;
+        this.mergeForm.roleName = null;
+        this.mergeForm.roleDesc = null;
+        this.mergeForm.roleFlag = null;
+        this.mergeForm.roleFlagName  = null;
         // this.$refs['mergeForm'].resetFields(); //清空验证信息
         this.dialogTitle = '角色添加';
       },
@@ -467,22 +468,25 @@
       },
       //搜索
       search: function() {
-        if (this.queryForm2.role_name != this.queryForm.role_name) {
-          if (this.queryForm.role_name != null && this.queryForm.role_name != '') {
+        if (this.queryForm2.roleName != this.queryForm.roleName) {
+          if (this.queryForm.roleName != null && this.queryForm.roleName != '') {
             this.queryForm.current_page = 1;
           }
         }
-        this.queryForm2.role_name == this.queryForm.role_name
+        this.queryForm2.roleName == this.queryForm.roleName
 
-        let url = this.axios.urls.SYS_ROLE_LIST;
+        let url = this.axios.urls.sys_right_listAllRole;
         this.axios.post(url, this.queryForm).then((resp) => {
           this.result = resp.data.result;
-          this.queryForm.total_count = resp.data.rows;
+          this.queryForm.total_count = resp.data.total;
         }).catch((error) => {});
-        let url01 = this.axios.urls.SYS_right_ROOTRIGHTS;
+
+        // 查询所有的root权限信息
+        let url01 = this.axios.urls.sys_right_rootSelect;
         this.axios.post(url01, {}).then((resp) => {
           this.data02 = resp.data.result;
         }).catch((error) => {});
+
       }
     }
   }

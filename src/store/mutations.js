@@ -23,7 +23,13 @@ export default {
 	},
 	setMyurls: function(state, payload) {
 		state.myurls = payload.myurls;
-	}
+	},
+  setMyPath: function (state, payload) {
+    state.myPath = payload.myPath;
+  },
+  setMyPersonId: function (state, payload) {
+    state.myPersonId = payload.myPersonId;
+  }
 }
 
 
