@@ -8,8 +8,15 @@
 
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="searchBox">
+      <!--<el-form-item label="字典分类编号">-->
+        <!--<el-select v-model="queryForm.dictcode" placeholder="请选择分类编号">-->
+          <!--<el-option key="nn" index="nn" label="所有分类编号" value=""></el-option>-->
+          <!--<el-option v-for="r in types" :key="r.dictcode" :label="r.dictcode" :value="r.dictcode">-->
+          <!--</el-option>-->
+        <!--</el-select>-->
+      <!--</el-form-item>-->
       <el-form-item label="字典分类名称">
-        <el-input size="small" v-model="queryForm.title" clearable placeholder="请输入搜索的字典分类名称"></el-input>
+        <el-input size="small" v-model="queryForm.titlem" clearable placeholder="请输入搜索的字典分类名称"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
@@ -23,9 +30,9 @@
     <el-table :data="result" ref="singleTable" style="width: 100%;" height="450">
       <el-table-column type="index" label="序" :index="indexMethod" min-width="" align="center">
       </el-table-column>
-      <el-table-column prop="dictcode" label="字典分类编码" min-width="20" align="center">
-      </el-table-column>
-      <el-table-column prop="title" label="字典分类名称" min-width="20" align="center">
+      <!--<el-table-column prop="dictcode" label="字典分类编码" min-width="20" align="center">-->
+      <!--</el-table-column>-->
+      <el-table-column prop="titlem" label="字典分类名称" min-width="20" align="center">
       </el-table-column>
       <el-table-column prop="mark" label="字典使用说明" min-width="20" align="center">
       </el-table-column>
@@ -43,16 +50,23 @@
                    :total="queryForm.total_count">
     </el-pagination>
     <!-- 添加和编辑操作 -->
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="60%" @close="handleDialogClose">
+    <el-dialog :titlem="dialogtitlem" :visible.sync="dialogVisible" width="40%" @close="handleDialogClose">
       <el-form :model="mergeForm" :rules="mergeFormRules" ref="mergeForm" :label-position="labelPosition" label-width="100px">
-        <el-form-item label="分类编码" prop="dictcode">
-          <el-input v-model="mergeForm.dictcode" placeholder="请输入字典分类编码"></el-input>
-        </el-form-item>
-        <el-form-item label="分类名称" prop="title">
-          <el-input v-model="mergeForm.title" placeholder="请输入字典分类名称"></el-input>
+        <!--<el-form-item label="分类编码" prop="dictcode">-->
+          <!--<el-input v-model="mergeForm.dictcode" placeholder="请输入字典分类编码"></el-input>-->
+        <!--</el-form-item>-->
+        <el-form-item label="分类名称" prop="titlem">
+          <el-input v-model="mergeForm.titlem" placeholder="请输入字典分类名称"></el-input>
         </el-form-item>
         <el-form-item label="使用说明" prop="mark">
-          <el-input v-model="mergeForm.mark" placeholder="请输入字典使用说明"></el-input>
+          <el-input
+            type="textarea"
+            placeholder="请输入字典分类使用说明"
+            v-model="mergeForm.mark"
+            maxlength="100"
+            show-word-limit
+          >
+          </el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -72,24 +86,26 @@
           current_page: 1,
           page_size: 10,
           total_count: 0,
-          dictId: '',
-          title: null,
+          dictid: '',
+          titlem: null,
+          dictcode:null,
           // dictItem: null,
           // dictValue: null
         },
         queryForm2: {
-          title: null,
+          titlem: null,
+          dictcode:null,
           // dictItem: null,
           // dictValue: null
         },
         result: [],
         dialogVisible: false,
-        dialogTitle: '数据字典目录添加',
+        dialogtitlem: '数据字典目录添加',
         labelPosition: 'left',
         mergeForm: {
-          dictId: null,
+          dictid: null,
           dictcode: null,
-          title: null,
+          titlem: null,
           mark: null,
           // dictName: null,
           body: null,
@@ -101,7 +117,7 @@
             message: '请输入字典分类编码',
             trigger: 'blur'
           }],
-          title: [{
+          titlem: [{
             required: true,
             message: '请输入字典分类名称',
             trigger: 'blur'
@@ -124,12 +140,12 @@
       //编辑文本（行）
       handleEdit: function(row) {
         console.log('handleEdit');
-        this.mergeForm.dictId = row.dictId,
+        this.mergeForm.dictid = row.dictid,
         this.mergeForm.dictcode = row.dictcode,
-        this.mergeForm.title= row.title,
+        this.mergeForm.titlem= row.titlem,
         this.mergeForm.mark = row.mark,
         this.dialogVisible = true,
-        this.dialogTitle = '数据字典目录修改';
+        this.dialogtitlem = '数据字典目录修改';
       },
       //删除文本（行）
       handleDelete: function(row) {
@@ -140,9 +156,9 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let url = this.axios.urls.SYS_DICT_DELETE;
+          let url = this.axios.urls.sys_dict_dictDel;
           this.axios.post(url, {
-            dictId: row.dictId
+            dictid: row.dictid
           }).then((resp) => {
             this.$message({
               message: resp.data.message,
@@ -172,13 +188,13 @@
           }
           console.log('onSubmitMergeForm');
 
-          let url = this.axios.urls.SYS_DICT_MERGE;
+          let url = this.axios.urls.sys_dict_dictMerge;
           this.axios.post(url, this.mergeForm).then((resp) => {
             this.$message({
               message: resp.data.message,
               type: 'success'
             });
-            if (null == this.mergeForm.dictId) {
+            if (null == this.mergeForm.dictid) {
               this.handleDialogClose();
               /* this.doOpenDialog(); */
             }
@@ -196,9 +212,9 @@
       },
       //清空表单中的数据
       doClearMergeForm: function() {
-        this.mergeForm.dictId = null, //清空后台提交表单数据
+        this.mergeForm.dictid = null, //清空后台提交表单数据
         this.mergeForm.dictcode = null,
-        this.mergeForm.title = null,
+        this.mergeForm.titlem = null,
         this.mergeForm.mark=null,
           // this.mergeForm.dictiseDitable=null,
           // this.mergeForm.dictId = row.dictId;
@@ -209,18 +225,18 @@
 
           // this.$refs['mergeForm'].resetFields(); //清空验证信息
 
-          this.dialogTitle = '基础字典添加';
+          this.dialogtitlem = '基础字典添加';
       },
       /* doOpenDialog: function(row) {
         console.log('row的值为：' + row);
         if (!row) {
           this.mergeForm.id = null;
-          this.mergeForm.title = null;
+          this.mergeForm.titlem = null;
           this.mergeForm.body = null;
           console.log('--------------------');
         }else{
           this.mergeForm.id = row.id;
-          this.mergeForm.title = row.title;
+          this.mergeForm.titlem = row.titlem;
           this.mergeForm.body = row.body;
         }
         this.dialogVisible = true;
@@ -240,12 +256,16 @@
       },
       //搜索
       search: function() {
-        if (this.queryForm2.title != this.queryForm.title ||
-          this.queryForm2.title != this.queryForm.title || this.queryForm2.title != this.queryForm.title
-        ){
-          if (this.queryForm.title != null && this.queryForm.title != '')
+        if (this.queryForm2.titlem != this.queryForm.titlem ||  this.queryForm2.dictcode != this.queryForm.dictcode){
+          if (this.queryForm.titlem != null && this.queryForm.titlem != ''){
             this.queryForm.current_page = 1;
+          }
+          if (this.queryForm.dictcode != null && this.queryForm.dictcode != '') {
+            this.queryForm.current_page = 1;
+          }
         }
+        this.queryForm2.titlem = this.queryForm.titlem;
+
 
 
         let url = this.axios.urls.sys_dict_dictSelect;
@@ -257,7 +277,6 @@
           // }
         }).catch((error) => {});
 
-        this.queryForm2.title = this.queryForm.title;
 
       }
 

@@ -243,8 +243,12 @@
 .btn-green:hover{background:#8bc026;}
 .btn-orange{background:#ff7417;color:#FFF !important;}
 .btn-orange:hover{background:#fea53d;}
-.btn-gray{background:#859ab4;}
-.btn-blue:hover{background:#3cb9dc;}
+.btn-gray{
+  background:red;
+}
+.btn-blue:hover{
+  background:#0caffe;
+}
 .btn-blue{background:#38adce;}
 .btn-gray:hover{background:#738fb2;}
 .ui-btn.disabled,.ui-btn.disabled:hover{cursor:default !important;background:#999 !important;}
