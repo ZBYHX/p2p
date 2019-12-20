@@ -1,166 +1,389 @@
 <template>
   <div>
     <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right" style="font-size: 18px;font-family: '宋体';font-weight: bold;">
-      <el-breadcrumb-item>审核项目</el-breadcrumb-item>
-      <el-breadcrumb-item>充值审核</el-breadcrumb-item>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item style="font-size: 20px;">审核管理</el-breadcrumb-item>
+      <el-breadcrumb-item style="font-size: 20px;">充值审核</el-breadcrumb-item>
     </el-breadcrumb>
+    <br/>
+
+    <!-- 搜索筛选 -->
     <el-form :inline="true" class="searchBox">
-      <el-form-item label="交易时间">
-        <el-date-picker type="date" size="small" placeholder="选择日期" v-model="reChargeQuery.tradeTime" style="width: 100%;"></el-date-picker>
+      <el-form-item label="审核状态">
+        <el-select v-model="queryForm.state" clearable>
+          <el-option v-for="item in types01" :value="item.value" :label="item.typeName" :key="item.value"></el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item style="float: right;margin-right: 30px;">
-        <el-button type="success" width="200px" icon="el-icon-question">&emsp;帮&emsp;助&emsp;</el-button>
-        <el-button type="primary" width="200px" icon="el-icon-search" @click="search()">&emsp;查&emsp;询&emsp;</el-button>
+      <el-form-item label="申请时间">
+        <!--applytime-->
+        <!--<span class="demonstration">带快捷选项</span>-->
+        <el-date-picker v-model="value4" type="datetimerange" :picker-options="pickerOptions2" range-separator="至"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期"
+                        align="right"
+        >
+        </el-date-picker>
+
+      </el-form-item>
+      <el-form-item>
+        <el-button size="small" type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
       </el-form-item>
     </el-form>
-    <hr />
-    <el-form label-width="80px">
-      <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="rechargeId" label="充值ID" min-width="10">
-        </el-table-column>
-        <el-table-column prop="bankId" label="银行卡ID" min-width="15">
-        </el-table-column>
-        <el-table-column prop="rechargeMoney" label="充值金额" min-width="20">
-        </el-table-column>
-        <el-table-column prop="tradeTime" label="交易时间" min-width="15">
-        </el-table-column>
-        <el-table-column prop="auditId" label="审核ID" min-width="15">
-        </el-table-column>
-        <el-table-column prop="date" label="操作" min-width="15">
-          <template slot-scope="scope" margin-right="300px">
-            <el-button size="mini" icon="el-icon-edit" type="primary" @click="toSubmit(scope.row)" round>确定</el-button>
-            <el-button size="mini" icon="el-icon-delete" type="warning" @click="doDel(scope.row)" round>删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <!-- 完整分页-->
-      <el-pagination style="margin-top: 15px;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                     :current-page="queryForm.current_page" :page-sizes="[8, 20, 30, 40]" :page-size="queryForm.page_size" layout="total, sizes, prev, pager, next, jumper"
+
+    <!-- 数据表格  现实重要列名 :data="result"-->
+    <el-table :data="result" ref="singleTable" border style="width: 100%" height="450" highlight-current-row
+              @current-change="handelSelectRow">
+      <el-table-column type="index" label="序" :index="indexMethod" min-width="10" align="center">
+      </el-table-column>
+      <el-table-column prop="audit.nickname" label="申请人" min-width="25">
+      </el-table-column>
+      <el-table-column prop="audit.applytimeName" label="申请时间" min-width="25">
+      </el-table-column>
+      <el-table-column prop="audit.userName" label="审核人" min-width="20">
+      </el-table-column>
+      <el-table-column prop="audit.audittimeName" label="审核时间" min-width="25">
+      </el-table-column>
+      <el-table-column prop="audit.audittypeName" label="审核类型" min-width="20">
+      </el-table-column>
+      <el-table-column prop="audit.stateName" label="审核状态" min-width="20">
+      </el-table-column>
+      <el-table-column label="操作" min-width="30">
+        <template slot-scope="scope">
+          <!--<el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>-->
+          <el-button type="primary" icon="el-icon-edit" @click="handleEdit(scope.row)">{{scope.row.audit.diableState}}
+          </el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="del(scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <!-- 完整分页 -->
+    <div class="block" style="padding-top: 20px; text-align: left;">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                     :current-page="queryForm.current_page"
+                     :page-sizes="[10, 20, 30, 40]" :page-size="10" layout="total, sizes, prev, pager, next, jumper"
                      :total="queryForm.total_count">
       </el-pagination>
-    </el-form>
-    <!-- <div style="width: 100%;margin-top: 20px;height: 580px;"> -->
-    <el-dialog :title="title" :visible.sync="dialogSerFormVisible" @close="clearForm" width="60%">
-      <el-form :inline="true" :model="reChargeForm" ref="valide" :rules="mergeFormRules" label-position="left"
-               label-width="80px" style="overflow: auto;max-height: 400px;">
+    </div>
+    <!-- 添加和编辑操作-->
+    <el-dialog title="充值审核编辑" :visible.sync="dialogVisible" @close="doDialogMergeFormClose" width="60%"
+               style="margin-top: -30px;">
+      <el-form :inline="true" :model="mergeForm" ref="mergeForm" :rules="MergeFormRules" label-position="left"
+               label-width="100px" style="overflow: auto;max-height: 420px;">
         <div>
-          <el-form-item label="充值编号" v-if="false" prop="rechargeId">
-            <el-input type="hidden" v-model="reChargeForm.rechargeId" readonly="readonly"></el-input>
-          </el-form-item><br />
-          <el-form-item label="银行卡号" prop="bankId">
-            <el-input style="width: 300px;" size="20" v-model="reChargeForm.bankId" readonly="readonly"></el-input>
+          <!--充值ID不可被编辑 -->
+          <el-form-item label="充值ID" prop="rechargeid">
+            <el-input style="width: 300px;" v-model="mergeForm.rechargeid" readonly="readonly"
+                      auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="充值金额" style="margin-left: 60px;" prop="rechargeMoney">
-            <el-input style="width: 300px;" v-model="reChargeForm.rechargeMoney" readonly="readonly" placeholder="请选择金额"></el-input>
-          </el-form-item>
-        </div>
-        <div>
-          <el-form-item label="审核ID" prop="auditId">
-            <el-input style="width: 300px;" v-model="reChargeForm.auditId" readonly="readonly"></el-input>
+          <!--银行卡ID-->
+          <el-form-item label="银行卡ID" prop="bankid" style="margin-left: 60px;">
+            <el-input style="width: 300px;" v-model="mergeForm.bankid" readonly="readonly" auto-complete="off"
+                      placeholder=""></el-input>
           </el-form-item>
         </div>
         <div>
-
-        </div>
-        <div>
-          <el-form-item label="交易时间" prop="tradeTime">
-            <el-col :span="11">
-              <el-date-picker type="date" placeholder="选择日期(自动)" v-model="reChargeForm.tradeTime" style="width: 80%;"
-                              readonly="readonly"></el-date-picker>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-time-picker placeholder="选择时间(自动)" v-model="reChargeForm.tradeTime" style="width: 80%;" readonly="readonly"></el-time-picker>
-            </el-col>
+          <el-form-item label="充值金额" prop="rechargemoney">
+            <el-input style="width: 300px;" v-model="mergeForm.rechargemoney" readonly="readonly" auto-complete="off"
+                      placeholder=""></el-input>
+          </el-form-item>
+          <el-form-item label="交易时间" prop="tradeTime" style="margin-left: 60px;" >
+            <el-date-picker type="datetime" v-model="mergeForm.tradetime" style="width: 300px;"  readonly="readonly" auto-complete="off"
+                      placeholder=""></el-date-picker>
           </el-form-item>
         </div>
-
+        <div>
+          <el-form-item label="备注" prop="remarkk">
+            <el-input type="textarea" rows="3" style="width: 770px;" v-model="mergeForm.remarkk"
+                      auto-complete="off" maxlength="200"
+                      placeholder="请输入你审核的备注信息"></el-input>
+          </el-form-item>
+          <el-form-item style="width: 500px;" label="审核结果" prop="state">
+            <el-radio-group v-model="mergeForm.state" size="small">
+              <el-radio label="1" border>通过</el-radio>
+              <el-radio label="2" border>拒绝</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </div>
       </el-form>
-      <div slot="footer" class="dialog-footer" align="center">
-        <el-button style="width: 20%;" type="primary" @click="onSubmitSerAssForm()">确 定</el-button>
-        <el-button style="width: 20%;" @click="dialogSerFormVisible=false">取 消</el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="doMergeForm">确 定</el-button>
       </div>
     </el-dialog>
+
   </div>
 </template>
 
 <script>
+
   export default {
-    data: function() {
+    data: function () {
       return {
-        reChargeForm: {
-          rechargeId:null,//充值ID
-          bankId: null, //银行卡ID
-          rechargeMoney: null, //充值金额
-          tradeTime: null, //交易时间
-          auditId: null, //审核ID
-          current_page: 1, //当前显示的页码数
-          page_size: 10, //每页显示的最大页码数
-          total_count: 0 //总记录数
-        },
-        reChargeQuery: {
-          tradeTime: null //交易时间
-        },
         queryForm: {
-          current_page: 1, //当前页码数
-          page_size: 8, //每页显示的最大记录数
-          total_count: 0, //总记录数
-
-
+          rechargeid: null,//充值ID
+          startTime: null,//起始时间
+          endTime: null,//结束时间
+          // bankid: null,//银行卡ID
+          // rechargemoney: null,//充值金额
+          // tradetime: null,//交易时间
+          // auditid:null,//审核ID
+          state: null,
+          current_page: 1,
+          page_size: 10,
+          total_count: 0
+        },
+        queryForm2: {
+          nickname: null//用户昵称
         },
         result: [],
+        //日期值的  到时候查询结果里面有
+        value1: '',
+        currentRow: null,
         dialogVisible: false,
-        dialogTitle: '充值审核',
-        mergeFormRules: {
-
-        }
-      };
+        //定义一个行的ID属性
+        rechargeId: null,
+        mergeForm: {
+          rechargeid: null,
+          bankid: null,
+          rechargemoney: null,
+          tradetime: null,
+          auditid: null,
+          remarkk: null,
+          state: null
+        },
+        //类型数组
+        types01: [
+          {
+            value: '1',
+            typeName: '已通过'
+          },
+          {
+            value: '2',
+            typeName: '已拒绝'
+          },
+          {
+            value: '3',
+            typeName: '未审核'
+          }
+        ],
+        visible01: false,
+        MergeFormRules: {
+          remarkk: [{
+            required: true,
+            message: '请输入审核的备注信息',
+            trigger: 'blur'
+          }],
+          state: [{
+            required: true,
+            message: '请选择审核结果',
+            trigger: 'change'
+          }]
+        },
+        pickerOptions2: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
+        // value3: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+        value4: ''
+      }
     },
-    created: function() {
+    created: function () {
       this.search();
-      this.queryMoney();
     },
     methods: {
-      //查询操作
-      search: function(index, row) {
-
-
-
-        this.reChargeForm.tradeTime = row.tradeTime; //交易时间
-
-        this.dialogVisible = true;
+      //选中一行
+      selectCansle(row) {
+        this.$refs.singleTable.setCurrentRow(row);
       },
-      queryMoney:function(){
-        this.reChargeForm.auditId=this.$store.getters.userid;
-
-      },
-
-      //点击提交文本
-      toSubmit: function() {//保存操作
-        //this.reChargeForm.
-
+      handelSelectRow(rows) {
+        if (rows != null) {
+          this.currentRow = rows;
+        }
       },
       //更改每页显示行数
       handleSizeChange(rows) {
-        console.log('rows=%i', rows);
+        //console.log('rows=%i', rows);
         this.queryForm.page_size = rows;
         this.queryForm.current_page = 1;
-        this.queryMoney();
+        this.search();
       },
       //更改当前页码数
       handleCurrentChange(page) {
-        console.log('page=%i', page);
+        this.selectCansle();
+        //console.log('page=%i', page);
         this.queryForm.current_page = page;
-        this.queryMoney();
-      }
+        this.search();
+      },
+      search: function () {
+        //分页
+        // if (this.queryForm2.nickname != this.queryForm.nickname) {
+        //   if (this.queryForm.nickname != null && this.queryForm.nickname != '') {
+        //     this.queryForm.current_page = 1;
+        //   }
+        // }
+        // this.queryForm2.nickname = this.queryForm.nickname;
 
+        /*if (this.queryForm.state == "") {
+          this.queryForm.state = null;
+        }*/
+
+        if (this.value4 != null && this.value4.length > 0) {
+          //起始时间
+          const t1 = this.value4[0].toLocaleString().substr(0, 10);
+          const t2 = this.value4[0].toLocaleString().substr(13);
+          this.queryForm.startTime = t1 + " " + t2;
+          //结束时间
+          const t01 = this.value4[1].toLocaleString().substr(0, 10);
+          const t02 = this.value4[1].toLocaleString().substr(13);
+          this.queryForm.endTime = t01 + " " + t02;
+        } else {
+          this.queryForm.startTime = null;
+          this.queryForm.endTime = null;
+        }
+        console.log(this.queryForm);
+        console.log("search...");
+        let url = this.axios.urls.RECHARGE_LISTALLRECHARGES;
+        this.axios.post(url, this.queryForm).then((resp) => {
+          this.result = resp.data.result;
+          this.queryForm.total_count = resp.data.total;
+        }).catch((error) => {
+          console.log(error);
+        });
+
+
+      },
+      //序列显示方法
+      indexMethod(index) {
+        return (this.queryForm.current_page - 1) * this.queryForm.page_size + (index + 1);
+      },
+      //修改方法
+      handleEdit: function (row) {
+        if (row.audit.state != null && row.audit.state != 3) {
+          this.mergeForm.state = row.audit.state.toString();
+          console.log("状态id", this.mergeForm.state);
+        }
+        this.mergeForm.rechargeid = row.rechargeid;
+
+        this.mergeForm.bankid = row.bankid;
+        this.mergeForm.rechargemoney = row.rechargemoney;
+        this.mergeForm.tradetime = row.tradetime;
+
+        this.mergeForm.remarkk = row.audit.remarkk;
+        this.mergeForm.auditid = row.audit.auditid;
+
+        this.dialogVisible = true;
+      },
+
+      doMergeForm: function () {
+        //新增和修改同是调用此方法
+        this.$refs['mergeForm'].validate((valid) => {
+          if (false === valid) {
+            return false;
+          }
+
+          //创建一个提交表单
+          let from01 = {
+            remarkk: this.mergeForm.remarkk,
+            state: this.mergeForm.state,
+            aid: this.mergeForm.auditid,
+            auditorid: this.$store.getters.userId
+          }
+
+          console.log(from01);
+
+          let url = this.axios.urls['RECHARGE_EDITRECHARGE'];
+          this.axios.post(url, from01).then((response) => {
+            if (0 === response.data.code) {
+              this.$message({
+                message: response.data.message,
+                type: 'success'
+              });
+            }
+            //只有新增时才需要清空表单
+            // if (!this.mergeForm.custNo) {
+            //   this.doClearMergeForm();
+            // }
+            this.search();
+          }).catch(function (error) {
+            console.log(error);
+          });
+        });
+      },
+      //删除的单条数据的方法
+      del: function (row) {
+        this.$confirm('你确定要删除这条记录, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+
+          let from01 = {
+            rechargeid: row.rechargeid,
+            aid: row.audit.auditid
+          }
+
+          let url = this.axios.urls.RECHARGE_DELRECHARGE;
+          this.axios.post(url, from01).then((resp) => {
+            this.$message({
+              message: resp.data.message,
+              type: 'success'
+            });
+            this.search();
+          }).catch((error) => {
+          });
+
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+
+      },
+      //dialog对话框的关闭事件
+      handleDialogClose: function () {
+        console.log('handleDialogClose......');
+        this.$refs['mergeForm'].resetFields(); //清空验证信息
+        //this.doClearMergeForm();
+      },
+
+      doDialogMergeFormClose: function () {
+        console.log('close...');
+        this.handleDialogClose();
+      },
 
     }
   }
 
-
 </script>
 
 <style>
+  .searchBox {
+    margin-top: 20px;
+  }
+
 </style>
