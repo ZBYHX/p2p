@@ -112,37 +112,9 @@
 </template>
 
 <script>
-  import moment from 'moment'
-
   export default {
     data: function () {
       return {
-        // pickerOptions: {
-        //   disabledDate(time) {
-        //     return time.getTime() > Date.now();
-        //   },
-        //   shortcuts: [{
-        //     text: '今天',
-        //     onClick(picker) {
-        //       picker.$emit('pick', new Date());
-        //     }
-        //   }, {
-        //     text: '昨天',
-        //     onClick(picker) {
-        //       const date = new Date();
-        //       date.setTime(date.getTime() - 3600 * 1000 * 24);
-        //       picker.$emit('pick', date);
-        //     }
-        //   }, {
-        //     text: '一周前',
-        //     onClick(picker) {
-        //       const date = new Date();
-        //       date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-        //       picker.$emit('pick', date);
-        //     }
-        //   }]
-        // },
-        // value2: '',
         diss: null,
         dialogVisible: false,
         dialogTitle: '账户流水添加',
@@ -162,7 +134,6 @@
           tradetimeName: null,
           actiontype: null
         },
-
         amount: '',
         amounts: '',
         list: ["1-5000", "5001-10000", "10001-20000", "20001-50000", "50001-100000", "100001-200000", "200001-100000000"],
@@ -217,7 +188,7 @@
     },
     created: function () {
       // this.type();
-      console.log(this.amounts);
+      // console.log(this.amounts);
       this.loadAll();
     },
     methods: {
@@ -398,7 +369,7 @@
         return (this.queryForm.current_page - 1) * this.queryForm.page_size + (index + 1);
       },
 
-    },
+    }
 
   }
 </script>

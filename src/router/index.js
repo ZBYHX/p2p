@@ -33,7 +33,7 @@ import LoanProject from '@/views/frontEnd/personalCenterModule/loanProjectModule
 import ReimbursementDetail from '@/views/frontEnd/personalCenterModule/loanProjectModule/ReimbursementDetail'//还款明细
 import TenderDetails from '@/views/frontEnd/personalCenterModule/loanProjectModule/TenderDetails'//投标明细
 //个人中心-->资产详情
-import AccountOfTheWater from '@/views/frontEnd/personalCenterModule/assetDetailsModule/AccountOfTheWater'//账户流水
+import AccountWater from '@/views/frontEnd/personalCenterModule/assetDetailsModule/AccountWater'//账户流水
 import TopUpDetail from '@/views/frontEnd/personalCenterModule/assetDetailsModule/TopUpDetail'//充值详情
 
 
@@ -64,24 +64,26 @@ import MenuManagement from '@/views/backstage/rightManagementModule/MenuManageme
 import UserManagement from '@/views/backstage/userManagementModule/UserManagement'//平台用户管理
 import StaffManagement from '@/views/backstage/userManagementModule/StaffManagement'//员工管理
 import LoginHistory from '@/views/backstage/userManagementModule/LoginHistory'//登录历史
-//财务管理
-import AccountOfTheWater from "@/views/backstage/financeManagementModule/AccountOfTheWater"
-import SysAccountOfTheWater from "@/views/backstage/financeManagementModule/SysAccountOfTheWater"
-import QueryMoney from "@/views/backstage/financeManagementModule/QueryMoney"
 //数据字典管理
 import SysDataDictCatalog from '@/views/backstage/dictManagementModule/SysDataDictCatalog'//字典目录管理
 import SysDataDictDetail from '@/views/backstage/dictManagementModule/SysDataDictDetail' //字典明细管理
-//审核项目（谭玲）
+
+//审核项目
 import OfflineRechargeAudit from '@/views/backstage/auditProjectModule/OfflineRechargeAudit'//充值审核
 import WithdrawalAudit from '@/views/backstage/auditProjectModule/WithdrawalAudit'//撤资审核
 import FullScaleOfFirstInstance from '@/views/backstage/auditProjectModule/FullScaleOfFirstInstance'//满标审核
 import GetMoneyAudit from '@/views/backstage/auditProjectModule/GetMoneyAudit'//提现审核
-//项目审核模块
-import RealNameAuthenticationAudit from '@iews/backstage/auditProjectModule/RealNameAuthenticationAudit'//实名认证审核
-import BankCardAudit from '@iews/backstage/auditProjectModule/BankCardAudit'//银行卡认证审核
-import MaterialAudit from '@iews/backstage/auditProjectModule/MaterialAudit'//材料认证审核
-import CallBidAudit from '@iews/backstage/auditProjectModule/CallBidAudit'//招标审核
-import BidAudit from '@iews/backstage/auditProjectModule/BidAudit'//投标审核
+// 项目审核模块
+import RealNameAuthenticationAudit from '@/views/backstage/auditProjectModule/RealNameAuthenticationAudit'//实名认证审核
+import BankCardAudit from '@/views/backstage/auditProjectModule/BankCardAudit'//银行卡认证审核
+import MaterialAudit from '@/views/backstage/auditProjectModule/MaterialAudit'//材料认证审核
+import CallBidAudit from '@/views/backstage/auditProjectModule/CallBidAudit'//招标审核
+import BidAudit from '@/views/backstage/auditProjectModule/BidAudit'//投标审核
+//财务管理
+import AccountOfTheWater from "@/views/backstage/financeManagementModule/AccountOfTheWater"
+import SysAccountOfTheWater from "@/views/backstage/financeManagementModule/SysAccountOfTheWater"
+import QueryMoney from "@/views/backstage/financeManagementModule/QueryMoney"
+
 
 
 Vue.use(Router)
@@ -179,9 +181,9 @@ export default new Router({
               component: RealNameAuthentication
             },
             {//账户流水
-              path: '/AccountOfTheWater',
-              name: 'AccountOfTheWater',
-              component: AccountOfTheWater
+              path: '/AccountWater',
+              name: 'AccountWater',
+              component: AccountWater
             },
             {//充值详情
               path: '/TopUpDetail',
@@ -325,16 +327,6 @@ export default new Router({
           name: 'QueryMoney',
           component: QueryMoney
         },
-        {//账户流水
-          path: '/SysAccountOfTheWater',
-          name: 'SysAccountOfTheWater',
-          component: SysAccountOfTheWater
-        },
-        {//平台流水
-          path: '/AccountOfTheWater',
-          name: 'AccountOfTheWater',
-          component: AccountOfTheWater
-        },
         //-----------------数据字典-------------------
         {//数据字典目录
           path: '/SysDataDictCatalog',
@@ -356,16 +348,16 @@ export default new Router({
           name: 'WithdrawalAudit',
           component: WithdrawalAudit
         },
-        {//满标审核
+        {//满标一审
           path: '/FullScaleOfFirstInstance',
           name: 'FullScaleOfFirstInstance',
           component: FullScaleOfFirstInstance
         },
-        {//撤资审核
-          path: '/WithdrawalAudit',
-          name: 'WithdrawalAudit',
-          component: WithdrawalAudit
-        },
+        // {//满标二审
+        //   path: '/FullScaleSecondTrial',
+        //   name: 'FullScaleSecondTrial',
+        //   component: FullScaleSecondTrial
+        // },
         {//实名认证
           path: '/RealNameAuthenticationAudit',
           name: 'RealNameAuthenticationAudit',
@@ -381,20 +373,30 @@ export default new Router({
           name: 'MaterialAudit',
           component: MaterialAudit
         },
-        {//提现审核
+        {//充值审核
           path: '/GetMoneyAudit',
           name: 'GetMoneyAudit',
           component: GetMoneyAudit
         },
-        {//招标审核
+        {//招标请求
           path: '/CallBidAudit',
           name: 'CallBidAudit',
           component: CallBidAudit
         },
-        {//投标审核
+        {//投标请求
           path: '/BidAudit',
           name: 'BidAudit',
           component: BidAudit
+        },
+        {//账户流水
+          path: '/AccountOfTheWater',
+          name: 'AccountOfTheWater',
+          component: AccountOfTheWater
+        },
+        {//系统流水
+          path: '/SysAccountOfTheWater',
+          name: 'SysAccountOfTheWater',
+          component: SysAccountOfTheWater
         },
       ]
     }

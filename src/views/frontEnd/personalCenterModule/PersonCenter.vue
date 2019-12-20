@@ -81,7 +81,7 @@
             <li>
               <span class="myCss01">资&ensp;产&ensp;明&ensp;细</span>
             </li>
-            <li id="t11" @click="clickShow('t11', 'AccountOfTheWater')">
+            <li id="t11" @click="clickShow('t11', 'AccountWater')">
               <span>
                 <a href="javascript:void(0);">
                   <i class="el-icon-menu" style="color: lightgrey;">&emsp;</i>账户流水</a>
@@ -143,7 +143,7 @@
         }else if(cc == 't10') {
           pathh = 'ReimbursementDetail';
         }else if(cc == 't11') {
-          pathh = 'AccountOfTheWater';
+          pathh = 'AccountWater';
         }else if(cc == 't12') {
           pathh = 'TopUpDetail';
         }

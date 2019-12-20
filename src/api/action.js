@@ -37,53 +37,41 @@ export default {
   'EDIT_SYS_ACCOUNT_FLOW': '/financePlatFlow/editSysAccountFlow',//sys编辑
   'DEL_SYS_ACCOUNT_FLOW': '/financePlatFlow/delSysAccountFlow',//sys删除
 
-  'QUERY_JKMANAGER': 'Manager/queryAllByAnything',//paySchedule
-  'DEL_JKMANAGER': 'Manager/delPaySchedule',//paySchedule删除
-  'EDIT_JKMANAGER': 'Manager/editPaySchedule',//paySchedule编辑
-
-
-
-
+  'QUERY_JKMANAGER': '/jkManager/queryAllByAnything',//paySchedule
+  'DEL_JKMANAGER': '/jkManager/delPaySchedule',//paySchedule删除
+  'EDIT_JKMANAGER': '/jkManager/editPaySchedule',//paySchedule编辑
 
 
   //基础管理部分（刘亮）
-  'sys_dict_dictSelect': '/DictManagementlectDict', //查询所有基础信息
+  'sys_dict_dictSelect': '/DictManagement/selectDict', //查询所有基础信息
   'sys_dict_dictDel': '/DictManagement/delDict', //删除基础信息
   'sys_dict_dictMerge': '/DictManagement/MergeDict', //增加和修改基础信息
-  'sys_dict_dictItemSelect': '/DictItemManagementlectDictItem', //查询所有基础明细信息
+  'sys_dict_dictItemSelect': '/DictItemManagement/selectDictItem', //查询所有基础明细信息
   'sys_dict_dictItemDel': '/DictItemManagement/delDictItem',//删除基础明细信息
   'sys_dict_dictItemMerge': '/DictItemManagement/MergeDictItem',//增加和修改基础明细信息
-  'sys_dict_dictItemId': '/DictItemManagementlectDictItemId',//查找单个id对应的所有那一列的值
-
-
-
-
+  'sys_dict_dictItemId': '/DictItemManagement/selectDictItemId',//查找单个id对应的所有那一列的值
 
 
   //审核项目01（竺尧）
-  'REALNAME_LISTALLNAME': '/RealNamestAllName', //查询所有实名认证信息
+  'REALNAME_LISTALLNAME': '/RealName/listAllName', //查询所有实名认证信息
   'REALNAME_EDITREALNAME': '/RealName/editRealName', //修改实名认证的信息
   'REALNAME_DELREALNAME': '/RealName/delRealName', //删除实名认证的相关的信息（审核表和实名认证表）
 
-  'BANKCARD_LISTALLBANKCARD': '/BankCardstAllBankCard', //查询所有银行卡认证信息  ctrl+shif+U
+  'BANKCARD_LISTALLBANKCARD': '/BankCard/listAllBankCard', //查询所有银行卡认证信息  ctrl+shif+U
   'BANKCARD_EDITBANKCARD': '/BankCard/editBankCard', //修改银行卡认证信息
   'BANKCARD_DELBANKCARD': '/BankCard/delBankCard', //删除银行卡认证信息
 
-  'MATERIAL_LISTALLMATERIAL': '/MaterialstAllMaterial', //查询材料认证信息
+  'MATERIAL_LISTALLMATERIAL': '/Material/listAllMaterial', //查询材料认证信息
   'MATERIAL_EDITMATERIAL': '/Material/editMaterial', //修改材料认证信息
   'MATERIAL_DELMATERIAL': '/Material/delMaterial', //删除材料认证信息
 
-  'CALLBIDS_LISTALLCALLBIDS': '/CallBidsstAllCallBids', //查询招标审核信息
+  'CALLBIDS_LISTALLCALLBIDS': '/CallBids/listAllCallBids', //查询招标审核信息
   'CALLBIDS_EDITCALLBIDS': '/CallBids/editCallBids',//  修改招标审核信息
   'CALLBIDS_DELCALLBIDS': '/CallBids/delCallBids',//  删除招标审核信息
 
-  'BID_LISTALLBID': '/BidstAllBid', //查询投标审核信息
+  'BID_LISTALLBID': '/Bid/listAllBid', //查询投标审核信息
   'BID_EDITBID': '/Bid/editBid', //修改投标审核信息
   'BID_DELBID': '/Bid/delBid', //删除投标审核信息
-
-
-
-
 
 
   //审核项目02(谭玲)
@@ -96,9 +84,6 @@ export default {
   'FULLBID_LISTALLFULLBID': '/auditProjectModule/listAllFullBid',//查询多个满标记录
   'FULLBID_DELFULLBID': '/auditProjectModule/delFullBid',//删除满标记录
   'FULLBID_EDITFULLBID': '/auditProjectModule/editFullBid',//修改满标记录
-
-
-
 
 
   //获得请求的完整地址，用于mockjs测试时使用

@@ -4,17 +4,12 @@
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item style="font-size: 24px;">借款投资查询</el-breadcrumb-item>
       </el-breadcrumb>
-
       <div style="text-align: right">
         <el-button-group>
           <el-button type="primary" icon="el-icon-question" @click="wantHelp()">帮助</el-button>
         </el-button-group>
-        <!--<el-button-group>-->
-        <!--<el-button type="primary" icon="el-icon-plus" @click="dialogVisible=true">添加</el-button>-->
-        <!--</el-button-group>-->
       </div>
       <br/>
-
       <div>
         <el-form>
           <el-form-item>
@@ -32,7 +27,6 @@
               <el-option v-for="(item,index) in this.list" :value="item" :index="index" :key="index" :label="item"
                          :disabled="item.disabled"></el-option>
             </el-select>
-
             <el-button type="primary" icon="el-icon-search" @click="loadAll()">搜索</el-button>
           </el-form-item>
         </el-form>
@@ -121,7 +115,6 @@
 </template>
 
 <script>
-  import moment from 'moment'
 
   export default {
     data: function () {
@@ -223,13 +216,6 @@
       this.loadAll();
     },
     methods: {
-      // dateFormat: function (date) {
-      //   var date = row[column.property];
-      //   if (date == undefined) {
-      //     return "";
-      //   }
-      //   return moment(date).format("YYYY-MM-DD HH:mm:ss");
-      // },
       //查询的方法
       loadAll: function () {
         var min = null;
@@ -361,6 +347,8 @@
       },
       //修改
       handleByEdit: function (row) {
+        console.log(this.queryForm.payid);
+
         this.mergeForm.payid = row.payid;
         this.mergeForm.totalamount = row.totalamount;
         this.mergeForm.state = row.state.toString();
@@ -413,9 +401,7 @@
       indexMethod(index) {
         return (this.queryForm.current_page - 1) * this.queryForm.page_size + (index + 1);
       },
-
-    },
-
+    }
   }
 </script>
 
