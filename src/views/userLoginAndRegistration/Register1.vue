@@ -54,7 +54,7 @@
 
 <script>
   import {common} from "../frontEnd/static/script/common";
-  import {login} from "../frontEnd/static/script/login";
+  // import {login} from "../frontEnd/static/script/login";
 
   export default {
     name: 'Register1',

@@ -58,21 +58,21 @@ $(function(){
 			aSpan.eq(i).addClass('benefit-active');				
 		}
 		
-		function autoPlay(){
-			i++;
-			i%=aLi.size();
-			fadeFn();				
-		}
+		// function autoPlay(){
+		// 	i++;
+		// 	i%=aLi.size();
+		// 	fadeFn();
+		// }
 
-		iTimer = setInterval(autoPlay,3000);
-		$('.benefit-main').mouseover(function() {
-			clearInterval(iTimer);
-		});
-
-		$('.benefit-main').mouseout(function() {
-			clearInterval(iTimer); //先停止，再开启；
-			iTimer = setInterval(autoPlay,3000);
-		});		
+		// iTimer = setInterval(autoPlay,3000);
+		// $('.benefit-main').mouseover(function() {
+		// 	clearInterval(iTimer);
+		// });
+    //
+		// $('.benefit-main').mouseout(function() {
+		// 	clearInterval(iTimer); //先停止，再开启；
+		// 	iTimer = setInterval(autoPlay,3000);
+		// });
 
 	}
 
@@ -591,23 +591,23 @@ $(function(){
 })
 
 //网站公告 文字向上滚动效果  20150319
-function autoScroll(obj){  
-	$(obj).find("ul").animate({  
-		marginTop : "-51px"  
-	},800,function(){  
-		$(this).css({marginTop : "0px"}).find("li:first").appendTo(this);  
-	})  
-}  
-$(function(){  
-	var iTime = null;
-	iTime = setInterval('autoScroll(".notice-list")',3500)
-
-	$('.notice-list').hover(function(){
-		clearInterval(iTime);
-	},function(){
-		iTime = setInterval('autoScroll(".notice-list")',3500)
-	})
-}) 
+// function autoScroll(obj){
+// 	$(obj).find("ul").animate({
+// 		marginTop : "-51px"
+// 	},800,function(){
+// 		$(this).css({marginTop : "0px"}).find("li:first").appendTo(this);
+// 	})
+// }
+// $(function(){
+// 	var iTime = null;
+// 	iTime = setInterval('autoScroll(".notice-list")',3500)
+//
+// 	$('.notice-list').hover(function(){
+// 		clearInterval(iTime);
+// 	},function(){
+// 		iTime = setInterval('autoScroll(".notice-list")',3500)
+// 	})
+// })
 //验证输入字符串的长度是否合法（包括汉字的验证）
 function validateInputLength(value,exceptValue,chineseLength,charLength,minLength,maxLength)
 {

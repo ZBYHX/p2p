@@ -500,10 +500,10 @@
 
 
 <script>
-  import {common} from '../static/script/common.js';
-  import {flexslider} from '../static/script/jquery.flexslider-min.js';
-  import {index} from '../static/script/index.js';
-  import {homePage} from '../static/script/myJavascript/homePage.js';
+  // import {common} from '../static/script/common.js';
+  // import {flexslider} from '../static/script/jquery.flexslider-min.js';
+  // import {index} from '../static/script/index.js';
+  // import {homePage} from '../static/script/myJavascript/homePage.js';
 
   export default {
     data: function () {
