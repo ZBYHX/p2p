@@ -108,6 +108,8 @@
               <dt>
                 <h3>风控步骤</h3>
               </dt>
+
+
               <dd>
                 <div class="text">
                   <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 调查：风控部对借款人各项信息进行了全面的电话征信，一切资料真实可靠。<span></span> </p>
@@ -127,6 +129,8 @@
                 </div>
                 <div class="conclusion f16"> 结论：经风控部综合评估， <span class="c-orange">同意放款40,000.00元；</span> <i class="icon icon-status icon-status1"></i> </div>
               </dd>
+
+
             </dl>
             <dl class="item">
               <dt>
