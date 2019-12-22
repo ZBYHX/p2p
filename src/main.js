@@ -2,7 +2,6 @@ import Vue from 'vue'
 //添加jQuery
 import $ from 'jquery'
 // import 'jquery'
-
 import ElementUI from 'element-ui' //新添加1
 import 'element-ui/lib/theme-chalk/index.css' //新添加2，避免后期打包样式不同，要放在import App from './App';之前
 
@@ -16,6 +15,7 @@ import store from './store'
 import axios from '@/api/http'
 import VueAxios from 'vue-axios'
 
+axios.defaults.withCredentials = true
 
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI) //新添加3
@@ -39,22 +39,7 @@ window.vm = new Vue({
 }).$mount("#app");
 
 
-/* eslint-disable no-new */
-// window.vm = new Vue({
-//   el: '#app',
-//   router,//导入路由
-//   store, //在main.js中导入store实例
-//   components: {
-//     App
-//   },
-//   template: '<App/>',
-//   data: function() {
-//     return {
-//       //自定义事件总线对象，用于非父子组件的通信
-//       Bus: new Vue()
-//     }
-//   }
-// });
+
 
 
 //导入代码阻止菜单点击报错

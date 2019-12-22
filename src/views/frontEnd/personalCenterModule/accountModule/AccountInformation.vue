@@ -1,12 +1,10 @@
 <template>
   <header>
-    <div class="personal-main">
+    <div class="personal-main" style="background-color: white">
       <link rel="stylesheet" type="text/css" href="css/fileupload.less.css">
       <div class="pmain-profile">
         <div class="pmain-welcome">
           <span class="fl">
-          <!--<span id="outLogin">晚上好，</span>-->
-          <!--tg_gpdt0139 喝一杯下午茶，让心情放松一下~-->
           </span>
           <span class="fr">上次登录时间：
           2015-09-11 14:05:07 </span></div>
@@ -49,77 +47,87 @@
             </ul>
           </div>
         </div>
-        <div class="pmain-money">
+        <hr/>
+
+        <div style="margin-left:350px;margin-right: auto;height: 50px;margin-top: 10px">
+          <el-button type="primary">账户充值</el-button>
+          <el-button type="success">账户提现</el-button>
+        </div>
+
+        <div class="pmain-money" style="height: 100px;margin-left: 100px">
           <ul>
             <li class="none"><span><em>账户总额</em><i id="zhze" class="markicon"></i><span class="arrow-show1"
                                                                                         style="display:none;">可用余额+待收本息</span><span
               class="icon-show1" style="display:none;"></span></span> <span class="truemoney"><i
               class="f26 fb">0.00 </i> 元</span></li>
-            <li><span><em>待收本息</em><i id="dsbx" class="markicon"></i><span class="arrow-show2" style="display:none;">未到账的投资项目的本金、利息总额</span><span
+            <li><span><em>冻结金额</em><i id="dsbx" class="markicon"></i><span class="arrow-show2" style="display:none;">正在进行投标的资金是不可用的</span><span
               class="icon-show2" style="display:none;"></span></span> <span class="truemoney"><i
               class="f26 fb">0.00 </i>元</span></li>
-            <li><span><em>累计收益</em><i id="ljsy" class="markicon"></i><span class="arrow-show3" style="display: none;">已到账的投资收益+未到账的投资收益</span><span
+            <li><span><em>可用金额</em><i id="ljsy" class="markicon"></i><span class="arrow-show3" style="display: none;">账户目前可以立马提现使用的资金</span><span
               class="icon-show3" style="display: none;"></span></span> <span class="truemoney"><i class="f26 fb c-pink">0.00 </i> 元</span>
             </li>
           </ul>
         </div>
-      </div>
-      <div class="pmain-connent">
-        <div id="pmain-contab" class="pmain-contab">
+
+        <div class="pmain-money" style="height: 100px;margin-left: 100px">
           <ul>
-            <li id="pmain-contab1" class="on">回款计划</li>
-            <li id="pmain-contab2">资金记录</li>
-            <li id="pmain-contab3">投资记录</li>
-            <li class="li-other"></li>
+            <li class="none"><span><em>待收利息</em><i class="markicon"></i><span class="arrow-show4"
+                                                                              style="display:none;">利息总额</span><span
+              class="icon-show4" style="display:none;"></span></span> <span class="truemoney"><i
+              class="f26 fb">0.00 </i> 元</span></li>
+            <li><span><em>待收本金</em><i class="markicon"></i><span class="arrow-show5"
+                                                                 style="display:none;">未到账的投资项目的本金总额</span><span
+              class="icon-show5" style="display:none;"></span></span> <span class="truemoney"><i
+              class="f26 fb">0.00 </i>元</span></li>
+            <li><span><em>待还本息</em><i class="markicon"></i><span class="arrow-show6"
+                                                                 style="display: none;">还款的本金+利息</span><span
+              class="icon-show6" style="display: none;"></span></span> <span class="truemoney"><i class="f26 fb c-pink">0.00 </i> 元</span>
+            </li>
           </ul>
-        </div>
-        <div class="pmain-conmain" id="pmain-conmain">
-          <div class="pmain-conmain1">
-            <div class="pmain-contitle"><span class="pmain-titledate">计划回款时间</span><span
-              class="pmain-titleproject">项目</span><span class="pmain-titletype">类型</span><span class="pmain-titlemoney">回款金额</span>
-            </div>
-            <ul style="float:left;">
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-titleproject">宝马汽车借贷业务</span><span
-                class="pmain-titletype">债权转让</span><span class="pmain-titlemoney">10.00</span></li>
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-titleproject">宝马汽车借贷业务</span><span
-                class="pmain-titletype">债权转让</span><span class="pmain-titlemoney">10.00</span></li>
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-titleproject">宝马汽车借贷业务</span><span
-                class="pmain-titletype">债权转让</span><span class="pmain-titlemoney">10.00</span></li>
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-titleproject">宝马汽车借贷业务</span><span
-                class="pmain-titletype">债权转让</span><span class="pmain-titlemoney">10.00</span></li>
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-titleproject">宝马汽车借贷业务</span><span
-                class="pmain-titletype">债权转让</span><span class="pmain-titlemoney">10.00</span></li>
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-titleproject">宝马汽车借贷业务</span><span
-                class="pmain-titletype">债权转让</span><span class="pmain-titlemoney">10.00</span></li>
-            </ul>
-            <div class="pmain-morebtn" style="border-top:0;margin-top:0"></div>
-          </div>
-          <div class="pmain-conmain2" style=" display:none;">
-            <div class="pmain-contitle"><span class="pmain-titledate">交易时间</span><span
-              class="pmain-w100">交易类型</span><span class="pmain-w120">交易金额</span><span class="pmain-w120">余额</span><span
-              class="pmain-w200">备注</span></div>
-            <ul style="float:left;">
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-w100">债权转让</span><span
-                class="pmain-w120 pmain-money">10.00</span><span class="pmain-w120 pmain-money">10.00</span><span
-                class="pmain-w200">备注</span></li>
-            </ul>
-            <div class="pmain-morebtn" style="border-top:0;margin-top:0"></div>
-          </div>
-          <div class="pmain-conmain3" style=" display:none;">
-            <div class="pmain-contitle"><span class="pmain-titledate">交易时间</span><span class="pmain-w210">项目</span><span
-              class="pmain-w80">状态</span><span class="pmain-whb200">我的投资</span><span class="pmain-whb110">我的收益</span>
-            </div>
-            <ul style="float:left;">
-              <li><span class="pmain-titledate">2015-10-20</span><span class="pmain-w210">债权转让</span><span
-                class="pmain-w80 pmain-money">10.00</span><span class="pmain-whb200 pmain-money">10.00</span><span
-                class="pmain-whb110">备注</span></li>
-            </ul>
-            <div class="pmain-morebtn" style="border-top:0;margin-top:0"></div>
-          </div>
         </div>
       </div>
     </div>
-    <div class="clear"></div>
+    <hr/>
+
+    <div style="margin-left: 10px;background-color: white">
+      <div style="margin-left: 10px; margin-top:10px;">
+        <img  src="../../static/imgzy/实名认证图片.jpg" >
+        <div style="margin-top:-85px; margin-left: 370px;">
+          <strong style="font-size: 20px;">实名认证</strong>
+          <!-- 判断是否认证-->
+          <div style="margin-left: -5px;margin-top: 35px;">
+            <!--<div v-if="aa">-->
+            <!--<span>已认证</span>-->
+            <!--</div>-->
+            <!--<div v-if="bb">-->
+            <!--<span>未认证</span>-->
+            <!--</div>-->
+            <!--<div><a href="javascript:void(0);">查看</a></div>-->
+          <span style="font-size: 14px">实名认证之后才能在平台投资</span>
+          </div>
+        </div>
+      </div>
+      <div  style="margin-left: 560px; margin-top: -85px;">
+        <img  src="../../static/imgzy/银行卡认证图片.jpg"  style="border-radius: 25px;" >
+        <div style="margin-top:-100px; margin-left: 130px;">
+          <strong style="font-size: 20px">银行卡认证</strong>
+          <div style="margin-left: -5px;margin-top: 35px;">
+          <span style="font-size: 14px">银行卡认证后才能在平台借款投资</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-left: 900px; margin-top: -85px;">
+        <img  src="../../static/imgzy/材料认证图片.jpg" stzyle="border-radius: 15px;" >
+        <div style="margin-top:-100px; margin-left: 140px;">
+        <strong style="font-size: 20px">材料认证</strong>
+          <div style="margin-left: -5px;margin-top: 35px;">
+            <span style="font-size: 14px">材料认证之后才能在平台上借款</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </header>
 </template>
 
@@ -130,7 +138,10 @@
 
   export default {
     data: function () {
-      return {}
+      return {
+        aa:"已认证",
+        bb:"未认证"
+      }
     },
     methods: {
       //
@@ -161,4 +172,9 @@
     width: 0px;
     height: 0px;
   }
+
+  /*.img{*/
+  /*height: 130px;*/
+  /*width: 80px;*/
+  /*}*/
 </style>

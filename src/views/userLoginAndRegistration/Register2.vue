@@ -13,7 +13,7 @@
         <ul>
           <li class="scses"> zhuchaoyou， 恭喜您注册成功！<a class="blue" href="#" target="_blank">请立即开通--双乾支付账户,即可投资！</a></li>
           <li class="rz"><a href="#" class="btn">立即开通</a>
-            <el-link type="primary" @click="inputUser()">进入我的账户</el-link>
+            &emsp;<el-link type="primary" @click="inputUser()">进入我的账户</el-link>
           </li>
         </ul>
       </div>
