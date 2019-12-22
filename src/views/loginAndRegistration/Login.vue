@@ -3,17 +3,17 @@
 		<el-form label-position="left" label-width="0px" class="demo-ruleForm login-container">
 			<h3 class="title">用户登录</h3>
 			<el-form-item>
-				<el-input type="text" v-model="userName" placeholder="请输入账号"></el-input>
+				<el-input type="text" v-model="userName" placeholder="请输入账号名称" clearable></el-input>
 			</el-form-item>
 			<el-form-item>
-				<el-input type="password" v-model="password" placeholder="请输入密码" autocomplete="off" show-password></el-input>
+				<el-input type="password" v-model="password" placeholder="请输入密码" clearable autocomplete="off" show-password></el-input>
 			</el-form-item>
 			<el-form-item>
 				<el-button type="primary" style="width: 100%;" @click="doSubmit">登录</el-button>
 			</el-form-item>
 			<el-form-item style="text-align: center;">
-				<el-link type="primary" :underline="false" @click="register">快速注册</el-link>&emsp;
-				<el-link type="primary" :underline="false" @click="foreigPwd">忘记密码</el-link>
+				<el-link type="primary" :underline="false" @click="SmsLogin()">短信登录</el-link>&emsp;
+				<el-link type="primary" :underline="false" @click="foreigPwd()">忘记密码</el-link>
 			</el-form-item>
 		</el-form>
 	</div>
@@ -25,17 +25,10 @@
 		data: function() {
 			return {
         userName: 'admin',//用户名称
-				password: '123'//用户密码
+				password: '123456'//用户密码
 			}
 		},
 		methods: {
-			// doSubmit: function() {
-			// 	this.$router.replace({
-			// 		path: '/AppMain'
-			// 	});
-      //
-			// },
-
 			//表单提交
 			doSubmit: function() {
 				if ('' == this.userName) {
@@ -95,15 +88,17 @@
 				}).catch((error) => {});
 
 			},
-			// 用户注册
-			register: function() {
-				// location.href = "#/Register";
+			// 短信登录
+      SmsLogin: function() {
+        this.$router.push({
+          path: '/SmsLogin'
+        });
 			},
 			//找回密码
 			foreigPwd: function() {
-				// this.$router.push({
-				// 	path: '/ForeigPwd'
-				// });
+				this.$router.push({
+					path: '/FindPassword2'
+				});
 			}
 		}
 	}
@@ -125,7 +120,7 @@
 	.login-container {
 		border-radius: 10px;
 		margin: 0 auto;
-		width: 350px;
+		width: 400px;
 		padding: 30px 35px 15px 35px;
 		background: #fff;
 		border: 1px solid #eaeaea;

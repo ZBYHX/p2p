@@ -8,6 +8,10 @@ export default {
 
   //后台员工登录注册部分
   'SYS_USER_LOGIN': '/userManagement/sysUserLogin', //员工用户登陆
+  'sys_user_sendSmsSysUser': '/userManagement/sendSmsSysUser', //员工短信验证请求
+  'sys_user_sysUserSmsLogin': '/userManagement/sysUserSmsLogin', //员工短信登录
+  'sys_user_selectSysUserSname': '/userManagement/selectSysUserSname', //员工找回密码
+  'sys_user_editStaffPwd': '/userManagement/editStaffPwd', //员工重设密码
 
 
   //权限管理部分
@@ -18,12 +22,28 @@ export default {
   'sys_right_listAllRole': '/rightManagement/listAllRole', //查询所有角色信息
   'sys_right_selectRightCodeByRoleid': '/rightManagement/selectRightCodeByRoleid', //查询所有权限信息的类型
   'sys_right_addRoleRight': '/rightManagement/addRoleRight', //增加权限信息
+  'sys_right_updateByPrimaryKeySelective': '/rightManagement/updateByPrimaryKeySelective', //修改权限信息
 
 
   //用户管理部分
   'sys_user_selectAllStaff': '/userManagement/selectAllStaff', //查询所有员工信息
   'user_selectAllUser': '/userManagement/listUser', //查询所有平台用户信息
   'user_selectAllLoginInfo': '/userManagement/listLoginInfo', //查询所有登录历史信息
+  'user_delUser': '/userManagement/delUser', //后台删除用户信息
+  'user_editUser': '/userManagement/editUser', //后台修改用户信息
+  'user_listAllRole': '/rightManagement/listAllRole', //查询所有角色类型
+  'user_editStaff': '/userManagement/editStaff', //修改员工信息
+  'user_addStaff': '/userManagement/addStaff', //增加新员工信息
+  'user_delStaff': '/userManagement/delStaff', //删除员工信息
+
+
+  'user_sendSms': '/userManagement/sendSms', //平台发送发送短信验证码
+  'user_userLogin': '/userManagement/userLogin', //平台用户登录
+  'user_addUser': '/userManagement/addUser', //平台用户注册
+  'user_findPwd': '/userManagement/findPwd', //平台用户找回密码
+  'user_editUserPwd': '/userManagement/editUserPwd', //修改平台用户密码（重新设置用户密码）
+
+
 
 
   //财务管理部分（朱贤良）
@@ -40,6 +60,11 @@ export default {
   'QUERY_JKMANAGER': '/jkManager/queryAllByAnything',//paySchedule
   'DEL_JKMANAGER': '/jkManager/delPaySchedule',//paySchedule删除
   'EDIT_JKMANAGER': '/jkManager/editPaySchedule',//paySchedule编辑
+
+  'LIST_CALLBIDSTYPE': '/callBidsTypeCtrl/listAnything',//
+  'EDIT_CALLBIDSTYPE': '/callBidsTypeCtrl/editCallBidsType',//
+  'DEL_CALLBIDSTYPE': '/callBidsTypeCtrl/delCallBidsType',//
+
 
 
   //基础管理部分（刘亮）
@@ -75,6 +100,9 @@ export default {
 
 
   //审核项目02(谭玲)
+  'CASH_LISTALLCASH':'/auditProjectModule/listAllCash',//查询多个提现信息
+  'CASH_DELCASH':'/auditProjectModule/delCash',//删除提现信息
+  'CASH_EDITCASH':'/auditProjectModule/editCash',//修改提现信息
   'RECHARGE_LISTALLRECHARGES': '/auditProjectModule/listAllRecharges',//查询充值记录
   'RECHARGE_DELRECHARGE': '/auditProjectModule/delRecharge',//删除充值记录
   'RECHARGE_EDITRECHARGE': '/auditProjectModule/editRecharge',//修改充值记录

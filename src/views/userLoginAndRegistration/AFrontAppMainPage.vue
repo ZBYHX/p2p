@@ -13,36 +13,56 @@
           <li class="c_4"><a href="#" target="_blank" title="新浪微博" alt="新浪微博"><b class="ico_head_sina"></b></a></li>
         </ul>
         <ul class="fn-right header-top-ul">
-          <li><a href="javascript:void(0)" @click="MainPage()" class="app">返回首页</a></li>
           <li>
-            <div class="">
+            <a href="javascript:void(0)" @click="MainPage()" class="app">返回首页</a>
+          </li>
+          <!--判断是否登录-->
+          <li v-if="login == false">
+            <div>
               <a href="javascript:void(0)" @click="Register()" title="免费注册">免费注册</a>
             </div>
           </li>
-          <li>
-            <div class=""><a href="javascript:void(0)" @click="UserLogin()" class="js-login" title="登录">登录</a></div>
+          <li v-if="login == false">
+            <div>
+              <a href="javascript:void(0)" @click="UserLogin()" class="js-login" title="登&emsp;录">登&ensp;录</a>
+            </div>
           </li>
+          <li v-if="login == true">
+            <div>
+              <a href="javascript:void(0)" @click="Logout()" title="退出登录">退出登录</a>
+            </div>
+          </li>
+          <li v-if="login == true" class="myLiCss01" @click="PersonCenter()">
+            <div>
+              <span class="spanCss1">{{username}}</span>
+            </div>
+          </li>
+          <li v-if="login == true" @click="PersonCenter()">
+            <div>
+              <img class="imageCss01" :src="headImage" alt="图片信息" />
+            </div>
+          </li>
+
         </ul>
       </div>
     </div>
     <div class="header min-width">
       <div class="container">
         <div class="fn-left logo">
-          <a class="" href="javascript:void(0);" @click="MainPage()" >
+          <a class="" href="javascript:void(0);" @click="MainPage()">
             <img src="../frontEnd/static/images/logo.png" title="">
           </a>
         </div>
         <ul class="top-nav fn-clear">
           <li class="on"><a href="javascript:void(0)" @click="MainPage()">首页</a></li>
-          <li><a href="javascript:void(0)" @click="BorrowMoney()" >我要借款</a></li>
-          <li><a href="javascript:void(0)" @click="Inverstment()" >我要投资</a></li>
+          <li><a href="javascript:void(0)" @click="BorrowMoney()">我要借款</a></li>
+          <li><a href="javascript:void(0)" @click="Inverstment()">我要投资</a></li>
           <li><a href="javascript:void(0)" @click="HelpCenter()">帮助中心</a></li>
-          <li class="top-nav-safe"><a   @click="PersonCenter()" href="javascript:void(0)"  >我的账户</a></li>
+          <li class="top-nav-safe"><a @click="PersonCenter()" href="javascript:void(0)">我的账户</a></li>
           <li><a href="javascript:void(0)" @click="AboutUs()">关于我们</a></li>
         </ul>
       </div>
     </div>
-
     <!--路由显示区域-->
     <router-view/>
 
@@ -115,15 +135,25 @@
   export default {
     // name: 'abc',
     data: function () {
-      return {}
+      return {
+        login: false,
+        username: null,//用户名
+        headImage: null,//用户头像
+      }
     },
     created() {
-      if (this.$store.getters.myPath == null) {
-        //默认跳转到主页
-        this.MainPage();
+      // console.log("取当前完整的url：", this.$route.path);
+      if (this.$store.getters.nickname != null) {
+        this.username = this.$store.getters.nickname;
+        this.headImage = require("../static/img01/"+this.$store.getters.headImage);
+        this.login = true;
+      }
+      if (this.$store.getters.myPath == null || this.$route.path == "/") {
         this.$store.commit('setMyPath', {
           myPath: 1
         });
+        //默认跳转到主页
+        this.MainPage();
       }
 
     },
@@ -176,6 +206,17 @@
         this.$router.replace({
           path: "/BorrowMoney"
         });
+      },
+      //退出登录
+      Logout: function () {
+        //给vuex中nickname和pathUserId赋值
+        this.$store.commit('setNickname', {
+          nickname: null
+        });
+        this.$store.commit('setPathUserId', {
+          pathUserId: null
+        });
+        this.login = false;
       }
 
     }
@@ -187,5 +228,25 @@
   @import "../frontEnd/static/css/common.css";
   @import "../frontEnd/static/css/register.css";
   /*@import "../frontEnd/static/css/user.css";*/
+
+  .imageCss01 {
+    width: 50px;
+    height: 50px;
+    /*margin-bottom: -30px;*/
+    border-radius: 50px;
+  }
+
+  .spanCss1 {
+    margin: 0px 15px;
+    color: blue;
+    font-weight: bold;
+  }
+
+  .myLiCss01:hover {
+    cursor: pointer;
+    background-color: lightblue;
+    color: white;
+  }
+
 
 </style>

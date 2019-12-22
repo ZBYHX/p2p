@@ -4,6 +4,7 @@
 import axios from 'axios'
 import qs from 'qs'
 
+
 //引入action模块，并添加至axios的类属性urls上
 import action from '@/api/action'
 axios.urls = action
