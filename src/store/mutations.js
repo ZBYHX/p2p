@@ -34,7 +34,7 @@ export default {
     state.nickname = payload.nickname;
   },
   setPathUserId: function (state, payload) {
-    state.setPathUserId = payload.setPathUserId;
+    state.pathUserId = payload.pathUserId;
   },
   setHeadImage: function (state, payload) {
     state.headImage = payload.headImage;
