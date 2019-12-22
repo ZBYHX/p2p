@@ -13,9 +13,9 @@
                   v-model="queryForm.username"
                   placeholder="模块名称"></el-input>
       </el-form-item>
-      <el-form-item  label="登录时间"  style="margin-left: 40px;">
+      <el-form-item label="登录时间" style="margin-left: 40px;">
         <el-date-picker
-          v-model="value2"
+          v-model="value4"
           type="datetimerange"
           :picker-options="pickerOptions"
           range-separator="至"
@@ -41,12 +41,12 @@
       </el-table-column>
       <el-table-column prop="logoutName" label="离线时间" min-width="20">
       </el-table-column>
-      <el-table-column label="操作" min-width="14" align="center">
-        <template slot-scope="scope">
-          <el-button size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
+      <!--<el-table-column label="操作" min-width="14" align="center">-->
+        <!--<template slot-scope="scope">-->
+          <!--&lt;!&ndash;<el-button size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>&ndash;&gt;-->
+          <!--&lt;!&ndash;<el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>&ndash;&gt;-->
+        <!--</template>-->
+      <!--</el-table-column>-->
     </el-table>
     <!-- 完整分页-->
     <el-pagination style="margin-top: 15px;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
@@ -54,32 +54,6 @@
                    layout="total, sizes, prev, pager, next, jumper"
                    :total="queryForm.total_count">
     </el-pagination>
-    <!-- 添加和编辑操作 -->
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="40%" @close="handleDialogClose">
-      <el-form :model="mergeForm" :rules="mergeFormRules" ref="mergeForm" :label-position="labelPosition"
-               label-width="120px">
-        <el-form-item label="权限名称" prop="right_text">
-          <el-input v-model="mergeForm.right_text" placeholder="请输入权限名称"></el-input>
-        </el-form-item>
-        <el-form-item label="权限类型" prop="right_type">
-          <el-input v-model="mergeForm.right_type" placeholder="请输入权限的类型"></el-input>
-        </el-form-item>
-        <el-form-item label="权限图标" prop="right_icon">
-          <el-input v-model="mergeForm.right_icon" readonly="readonly"></el-input>
-        </el-form-item>
-        <el-form-item label="权限的URL" prop="right_url">
-          <el-input v-model="mergeForm.right_url" readonly="readonly"></el-input>
-        </el-form-item>
-        <el-form-item label="权限提示" prop="right_tip">
-          <el-input type="textarea" rows="2" maxlength="50" show-word-limit v-model="mergeForm.right_tip"
-                    placeholder="请输入权限的提示内容"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer" align="center">
-        <el-button style="width: 20%;" type="primary" @click="onSubmitMergeForm()">确 定</el-button>
-        <el-button style="width: 20%;" @click="dialogVisible=false">取 消</el-button>
-      </div>
-    </el-dialog>
 
   </div>
 </template>
@@ -92,10 +66,13 @@
           username: null, //用户名称
           current_page: 1, //当前显示页码数
           page_size: 8, //每页显示的最大行数
+          startTime: null,//起始时间
+          endTime: null,//结束时间
           total_count: 0 //数据的总记录数
         },
         queryForm2: {
           username: null, //用户名称
+          value4: null//时间组
         },
         result: [], //数据的结果集
         dialogVisible: false, //弹出框的显示判断
@@ -166,7 +143,7 @@
           }]
         },
         // value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-        value2: ''
+        value4: ''
       };
     },
     created: function () {
@@ -240,13 +217,31 @@
       },
       //搜索
       search: function () {
-        if (this.queryForm.username != this.queryForm2.username) {
+        if (this.queryForm.username != this.queryForm2.username ||this.queryForm2.value4!=this.queryForm.value4) {
           if (this.queryForm.username != null && this.queryForm.username != '') {
             this.queryForm.current_page = 1;
           }
+          if (this.queryForm.value4 != null && this.queryForm.value4) {
+            this.queryForm.current_page = 1;
+          }
         }
-
         this.queryForm2.username = this.queryForm.username;
+        this.queryForm2.value4 = this.queryForm.value4;
+
+
+        if (this.value4 != null && this.value4.length > 0) {
+          //起始时间
+          const t1 = this.value4[0].toLocaleString().substr(0, 10);
+          const t2 = this.value4[0].toLocaleString().substr(13);
+          this.queryForm.startTime = t1 + " " + t2;
+          //结束时间
+          const t01 = this.value4[1].toLocaleString().substr(0, 10);
+          const t02 = this.value4[1].toLocaleString().substr(13);
+          this.queryForm.endTime = t01 + " " + t02;
+        } else {
+          this.queryForm.startTime = null;
+          this.queryForm.endTime = null;
+        }
 
         let url01 = this.axios.urls.user_selectAllLoginInfo;
         this.axios.post(url01, this.queryForm).then((resp) => {
@@ -254,14 +249,6 @@
           this.queryForm.total_count = resp.data.total;
         }).catch((error) => {
         });
-
-        // let url02 = this.axios.urls.SYS_RIGHT_ALLTYPES;
-        // this.axios.post(url02, {}).then((resp) => {
-        //   this.types = resp.data.result;
-        // }).catch((error) => {
-        // });
-
-
       }
     }
   }

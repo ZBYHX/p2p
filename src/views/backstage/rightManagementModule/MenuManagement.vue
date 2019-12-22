@@ -9,11 +9,11 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" class="searchBox">
       <el-form-item label="名称">
-        <el-input style="width: 300px;" clearable="" prefix-icon="el-icon-search" size="small" v-model="queryForm.right_text"
+        <el-input style="width: 300px;" clearable="" prefix-icon="el-icon-search" size="small" v-model="queryForm.rightText"
                   placeholder="模块名称"></el-input>
       </el-form-item>
       <el-form-item label="类型">
-        <el-select v-model="queryForm.rightType" placeholder="请选择权限的类型">
+        <el-select v-model="queryForm.rightType" clearable placeholder="请选择权限的类型">
           <el-option key="aa" index="aa" label="所有权限类型" value="" >
           </el-option>
           <el-option v-for="(item, index) in types" :key="index" :index="index" :label="item" :value="item">
@@ -165,15 +165,16 @@
           if (false === valid) {
             return false;
           }
-          let url = this.axios.urls.SYS_RIGHT_EDITONE;
+          let url = this.axios.urls.sys_right_updateByPrimaryKeySelective;
           this.axios.post(url, this.mergeForm).then((resp) => {
-            this.$message({
-              message: resp.data.message,
-              type: 'success'
-            });
-            // if (null == this.mergeForm.id) {
-            // 	this.handleDialogClose();
-            // }
+            if (0 == resp.data.code) {
+              this.$message({
+                message: resp.data.message,
+                type: 'success'
+              });
+            } else {
+              this.$message.error(resp.data.message);
+            }
             this.search();
           }).catch((error) => {});
         });

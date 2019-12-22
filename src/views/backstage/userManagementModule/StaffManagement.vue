@@ -71,16 +71,15 @@
         </el-form-item>
         <el-form-item label="员工角色" prop="roleId">
           <el-select v-model="mergeForm.roleId" placeholder="请选择用户角色">
-            <el-option label="1" value="23" tabindex="234">324</el-option>
-            <el-option v-for="(r, index) in result2" :label="r.role_name" :value="r.role_id" :key="index"
-                       :index="r.role_id">{{r.role_name}}
+            <el-option v-for="(r, index) in result2" :label="r.roleName" :value="r.roleId" :key="index"
+                       :index="r.roleId">{{r.roleName}}
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="员工状态" prop="userFlag">
           <div>
-            <el-radio v-model="mergeForm.userFlag" label="0" border size="medium">可用</el-radio>
-            <el-radio v-model="mergeForm.userFlag" label="1" border size="medium">禁用</el-radio>
+            <el-radio v-model="mergeForm.userFlag" label="1" border size="medium">可用</el-radio>
+            <el-radio v-model="mergeForm.userFlag" label="0" border size="medium">禁用</el-radio>
           </div>
         </el-form-item>
       </el-form>
@@ -146,7 +145,19 @@
         const reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
         if (value == null) {
           callback(new Error('请输入你的电话号码！'));
-        } else if (!reg.test(this.mergeForm.phonenumber)) {
+        } else if (!reg.test(this.mergeForm.numberphone)) {
+          callback(new Error('你输入的电话号码不合法!'));
+        } else {
+          callback();
+        }
+      };
+
+      var validatePass03 = (rule, value, callback) => {
+        //校验手机号是否合法
+        const reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        if (value == null) {
+          callback(new Error('请输入你的电话号码！'));
+        } else if (!reg.test(this.mergeForm2.numberphone)) {
           callback(new Error('你输入的电话号码不合法!'));
         } else {
           callback();
@@ -242,7 +253,7 @@
             {
               min: 2,
               max: 10,
-              message: '长度在 2 到 10 个字符',
+              message: '长度在 2 到 16 个字符',
               trigger: 'blur'
             }
           ],
@@ -260,13 +271,13 @@
           ],
           numberphone: [{
             required: true,
-            message: '请输入你的电话号码',
+            validator: validatePass03,
             trigger: 'change'
           }],
           userFlag: [{
             required: true,
-            validator: validatePass02,
-            trigger: 'blur'
+            message: '请选择用户状态',
+            trigger: 'change'
           }],
           roleId: [{
             required: true,
@@ -290,29 +301,19 @@
         this.mergeForm2.userPassword = row.userPassword;
         this.mergeForm2.numberphone = row.numberphone;
         this.mergeForm2.userFlag = row.userFlag.toString();
-        // this.mergeForm2.roleName = row.roleName;
         this.mergeForm2.roleId = row.roleName;
-
-        // this.mergeForm2.roleId = row.roleId;
-        // if (this.mergeForm2.user_flag == 0) {
-        //   this.user_flagName = '不可用';
-        // } else {
-        //   this.user_flagName = '可用';
-        // }
         this.dialogTitle = '用户修改';
       },
       //删除文本（行）
       handleDelete: function (index, row) {
-        // console.log('handleDelete');
-
         this.$confirm('你确定要删除这条记录, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let url = this.axios.urls.SYS_USER_DEL;
+          let url = this.axios.urls.user_delStaff;
           this.axios.post(url, {
-            user_id: row.user_id
+            userId: row.userId
           }).then((resp) => {
             this.$message({
               message: resp.data.message,
@@ -336,25 +337,18 @@
       },
       //表单提交(添加或者修改的使用)
       onSubmitMergeForm: function () {
-        // //给表单中的用户标识（状态）赋值
-        // if (this.user_flagName != null) {
-        //   if (this.user_flagName.length == 1) {
-        //     this.mergeForm2.user_flag = this.user_flagName;
-        //   }
-        // }
 
         this.$refs['mergeForm'].validate((valid) => {
           if (false === valid) {
             return false;
           }
-
           var myForm = null;
           var url = null;
-          if (null != this.mergeForm2.user_id) {
-            url = this.axios.urls.SYS_USER_EDIT;
+          if (null != this.mergeForm2.userId) {
+            url = this.axios.urls.user_editStaff;
             myForm = this.mergeForm2;
           } else {
-            url = this.axios.urls.SYS_USER_ADD;
+            url = this.axios.urls.user_addStaff;
             myForm = this.mergeForm;
           }
           this.axios.post(url, myForm).then((resp) => {
@@ -363,14 +357,13 @@
                 message: resp.data.message,
                 type: 'success'
               });
-              if (null == this.mergeForm2.user_id) {
+              this.search();
+              if (null == this.mergeForm2.userId) {
                 this.handleDialogClose();
               }
-              this.search();
             } else {
               this.$message.error(resp.data.message);
             }
-
           }).catch((error) => {
           });
         });
@@ -378,37 +371,35 @@
       //dialog对话框的关闭事件
       handleDialogClose: function () {
         this.$refs['mergeForm'].resetFields(); //清空验证信息
-        // this.$refs['mergeForm2'].resetFields(); //清空验证信息
+        this.$refs['mergeForm2'].resetFields(); //清空验证信息
         this.doClearMergeForm();
       },
       //清空表单中的数据
       doClearMergeForm: function () {
-        this.mergeForm.user_id = null; //清空后台提交表单数据
-        this.mergeForm.user_name = null;
-        this.mergeForm.user_password = null;
-        this.mergeForm.user_flag = null;
-        this.mergeForm.role_id = null;
+        this.mergeForm.userId = null; //清空后台提交表单数据
+        this.mergeForm.userName = null;
+        this.mergeForm.userPassword = null;
+        this.mergeForm.userFlag = null;
+        this.mergeForm.roleId = null;
         this.mergeForm.repwd = null;
 
-        this.mergeForm2.user_id = null; //清空后台提交表单数据
-        this.mergeForm2.user_name = null;
-        this.mergeForm2.user_password = null;
-        this.mergeForm2.user_flag = null;
-        this.mergeForm2.role_id = null;
+        this.mergeForm2.userId = null; //清空后台提交表单数据
+        this.mergeForm2.userName = null;
+        this.mergeForm2.userPassword = null;
+        this.mergeForm2.userFlag = null;
+        this.mergeForm2.roleId = null;
 
         this.user_flagName = null;
         this.dialogTitle = '用户添加';
       },
       //更改每页显示行数
       handleSizeChange(rows) {
-        // console.log('rows=%i', rows);
         this.queryForm.page_size = rows;
         this.queryForm.current_page = 1;
         this.search();
       },
       //更改当前页码数
       handleCurrentChange(page) {
-        // console.log('page=%i', page);
         this.queryForm.current_page = page;
         this.search();
       },
@@ -421,6 +412,7 @@
         }
         this.queryForm2.userName == this.queryForm.userName
 
+        //查询信息
         let url = this.axios.urls.sys_user_selectAllStaff;
         this.axios.post(url, this.queryForm).then((resp) => {
           this.result = resp.data.result;
@@ -428,11 +420,12 @@
         }).catch((error) => {
         });
 
-        // let url2 = this.axios.urls.SYS_ROLE_LIST;
-        // this.axios.post(url2, {}).then((resp) => {
-        //   this.result2 = resp.data.result;
-        // }).catch((error) => {
-        // });
+        //获得所有角色类型的集合
+        let url2 = this.axios.urls.user_listAllRole;
+        this.axios.post(url2, {}).then((resp) => {
+          this.result2 = resp.data.result;
+        }).catch((error) => {
+        });
 
       }
 

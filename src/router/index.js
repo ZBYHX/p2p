@@ -54,6 +54,10 @@ import t11 from '@/views/frontEnd/AboutUsModule/t11'//关于我们
 //================================后端部分==================================
 //登录注册部分
 import Login from '@/views/loginAndRegistration/Login' //后端登录
+import FindPassword2 from '@/views/loginAndRegistration/FindPassword2' //找回密码
+import ResetPassword2 from '@/views/loginAndRegistration/ResetPassword2' //重设密码
+import SmsLogin from '@/views/loginAndRegistration/SmsLogin' //短信登录
+
 //主页模块
 import AppMain from '@/views/backstage/mainPageModule/AppMain' //后台主页
 import Img from '@/views/backstage/mainPageModule/wother/Img'//后台首页图片显示
@@ -283,6 +287,21 @@ export default new Router({
       path: '/Login',
       name: 'Login',
       component: Login
+    },
+    {//找回密码
+      path: '/FindPassword2',
+      name: 'FindPassword2',
+      component: FindPassword2
+    },
+    {//重设密码
+      path: '/ResetPassword2',
+      name: 'ResetPassword2',
+      component: ResetPassword2
+    },
+    {//短信登录
+      path: '/SmsLogin',
+      name: 'SmsLogin',
+      component: SmsLogin
     },
     //--------------------首页部分-----------------------
     {//后台主页
