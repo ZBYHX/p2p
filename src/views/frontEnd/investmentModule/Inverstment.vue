@@ -351,6 +351,8 @@
 <script>
   import {jquery} from "../static/script/jquery.min";
   import {common} from "../static/script/common"
+
+
   export default {
     data:function () {
       return{}

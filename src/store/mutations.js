@@ -29,6 +29,21 @@ export default {
   },
   setMyPersonId: function (state, payload) {
     state.myPersonId = payload.myPersonId;
+  },
+  setNickname: function (state, payload) {
+    state.nickname = payload.nickname;
+  },
+  setPathUserId: function (state, payload) {
+    state.setPathUserId = payload.setPathUserId;
+  },
+  setHeadImage: function (state, payload) {
+    state.headImage = payload.headImage;
+  },
+  setTempName:function (state, payload) {
+    state.tempName = payload.tempName;
+  },
+  setTempUserid: function (state, payload) {
+    state.tempUserid = payload.tempUserid;
   }
 }
 
