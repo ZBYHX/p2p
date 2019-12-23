@@ -12,84 +12,23 @@
               <!--<input id="filterMulti" name="multiple_choice" type="checkbox">-->
               <!--多选</label>-->
             </div>
-            <div class="bd">
-              <dl>
-                <dt>项目类型</dt>
-                <dd>
-                  <ul>
-                    <li class="n1"><a href="javascript:url('post_type','');" @click="searchProject('0')" id="type0"
-                                      class="active">不限</a></li>
-                    <li class="n2"><a href="javascript:url('post_type','car');" @click="searchProject('1')" id="type1">车易贷</a>
-                    </li>
-                    <li class="n3"><a href="javascript:url('post_type','house');" @click="searchProject('2')"
-                                      id="type2">房易贷</a></li>
-                    <li class="n4"><a href="javascript:url('post_type','bridge');" @click="searchProject('3')"
-                                      id="type3">赎楼贷</a></li>
-                    <li class="n5"><a href="javascript:url('post_type','worth');" @click="searchProject('4')"
-                                      id="type4">债权贷</a></li>
-                    <li class="n5"><a href="javascript:url('post_type','worth');" @click="searchProject('5')"
-                                      id="type5">其他贷款</a></li>
-                  </ul>
-                </dd>
-              </dl>
-              <dl>
-                <dt>年利率</dt>
-                <dd>
-                  <ul>
-                    <li class="n1"><a href="javascript:url('borrow_interestrate','');" id="borrow0"
-                                      @click="searchProject1('0')"
-                                      class="active">不限</a></li>
-                    <li class="n2"><a id="borrow1"
-                                      href="javascript:url('borrow_interestrate','1');" @click="searchProject1('1')">12%以下</a>
-                    </li>
-                    <li class="n3"><a id="borrow2"
-                                      href="javascript:url('borrow_interestrate','2');" @click="searchProject1('2')">12%-14%</a>
-                    </li>
-                    <li class="n4"><a id="borrow3"
-                                      href="javascript:url('borrow_interestrate','3');" @click="searchProject1('3')">14%-16%</a>
-                    </li>
-                    <li class="n5"><a id="borrow4"
-                                      href="javascript:url('borrow_interestrate','4');" @click="searchProject1('4')">16%及以上</a>
-                    </li>
-                  </ul>
-                </dd>
-              </dl>
-              <dl>
-                <dt>期限</dt>
-                <dd>
-                  <ul>
-                    <li class="n1"><a href="javascript:url('spread_month','');" @click="searchProject2('0')" id="month0"
-                                      class="active">不限</a>
-                    </li>
-                    <li class="n2"><a id="month1" href="javascript:url('spread_month','1');"
-                                      @click="searchProject2('1')">1月以下</a></li>
-                    <li class="n3"><a id="month2" href="javascript:url('spread_month','2');"
-                                      @click="searchProject2('2')">1-3月</a></li>
-                    <li class="n4"><a id="month3" href="javascript:url('spread_month','3');"
-                                      @click="searchProject2('3')">3-6月</a></li>
-                    <li class="n5"><a id="month4" href="javascript:url('spread_month','4');"
-                                      @click="searchProject2('4')">6-12月</a></li>
-                    <li class="n6"><a id="month5" href="javascript:url('spread_month','5');"
-                                      @click="searchProject2('5')">12月及以上</a></li>
-                  </ul>
-                </dd>
-              </dl>
-              <dl class="repayment">
-                <dt>还款方式</dt>
-                <dd>
-                  <ul>
-                    <li class="n1"><a @click="searchProject3('0')" href="javascript:url('repay_style','');" id="time0"
-                                      class="active">不限</a>
-                    </li>
-                    <li class="n2"><a @click="searchProject3('1')" id="time1"
-                                      href="javascript:url('repay_style','end');">到期还本付息</a></li>
-                    <li class="n2"><a id="time2" @click="searchProject3('2')"
-                                      href="javascript:url('repay_style','endmonth');">按月付息,到期还本</a></li>
-                    <li class="n2"><a @click="searchProject3('3')" id="time3"
-                                      href="javascript:url('repay_style','month');">等额本息</a></li>
-                  </ul>
-                </dd>
-              </dl>
+            <br/>
+            <div>
+              <el-form>
+                <el-form-item>
+                  <el-input placeholder="请输入还款期" v-model="queryForm.borrowtimeid" style="width: 300px;"
+                            clearable></el-input>
+                  <el-select v-model="queryForm.borrowtype" placeholder="请选择类型" key="-1" value="-1" clearable>
+                    <el-option v-for="item in types01" :label="item.label" :value="item.value"
+                               :key="item.value"></el-option>
+                  </el-select>
+                  <el-select v-model="queryForm.projecttypeid" placeholder="请选择类型" key="-2" value="-2" clearable>
+                    <el-option v-for="item in types02" :label="item.label" :value="item.value"
+                               :key="item.value"></el-option>
+                  </el-select>
+                  <el-button icon="el-icon-search" @click="loadAll()">搜索</el-button>
+                </el-form-item>
+              </el-form>
             </div>
           </div>
           <div class="common-problem">
@@ -108,8 +47,8 @@
           <h3>投资列表</h3>
           <div class="count">
             <ul>
-              <li class="line">散标投资交易金额&nbsp;&nbsp;<span class="f20 bold">x￥(万)</span></li>
-              <li>累计赚取收益&nbsp;&nbsp;<span class="f20 bold">x￥(万)</span></li>
+              <li class="line">散标投资交易金额&nbsp;&nbsp;<span class="f20 bold">{{sumMoney}}￥(万)</span></li>
+              <li>累计赚取收益&nbsp;&nbsp;<span class="f20 bold">{{earn}}￥(万)</span></li>
             </ul>
           </div>
         </div>
@@ -120,11 +59,11 @@
 
               <el-table-column prop="callBids.title" label="借款标题" width="280"></el-table-column>
 
-              <el-table-column prop="callBids.totalrewardamount" label="借款金额" width="145"></el-table-column>
+              <el-table-column prop="callBids.bidrequestamount" label="借款金额" width="145"></el-table-column>
 
               <el-table-column prop="projecttypeid" label="投资类型" width="123">
                 <template slot-scope="scope">
-                  <span>{{scope.row.projecttypeid===4?'债权贷款':'其他贷'|| scope.row.projecttypeid===1?'车易贷':'其他贷'|| scope.row.projecttypeid===2?'房易贷':'其他贷'||scope.row.projecttypeid===3?'赎楼贷':'其他贷' }}</span>
+                  <span>{{scope.row.projecttypeid===1?'车易贷':(scope.row.projecttypeid===2?'房易贷':(scope.row.projecttypeid===3?'赎楼贷':(scope.row.projecttypeid===4?'债权贷款':'其他贷')))}}</span>
                 </template>
               </el-table-column>
 
@@ -151,7 +90,7 @@
 
               <el-table-column label="操作" width="110px">
                 <template label="操作" min-width="10px" slot-scope="scope">
-                  <el-button size="mini" type="success" @click="" class="">我要投标</el-button>
+                  <el-button size="mini" @click="toubiao" class="">我要投标</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -164,6 +103,38 @@
                              :total="queryForm.total_count">
               </el-pagination>
             </div>
+
+            <!--添加和编辑操作-->
+            <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="40%" @close="handleDialogClose">
+              <el-form ref="mergeForm" :label-position="labelPosition"
+                       label-width="130px">
+                <el-form-item label="申请用户" prop="applierid">
+                  <el-input :readonly="diss" v-model="mergeForm.applierid"></el-input>
+                </el-form-item>
+                <el-form-item label="投资金额" prop="bidmoney">
+                  <el-input v-model="mergeForm.bidmoney"></el-input>
+                </el-form-item>
+                <el-form-item label="实际汇率" :readonly="diss" prop="actualrate">
+                  <el-input v-model="mergeForm.actualrate"></el-input>
+                </el-form-item>
+                <el-form-item label="投资备注" prop="remark">
+                  <el-input v-model="mergeForm.remark"></el-input>
+                </el-form-item>
+                <el-form-item label="审核人" :readonly="diss" prop="audit.userName">
+                  <el-input v-model="mergeForm.audit"></el-input>
+                </el-form-item>
+                <el-form-item :readonly="diss" label="审核时间" prop="audit.audittime">
+                  <el-input v-model="mergeForm.audit"></el-input>
+                </el-form-item>
+                <el-form-item :readonly="diss" label="申请时间" prop="audit.applytime">
+                  <el-input v-model="mergeForm.audit"></el-input>
+                </el-form-item>
+              </el-form>
+              <div slot="footer" class="dialog-footer" style="text-align: center">
+                <el-button @click="dialogVisible=false">取 消</el-button>
+                <el-button type="primary" @click="suretoubiao()">确 定</el-button>
+              </div>
+            </el-dialog>
 
           </div>
         </div>
@@ -181,42 +152,66 @@
       return {
         diss: null,
         dialogVisible: false,
-        dialogTitle: '',
+        dialogTitle: '我要投标界面 ',
         labelPosition: 'left',
         dataResult: [],
+        sumMoney: null,
+        earn: null,
         queryForm: {
           current_page: 1, //当前页码数
           page_size: 7, //每页显示的最大记录数
           total_count: 0, //总记录数
-          // min: null,
-          // max: null
         },
         queryForm1: {
           typeName: null,
+          borrowtype: null,
           borrowTypeName: null,
           borrowtimeid: null,
           yearcountid: null,
+          projecttypeid: null
         },
-        // list: ["1-5000", "5001-10000", "10001-20000", "20001-50000", "50001-100000", "100001-200000", "200001-100000000"],
-        mergeForm: {},
-        types: [{
+        queryForm2: {
+          bidmoney: null,
+          bidtime: null,
+          actualrate: null,
+          remark: null,
+          audit: null,
+        },
+        mergeForm: {
+          bidmoney: null,
+          bidtime: null,
+          actualrate: null,
+          audittime: null,
+          remark: null,
+          audit: null,
+          applierid: null,
+          applytime: null,
+        },
+        types01: [{
           value: '1',
-          label: '投资'
+          label: '按月还息到期还本'
         }, {
           value: '2',
-          label: '借款'
+          label: '等额本息法还款'
         }, {
           value: '3',
-          label: '主动还款'
+          label: '一次性还款'
+        }],
+        types02: [{
+          value: '1',
+          label: '车易贷'
+        }, {
+          value: '2',
+          label: '房易贷'
+        }, {
+          value: '3',
+          label: '赎楼贷'
         }, {
           value: '4',
-          label: '自动还款'
+          label: '债权贷款'
         }, {
           value: '5',
-          label: '逾期还款'
-        }, {
-          value: '6',
-          label: '投资收益'
+          label: '其他贷款'
         }],
         mergeFormRules: {},
 
@@ -263,22 +258,73 @@
           path: "/Infor"
         });
       },
+
+      toubiao: function () {
+
+        this.dialogVisible = true;
+        this.diss = true;
+      },
+
+      suretoubiao: function () {
+        this.$refs['mergeForm'].validate((valid) => {
+          if (false === valid) {
+            return false;
+          }
+          let url = this.axios.urls['EDIT_JKMANAGER'];
+          this.axios.post(url, {
+              // payid: this.mergeForm.payid,
+              // totalAmount: this.mergeForm.totalamount,
+              // principal: this.mergeForm.principal,
+              // monthIndex: this.mergeForm.monthindex,
+              // state: this.mergeForm.state,
+            }
+          ).then((response) => {
+            this.$router.replace({
+              path: "/Infor"
+            });
+            this.$message({
+              message: response.data.message,
+              type: 'success'
+            });
+            if (null == this.mergeForm) {
+              this.handleDialogClose();
+            }
+            this.loadAll();
+          }).catch((error) => {
+          });
+        });
+      },
+      //清空表单中的数据
+      doClearMergeForm: function () {
+        // 清空后台提交表单数据
+        this.mergeForm.bidmoney = null,
+          this.mergeForm.bidtime = null,
+          this.mergeForm.actualrate = null,
+          this.mergeForm.audittime = null,
+          this.mergeForm.remark = null,
+          this.mergeForm.audit = null,
+          this.mergeForm.applierid = null,
+          this.mergeForm.applytime = null
+        // this.$refs['mergeForm'].resetFields(); //清空验证信息
+
+      },
+
+      loadMoney: function () {
+        let url = this.axios.urls['LIST_CALLBIDSTYPE'];
+        this.axios.post(url, this.queryForm).then((response) => {
+          this.result2 = response.data.result;
+          for (let i = 0; i < this.result2.length; i++) {
+            if (this.result2[i].callBids.bidrequeststate == 1) {
+              this.sumMoney += this.result2[i].callBids.currentsum;
+              this.earn += (this.result2[i].callBids.currentrate) * (this.result2[i].callBids.currentsum);
+            }
+          }
+        }).catch((response) => {
+          console.log(Error);
+        });
+      },
       //查询的方法
       loadAll: function () {
-        // var min = null;
-        // var max = null;
-        // let str = this.queryForm.totalamount00;
-        // if (str != null && str.length > 0) {
-        //   let str1 = str.split("-");
-        //   min = str1[0];
-        //   max = str1[1];
-        // }
-        // console.log("最小值：", min);
-        // console.log("最大值：", max);
-        //将参数传到后台
-        // this.queryForm.min = min;
-        // this.queryForm.max = max;
-
         if (this.queryForm.borrowtimeid != this.queryForm1.borrowtimeid || this.queryForm.yearcountid != this.queryForm1.yearcountid || this.queryForm.typeName != this.queryForm1.typeName || this.queryForm1.borrowTypeName != this.queryForm.borrowTypeName) {
           if (this.queryForm.typeName != null && this.queryForm.typeName != '') {
             this.queryForm.current_page = 1;
@@ -293,7 +339,6 @@
             this.queryForm.current_page = 1;
           }
         }
-
         this.queryForm1.typeName = this.queryForm.typeName;
         this.queryForm1.borrowTypeName = this.queryForm.borrowTypeName;
         this.queryForm1.borrowtimeid = this.queryForm.borrowtimeid;
@@ -307,7 +352,6 @@
           console.log(Error);
         });
       },
-
       //更改每页显示行数
       handleSizeChange(total) {
         this.queryForm.page_size = total;
@@ -331,6 +375,7 @@
     },
     created() {
       this.loadAll();
+      this.loadMoney();
     }
 
   }

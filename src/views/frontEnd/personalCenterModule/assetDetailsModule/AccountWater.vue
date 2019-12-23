@@ -172,20 +172,20 @@
           this.queryForm.actiontype = null;
         }
 
-        // if (this.queryForm.accountName != this.queryForm1.accountName || this.queryForm1.actiontype != this.queryForm.actiontype || this.queryForm.tradetime != this.queryForm1.tradetime) {
-        //   if (this.queryForm.accountName != null && this.queryForm.accountName != '') {
-        //     this.queryForm.current_page = 1;
-        //   }
-        //   if (this.queryForm.actiontype != null && this.queryForm.actiontype != '') {
-        //     this.queryForm.current_page = 1;
-        //   }
-        //   if (this.queryForm.tradetimeName != null && this.queryForm.tradetimeName != '') {
-        //     this.queryForm.current_page = 1;
-        //   }
-        // }
-        // this.queryForm1.accountName = this.queryForm.accountName;
-        // this.queryForm1.actiontype = this.queryForm.actiontype;
-        // this.queryForm1.tradetimeName = this.queryForm.tradetimeName;
+        if (this.queryForm.accountName != this.queryForm1.accountName || this.queryForm1.actiontype != this.queryForm.actiontype || this.queryForm.tradetime != this.queryForm1.tradetime) {
+          if (this.queryForm.accountName != null && this.queryForm.accountName != '') {
+            this.queryForm.current_page = 1;
+          }
+          if (this.queryForm.actiontype != null && this.queryForm.actiontype != '') {
+            this.queryForm.current_page = 1;
+          }
+          if (this.queryForm.tradetimeName != null && this.queryForm.tradetimeName != '') {
+            this.queryForm.current_page = 1;
+          }
+        }
+        this.queryForm1.accountName = this.queryForm.accountName;
+        this.queryForm1.actiontype = this.queryForm.actiontype;
+        this.queryForm1.tradetimeName = this.queryForm.tradetimeName;
 
         let url = this.axios.urls['QUERY_ACCOUNT_WATER'];
 
