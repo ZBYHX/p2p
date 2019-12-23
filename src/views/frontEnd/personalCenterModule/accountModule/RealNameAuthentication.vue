@@ -10,20 +10,21 @@
     </div>
 
   <div style="margin-left: 260px;margin-top: -670px;height: 600px;width: 900px;background-color: white">
-   <span style="font-size: 22px;margin-left: 270px;"> 请选择你要上传的身份证正面图片</span>
+   <span style="font-size: 22px;margin-left: 290px;"> 请选择你要上传的身份证正面图片</span>
     <div style="margin-left: 300px;margin-top: 10px">
       <el-upload
         class="avatar-uploader"
-        action="https://jsonplaceholder.typicode.com/posts/"
+        action="http://localhost:8080hp2p/RealName/addRealName"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload">
         <img v-if="imageUrl" :src="imageUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
+
     </div>
 
-    <span style="font-size: 22px;margin-left: 270px;"> 请选择你要上传的身份证反面图片</span>
+    <span style="font-size: 22px;margin-left: 290px;"> 请选择你要上传的身份证反面图片</span>
     <div  style="margin-left: 300px;margin-top: 10px">
       <el-upload
       class="avatar-uploader"
@@ -31,14 +32,14 @@
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
       :before-upload="beforeAvatarUpload">
-      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+      <img v-if="imageUr2" :src="imageUr2" class="avatar">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
     </div>
 
     <div style="margin-left:350px;margin-top: 10px">
       <el-button type="info" plain>取消<i class="el-icon-circle-close el-icon--right"></i></el-button>
-      <el-button type="primary" plain>上传<i class="el-icon-upload el-icon--right"></i></el-button>
+      <el-button type="primary" plain @click="upload()">上传<i class="el-icon-upload el-icon--right"></i></el-button>
     </div>
   </div>
 
@@ -50,7 +51,8 @@
   export default {
     data() {
       return {
-        imageUrl: ''
+        imageUrl: '',
+        imageUr2: ''
       };
     },
     methods: {
@@ -68,6 +70,10 @@
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
         return isJPG && isLt2M;
+      },
+      upload(){
+        console.log(this.imageUrl);
+        console.log(this.imageUr2);
       }
     }
   }
@@ -101,8 +107,8 @@
     text-align: center;
   }
   .avatar {
-    width: 178px;
-    height: 178px;
+    width: 320px;
+    height: 230px;
     display: block;
   }
 
