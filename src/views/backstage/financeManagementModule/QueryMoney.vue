@@ -36,31 +36,29 @@
       <el-table :data="dataResult" border style="width: 100%">
         <el-table-column type="index" label="序" :index="indexMethod" min-width="30" align="center"></el-table-column>
 
-        <el-table-column prop="userName" label="借款/投资用户" width="149"></el-table-column>
+        <el-table-column prop="userName" label="借款/投资用户" width="139"></el-table-column>
 
-        <el-table-column prop="totalamount" label="借款/投资总金额" width="150"></el-table-column>
+        <el-table-column prop="totalamount" label="借款/投资总金额" width="140"></el-table-column>
 
-        <el-table-column prop="principal" label="借款本金/投资本金" width="150"></el-table-column>
+        <el-table-column prop="principal" label="借款本金/投资本金" width="130"></el-table-column>
 
-        <el-table-column prop="payDateCN" label="借款/投资日期" width="153"></el-table-column>
+        <el-table-column prop="payDateCN" label="借款/投资日期" width="160"></el-table-column>
 
         <el-table-column prop="deadLineCN" label="截止期限" width="153"></el-table-column>
 
-        <el-table-column prop="interest" label="借款利息/投资获利" width="149"></el-table-column>
+        <el-table-column prop="interest" label="借款利息/投资获利" width="129"></el-table-column>
 
-        <el-table-column prop="monthindex" label="月指数" width="149"></el-table-column>
+        <el-table-column prop="monthindex" label="月指数" width="129"></el-table-column>
 
-        <el-table-column prop="callid" label="招标ID" width="150"></el-table-column>
+        <el-table-column prop="callid" label="招标ID" width="100"></el-table-column>
 
-        <el-table-column prop="stateCN" label="交易类型" width="150"></el-table-column>
+        <el-table-column prop="stateCN" label="交易类型" width="100"></el-table-column>
 
         相关操作
-        <el-table-column label="操作">
+        <el-table-column label="操作" style="width: 100px">
           <template label="操作" min-width="10px" slot-scope="scope">
             <el-button size="mini" type="warning" @click="handleByEdit(scope.row)" class="el-icon-edit">编辑</el-button>
             <el-button size="mini" type="danger" @click="handleByDel(scope.row)" class="el-icon-delete">删除</el-button>
-            <!--<el-button size="mini" type="success" @click="handleByDetails(scope.row)" class="el-icon-info">详情-->
-            <!--</el-button>-->
           </template>
         </el-table-column>
       </el-table>
